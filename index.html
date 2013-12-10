@@ -7,6 +7,8 @@
   <meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
 
   <link rel="stylesheet" href="./css/tabs.css">
+  <link rel="stylesheet" href="./css/button.css">
+  <link rel="stylesheet" href="./css/value-selector.css">
   <script type="text/javascript" src="./js/calendar.js"></script>
   <script type="text/javascript" src="./js/task.js"></script>
   <script type="text/javascript" src="./js/history.js"></script>
@@ -72,11 +74,66 @@
       </li>
       <li id="panel2" role="tab">
         <a href="#panel2" class="icon">contacts</a>
-        <div role="tabpanel">
-          <script>
-            set_status(getStatus());
-            tas_print();
-          </script>
+        <div role="tabpanel">        	
+	        <form id="frmAddImdTask">	      	
+	          <table id="tblUnstart" align="center">
+	          	<tr>
+	          		<td>任務類型<br>
+			          <select id="lstTaskType">
+			          	<option value="sleep" selected="selected">準時睡覺</option>
+			          	<option value="study">認真唸書</option>
+			          	<option value="excercise">努力運動</option>
+			          </select>
+	          		</td>
+	          	</tr>
+	          	<tr>
+	          		<td>持續時長：<br>
+						<select id="lstHour"></select>時
+			          	<select id="lstMins"></select>分		          		
+	      			</td>
+	      		</tr>
+	      		<tr>
+	      			<td>
+	      				<button type="button" onclick="startImdTask();">開始任務</button>
+	  				</td>
+	  			</tr>
+	          </table>
+	          
+	          
+	          <table id="tblRunTask" align="center">
+          	  	<tr>
+          	  		<td>
+      	  				<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>
+      	  			</td>
+      	  		</tr>
+      	  		<tr>
+      	  			<td>
+      	  				<div id="divCntDnd"></div>
+  	  				</td>
+  	  			</tr>
+          	  </table>
+          	  
+          	  <table id="tblTaskResult" align = "center">
+          	  	<tr>
+          	  		<td>
+          	  			<div id="taskCmdDiv"></div>
+      	  			</td>
+      	  		</tr>
+      	  		<tr>
+      	  			<td>
+      	  				<div id="cpltRateDiv"></div>
+  	  				</td>
+  	  			</tr>
+  	  			<tr>
+  	  				<td>
+      	  				<button type="button" onclick="taskReturn();">返回</button>
+      	  				<button type="button" onclick="poFB();">發文至塗鴉牆</button>
+  	  				</td>
+  				</tr>
+      	  		
+      	  	  </table>
+          	  <script>tas_init();</script>
+          </form>
         </div>
       </li>
       <li id="panel3" role="tab">
