@@ -6,10 +6,10 @@ var task =
 	targetTime : 0,
 	lastTime : 0,
 	type : "none",
-	status : "UNDO"
+	status : "NOTYET"
 };
 
-function showTable(tblName)
+function changeTaskPage(tblName)
 {
 	document.getElementById("tblRunTask").style.display = "none";
 	document.getElementById("tblUnstart").style.display = "none";
@@ -20,9 +20,7 @@ function showTable(tblName)
 
 function tas_init()
 {
-	//document.getElementById("tblRunTask").style.display = "none";
-	//document.getElementById("tblUnstart").style.display = "";
-	showTable("tblUnstart");
+	changeTaskPage("tblUnstart");
 	
 	var lstHours = document.getElementById("lstHour");	
 	var lstMins = document.getElementById("lstMins");
@@ -51,18 +49,18 @@ function startImdTask()
 	{
 		alert("請選擇持續時長");
 	}
-	else if( (hours == 0 && parseInt(hours) !== 0))
+	else if( (hours == 0 && parseInt(hours) !== 0)) //hours not been chosed
 	{
 		alert("請選擇持續小時");
 	}
-	else if( (mins == 0 && parseInt(mins) !== 0))
+	else if( (mins == 0 && parseInt(mins) !== 0)) //mins not been chosed
 	{
 		alert("請選擇持續分鐘");
 	}
 	else if((parseInt(hours)!==0 || parseInt(mins)!==0) && hours != null && mins != null)
 	{
 		//successfully add a new task and start running it!
-		showTable("tblRunTask");	
+		changeTaskPage("tblRunTask");	
 		
 		switch(mode)
 		{
@@ -104,7 +102,7 @@ function addNewTask()
 	task.type = type;
 	task.status = status;
 	alert("任務開始時間：" + now.getTime() + "\n任務類型：" + type + "\n持續時長：" + targetTime + "秒\n任務狀態：" + status);
-	//alert(task);
+
 }
 
 function countdown()
@@ -118,7 +116,7 @@ function countdown()
 	if(rmdSnd < 10){rmdSnd = "0" + rmdSnd;}
 	
 	document.getElementById("divCntDnd").innerHTML = rmdHour + " : " + rmdMin + " : " + rmdSnd;
-	//var seconds = parseInt(totalSnd);
+	
 	if(remainSnd!=0)
 	{
 		remainSnd--;
@@ -128,11 +126,10 @@ function countdown()
 	{
 		task.lastTime = task.targetTime;
 		task.status = "SUCCESS";
-		//document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + Math.round(task.lastTime/task.targetTime) + "%";
 		document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (task.lastTime/task.targetTime) + "%";
 		document.getElementById("taskCmdDiv").innerHTML = "幹的好!你真是人生勝利組!";
 		
-		showTable("tblTaskResult");
+		changeTaskPage("tblTaskResult");
 	}
 }
 
@@ -142,10 +139,9 @@ function quitTask()
 	{
 		task.lastTime = parseInt(task.targetTime) - remainSnd;
 		task.status = "FAIL";
-		//document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + Math.round(task.lastTime/task.targetTime) + "%";
 		document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (task.lastTime/task.targetTime) + "%";
 		document.getElementById("taskCmdDiv").innerHTML = "這樣就不行了?!你的未來呢?!";
-		showTable("tblTaskResult");
+		changeTaskPage("tblTaskResult");
 	}
 	else{}//do nothing
 }
