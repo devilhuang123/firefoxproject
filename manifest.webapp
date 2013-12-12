@@ -1,7 +1,7 @@
 {
     "name": "Strive",
     "description": "This app allows you to check your battery levels!",
-    "launch_path": "/fb_2.html",
+    "launch_path": "/fb.html",
     "developer": {
         "name": "Huang",
 	"url":""
