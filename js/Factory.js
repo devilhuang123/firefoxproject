@@ -8,10 +8,6 @@ ElementFactory.CraeteElement=function(type){
 		return ElementFactory.Document.createElement(type);
 };
 
-ElementFactory.CraeteDiv=function(){
-		 ElementFactory.Document.
-};
-
 
 
 ElementFactory(document);

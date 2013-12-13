@@ -7,6 +7,7 @@
   <meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
   <link rel="stylesheet" type="text/css" media="all" href="./js/jsdatepick-calendar/jsDatePick_ltr.min.css" />
   <link rel="stylesheet" href="./css/tabs.css">
+  <link rel="stylesheet" href="./css/header.css">
   <script type="text/javascript" src="./js/Factory.js"></script>
   <script type="text/javascript" src="./js/calendar.js"></script>
   <script type="text/javascript" src="./js/task.js"></script>
@@ -65,11 +66,20 @@
     <ul role="tablist" data-items="4" class="bottom">
       <li id="panel1" role="tab">
         <a href="#panel1" class="icon">comms</a>
-        <div role="tabpanel" id="cal_mainDiv">
+        <div role="tabpanel" >
+          <section role="region" id="cal_mainDiv">
+                      <header>
+                      <menu type="toolbar">
+                        <a href="" class="icon">delect</a>
+                      </menu>
+                      <h1>Calendar</h1>
+                    </header>
           <script>
-          // div=document.getElementById("cal_mainDiv");
-          ShowCalendar();
+          var div=document.getElementById("cal_mainDiv");
+          ShowCalendar(div);
           </script>
+          </section>
+        
         </div>
       </li>
       <li id="panel2" role="tab">

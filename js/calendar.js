@@ -4,8 +4,8 @@ var messageDiv;
 var calendarId="myCalender";
 var messageId="myMessage";
 
-function ShowCalendar(){
-	var _div=ElementFactory.CraeteElement("div");
+function ShowCalendar(_div){
+	//var _div=ElementFactory.CraeteElement("div");
 	calenderDiv = _div;
 	calendarDiv=addDiv(_div,'#A2A1EF',"230px","250px");
 	calendarDiv.id=calendarId;
