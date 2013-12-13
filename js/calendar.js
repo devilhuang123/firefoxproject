@@ -4,7 +4,8 @@ var messageDiv;
 var calendarId="myCalender";
 var messageId="myMessage";
 
-function ShowCalendar(_div){
+function ShowCalendar(){
+	var _div=ElementFactory.CraeteElement("div");
 	calenderDiv = _div;
 	calendarDiv=addDiv(_div,'#A2A1EF',"230px","250px");
 	calendarDiv.id=calendarId;
@@ -17,7 +18,7 @@ function ShowCalendar(_div){
 
 
 function addDiv(objTo,_color,width,height) {
-    var divtest = document.createElement("div");
+    var divtest = ElementFactory.CraeteElement("div");
     objTo.appendChild(divtest);
     divtest.style.background = _color; 
     // divtest.style.overflow="hidden";

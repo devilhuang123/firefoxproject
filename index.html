@@ -7,6 +7,7 @@
   <meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
   <link rel="stylesheet" type="text/css" media="all" href="./js/jsdatepick-calendar/jsDatePick_ltr.min.css" />
   <link rel="stylesheet" href="./css/tabs.css">
+  <script type="text/javascript" src="./js/Factory.js"></script>
   <script type="text/javascript" src="./js/calendar.js"></script>
   <script type="text/javascript" src="./js/task.js"></script>
   <script type="text/javascript" src="./js/history.js"></script>
@@ -61,14 +62,13 @@
   <section role="region">
   	
     <!-- if your tabs are at the top, remove class="bottom" -->
-  <div id="cal_mainDiv"></div>
     <ul role="tablist" data-items="4" class="bottom">
       <li id="panel1" role="tab">
         <a href="#panel1" class="icon">comms</a>
-        <div role="tabpanel" >
+        <div role="tabpanel" id="cal_mainDiv">
           <script>
-          div=document.getElementById("cal_mainDiv");
-          ShowCalendar(div);
+          // div=document.getElementById("cal_mainDiv");
+          ShowCalendar();
           </script>
         </div>
       </li>
@@ -76,8 +76,8 @@
         <a href="#panel2" class="icon">contacts</a>
         <div role="tabpanel">
           <script>
-            //set_status(getStatus());
-            //tas_print();
+            set_status(getStatus());
+            tas_print();
           </script>
         </div>
       </li>
@@ -85,7 +85,7 @@
         <a href="#panel3" class="icon">dialer</a>
         <div role="tabpanel">
           <script>
-            //his_print();
+            his_print();
           </script>
         </div>
       </li>
@@ -93,9 +93,8 @@
         <a href="#panel4" class="icon">Tab name</a>
         <div role="tabpanel">
           <script>
-           // set_print();
+           set_print();
           </script>
-        </div>
       </li>
     </ul>
    
