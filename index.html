@@ -174,8 +174,63 @@
       <li id="panel4" role="tab">
         <a href="#panel4" class="icon">Tab name</a>
         <div role="tabpanel">
+			<form id="setting_form" name="setting_form">
+			<p>
+				<button type="button" onclick="Mode()">任務模式設置</button>
+				<button type="button" onclick="Type()">任務類型設置</button>
+				<button type="button" onclick="historyManage()">歷史數據管理</button>
+			</p>
+			<!-- Mode area -->
+			<p>
+			<table id="mode_table">
+				<tr>
+					<td>當前模式:</td>
+					<td id="td_mode">&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<select id="select_mode" onchange="setMode()">
+							<option value="sweet">溫柔模式</option>
+							<option value="strict">剽悍模式</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			</p>
+			<!-- end Mode -->
+			
+			<!-- Type area -->
+			<p>
+			<table id="task_type_table" border="1">
+				<tr>
+					<td>任務列表</td>
+				</tr>
+				<tr>
+					<td>
+						新增任務:<input type="text" id="text_type"><button type="button" onclick="appendOption()">新增</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<select id="select_type" width="200" size="10" multiple="multiple">
+							<script>getOption();</script>
+							<!--<option value="original1">Orig1</option>
+							<option value="original2">Orig2</option>-->
+						</select>
+					</td>
+				</tr>
+			</table>
+			</p>
+			
+			<p>
+			<table id="history_manage_table">
+			</table>
+			</p>
+			</form>
           <script>
-           set_print();
+
+			setting();
+           
           </script>
       </li>
       
