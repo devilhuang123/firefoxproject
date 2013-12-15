@@ -1,44 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<title>Facebook Login</title>
+	<meta charset="big5">
 	<link rel="stylesheet" href="./css/buttons.css">
 	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 </head>
 <body>
 
-<button type="button" onclick="self.location.href='index.html'">Click Me!</button>
-<script type="text/javascript">
-    Parse.initialize("bWZqoMINVR9B1H0ivjGe5qOvU9nKsd4qbxWtgten", "vwduM2xu0zj6KZXYdMJZhjL3GKIcR27GDDcCIS3H");
-    
-    var TestObject = Parse.Object.extend("TestObject");
-    var testObject = new TestObject();
-      testObject.save({foo: "bar"}, {
-      success: function(object) {
-        $(".success").show();
-      },
-      error: function(model, error) {
-        $(".error").show();
-      }
-    });
-    
-	
-    
-  </script>
-  <div id="fb-root"></div>
-	<script>
-		window.fbAsyncInit = function() {
-			FB.init({
-				appId: '434212573345108', status: true, cookie: true, xfbml: true
-			});
-		};
-		(function(d){
-			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement('script'); js.id = id; js.async = true;
-			js.src = "//connect.facebook.net/zh_TW/all.js";
-			ref.parentNode.insertBefore(js, ref);
-		}(document));
-	</script>
+<a role="button" class="blue" id="loginButton" href="https://m.facebook.com/dialog/oauth/?client_id=434212573345108&redirect_uri=http://web.cc.ncu.edu.tw/~102522102/">
+     Login with Facebook
+</a>
+
+
 </body>
 </html>
