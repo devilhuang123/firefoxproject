@@ -6,8 +6,8 @@ var messageId="myMessage";
 
 function ShowCalendar(_div){
 	
-	ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
-	ElementFactory.LoadScript("js/jquery-ui-1.10.3.custom.min.js");
+	//ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
+	//ElementFactory.LoadScript("js/jquery-ui-1.10.3.custom.min.js");
 	//var _div=ElementFactory.CraeteElement("div");
 	calenderDiv = _div;
 	calendarDiv=AddDiv(_div,'#A2A1EF');
