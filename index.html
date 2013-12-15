@@ -63,15 +63,16 @@
   <section role="region">
   	
     <!-- if your tabs are at the top, remove class="bottom" -->
-  <div id="cal_mainDiv"></div>
     <ul role="tablist" data-items="4" class="bottom">
       <li id="panel1" role="tab">
         <a href="#panel1" class="icon">comms</a>
-        <div role="tabpanel" >
-          <script>
-          div=document.getElementById("cal_mainDiv");
-          ShowCalendar(div);
-          </script>
+        <div role="tabpanel">
+          	<div id="cal_mainDiv">
+          		<script>
+          			div=document.getElementById("cal_mainDiv");
+          			ShowCalendar(div);
+          		</script>
+          	</div>
         </div>
       </li>
       <li id="panel2" role="tab">
