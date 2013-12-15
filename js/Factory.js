@@ -21,9 +21,10 @@ ElementFactory.LoadCSS=function(href){
 };
 
 ElementFactory.LoadScript=function(href){
-	$.getScript(href).fail(function( jqxhr, settings, exception ) {
-    Assert(false,exception);
+	var script=$.getScript(href,function(data, textStatus, jqxhr){
 	});
+	Assert(script!=null,"Load script failed");
+	return script;
 };
 
 
