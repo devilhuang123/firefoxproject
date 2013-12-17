@@ -5,7 +5,9 @@ function ElementFactory(_document) {
 ElementFactory.Document = null;
 
 ElementFactory.CraeteElement = function(type) {
-	return ElementFactory.Document.createElement(type);
+	var element= ElementFactory.Document.createElement(type);
+	Assert(element!=null,"CraeteElement: "+type+" failed");
+	return element;
 };
 
 ElementFactory.LoadCSS = function(href) {
@@ -26,5 +28,12 @@ ElementFactory.LoadScript = function(href) {
 	Assert(script != null, "Load script failed");
 	return script;
 };
+
+ElementFactory.FindElement=function(id){
+	var element=ElementFactory.Document.getElementById(id);
+	Assert(element!=null,"can't find element with"+id);
+	return element;
+};
+
 
 ElementFactory(document);

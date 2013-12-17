@@ -18,6 +18,10 @@ function ShowCalendar(_div) {
 	messageDiv.id = messageId;
 	messageDiv.className ="dateArea";
 	
+	var header=ElementFactory.FindElement("pageHeader");
+	var h1=ElementFactory.CraeteElement("h1");
+	header.appendChild(h1);
+	h1.appendChild(document.createTextNode('Calendar'));
 	// var hr=ElementFactory.CraeteElement("hr");
 	// messageDiv.appendChild(hr);
 	Initialize();

@@ -71,7 +71,6 @@
 	<body role="application">
 
 		<section role="region">
-
 			<!-- if your tabs are at the top, remove class="bottom" -->
 			<ul role="tablist" data-items="4" class="bottom">
 				<li id="panel1" role="tab">
@@ -79,11 +78,11 @@
 
 					<div role="tabpanel" >
 						<section role="region" id="cal_mainDiv">
-							<header>
+							<header id="pageHeader">
 								<menu type="toolbar">
 									<a href="" >delect</a>
 								</menu>
-								<h1>Calendar</h1>
+								<!-- <h1>Calendar</h1> -->
 							</header>
 							<script>
 								var div = document.getElementById("cal_mainDiv");
@@ -238,59 +237,9 @@
 						</form>
 						<script>
 							setting();
-
 						</script>
 				</li>
-
 			</ul>
-
-		</section>
-
-		<!-- if your tabs are at the top, remove class="bottom" -->
-		<ul role="tablist" data-items="4" class="bottom">
-			<li id="panel1" role="tab">
-				<a href="#panel1" class="icon">comms</a>
-				<div role="tabpanel" >
-					<section role="region" id="cal_mainDiv">
-						<header>
-							<menu type="toolbar">
-								<a href="" class="icon">delect</a>
-							</menu>
-							<h1>Calendar</h1>
-						</header>
-						<script>
-							var div = document.getElementById("cal_mainDiv");
-							ShowCalendar(div);
-						</script>
-					</section>
-
-				</div>
-			</li>
-			<li id="panel2" role="tab">
-				<a href="#panel2" class="icon">contacts</a>
-				<div role="tabpanel">
-					<script>
-						set_status(getStatus());
-						tas_print();
-					</script>
-				</div>
-			</li>
-			<li id="panel3" role="tab">
-				<a href="#panel3" class="icon">dialer</a>
-				<div role="tabpanel">
-					<script>
-						his_print();
-					</script>
-				</div>
-			</li>
-			<li id="panel4" role="tab">
-				<a href="#panel4" class="icon">Tab name</a>
-				<div role="tabpanel">
-					<script>
-						set_print();
-					</script>
-			</li>
-		</ul>
 		</section>
 
 	</body>
