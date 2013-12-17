@@ -7,7 +7,10 @@
 		<meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
 		<!-- <link rel="stylesheet" type="text/css" media="all" href="./js/jsdatepick-calendar/jsDatePick_ltr.min.css" /> -->
 		<link rel="stylesheet" href="./css/tabs.css">
+		<link rel="stylesheet" href="./css/button.css">
+		<link rel="stylesheet" href="./css/value-selector.css">
 		<link rel="stylesheet" href="./css/header.css">
+		<!-- <link rel="stylesheet" href="./css/ui-darkness/jquery-ui-1.10.3.custom.css"> -->
 		<script src="js/Debuger.js"></script>
 		<script src="js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="./js/Factory.js"></script>
@@ -15,6 +18,8 @@
 		<script type="text/javascript" src="./js/task.js"></script>
 		<script type="text/javascript" src="./js/history.js"></script>
 		<script type="text/javascript" src="./js/setting.js"></script>
+		<script type="text/javascript" src="./js/jquery-ui-1.10.3.custom.min.js"></script>
+
 		<!--
 		This <style> and <link> is only used for the example code, is no needed for the real case use
 		-->
@@ -53,8 +58,13 @@
 			#panel3 a:after {
 				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAB4CAYAAADlnULlAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG11AABzoAAA85kAAImUAAB+3gAA7PgAADObAAAQ5ap9ykMAAAE4SURBVHja7JdBTsJQFEUvxlF3I4OSbqKb6DpkgOvoHsiDPVQd1A2oAydMhGEnkNTJJ/m8fAOiDVHPS0jad8M/HfSEy6jve11irnShAQwY8N8E55J692mjfJbIZ1HeJvL8FPB7Yrf+Qr455cwU+E3S1u1eP7nez0t0/eyybTjzKHgnae6+uIju7yWtovtV2O1n6R58Hs48mBG/TniMx3iMTniMx3gMGDBgwIABAwb8D8DXflE1XS7pwa2fJI2jXn3r8jtJ07rIVDVdK+nG5ZO6yB7p1YP36rrIjvfqqunOfmHqIkOnX+Bx+C97lsfhHcFjPMZjPMbjgT1GJ8CAAQMGDBgw4OF7dVmWyV5tZuOQJ3u1mU1DnuzVZkavPhwz+/FeHc6kV+MxHuMxOuExHuMxHgMGDPib8zEAXEF5RgN/yzkAAAAASUVORK5CYII=);
 			}
+
 			#panel4 a:after {
 				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAB4CAYAAADlnULlAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG11AABzoAAA85kAAImUAAB+3gAA7PgAADObAAAQ5ap9ykMAAAE4SURBVHja7JdBTsJQFEUvxlF3I4OSbqKb6DpkgOvoHsiDPVQd1A2oAydMhGEnkNTJJ/m8fAOiDVHPS0jad8M/HfSEy6jve11irnShAQwY8N8E55J692mjfJbIZ1HeJvL8FPB7Yrf+Qr455cwU+E3S1u1eP7nez0t0/eyybTjzKHgnae6+uIju7yWtovtV2O1n6R58Hs48mBG/TniMx3iMTniMx3gMGDBgwIABAwb8D8DXflE1XS7pwa2fJI2jXn3r8jtJ07rIVDVdK+nG5ZO6yB7p1YP36rrIjvfqqunOfmHqIkOnX+Bx+C97lsfhHcFjPMZjPMbjgT1GJ8CAAQMGDBgw4OF7dVmWyV5tZuOQJ3u1mU1DnuzVZkavPhwz+/FeHc6kV+MxHuMxOuExHuMxHgMGDPib8zEAXEF5RgN/yzkAAAAASUVORK5CYII=);
+			}
+
+			#delect a:after {
+				background-image: url(data:image/delect.png;)
 			}
 		</style>
 	</head>
@@ -66,11 +76,12 @@
 			<ul role="tablist" data-items="4" class="bottom">
 				<li id="panel1" role="tab">
 					<a href="#panel1" class="icon">comms</a>
+
 					<div role="tabpanel" >
 						<section role="region" id="cal_mainDiv">
 							<header>
 								<menu type="toolbar">
-									<a href="" class="icon">delect</a>
+									<a href="" >delect</a>
 								</menu>
 								<h1>Calendar</h1>
 							</header>
@@ -84,16 +95,79 @@
 				</li>
 				<li id="panel2" role="tab">
 					<a href="#panel2" class="icon">contacts</a>
+
 					<div role="tabpanel">
-						<script>
-							set_status(getStatus());
-							tas_print();
-						</script>
+						<form id="frmAddImdTask">
+							<table id="tblUnstart" align="center">
+								<tr>
+									<td>任務類型
+									<br>
+									<select id="lstTaskType">
+										<option value="sleep" selected="selected">準時睡覺</option>
+										<option value="study">認真唸書</option>
+										<option value="excercise">努力運動</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td>持續時長：
+									<br>
+									<select id="lstHour"></select>時 <select id="lstMins"></select>分 </td>
+								</tr>
+								<tr>
+									<td>
+									<button type="button" onclick="startImdTask();">
+										開始任務
+									</button></td>
+								</tr>
+							</table>
+
+							<table id="tblRunTask" align="center">
+								<tr>
+									<td>
+									<button id="btnQuit" type="button" onclick="quitTask();">
+										放棄任務
+									</button></td>
+								</tr>
+								<tr>
+									<td><div id="divCntDnd"></div></td>
+								</tr>
+							</table>
+
+							<table id="tblTaskResult" align = "center">
+								<tr>
+									<td><div id="taskCmdDiv"></div></td>
+								</tr>
+								<tr>
+									<td><div id="cpltRateDiv"></div></td>
+								</tr>
+								<tr>
+									<td>
+									<button type="button" onclick="taskReturn();">
+										返回
+									</button>
+									<button type="button" onclick="poFB();">
+										發文至塗鴉牆
+									</button></td>
+								</tr>
+
+							</table>
+							<script>
+								tas_init();
+							</script>
+						</form>
 					</div>
 				</li>
 				<li id="panel3" role="tab">
 					<a href="#panel3" class="icon">dialer</a>
 					<div role="tabpanel">
+						<section role="region">
+							<header>
+								<menu type="toolbar">
+									<a href="" class="icon">delect</a>
+								</menu>
+								<h1>History</h1>
+							</header>
+						</section>
 						<script>
 							his_print();
 						</script>
@@ -102,12 +176,121 @@
 				<li id="panel4" role="tab">
 					<a href="#panel4" class="icon">Tab name</a>
 					<div role="tabpanel">
+						<form id="setting_form" name="setting_form">
+							<p>
+								<button type="button" onclick="Mode()">
+									任務模式設置
+								</button>
+								<button type="button" onclick="Type()">
+									任務類型設置
+								</button>
+								<button type="button" onclick="historyManage()">
+									歷史數據管理
+								</button>
+							</p>
+							<!-- Mode area -->
+							<p>
+								<table id="mode_table">
+									<tr>
+										<td>當前模式:</td>
+										<td id="td_mode">&nbsp;</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+										<select id="select_mode" onchange="setMode()">
+											<option value="sweet">溫柔模式</option>
+											<option value="strict">剽悍模式</option>
+										</select></td>
+									</tr>
+								</table>
+							</p>
+							<!-- end Mode -->
+
+							<!-- Type area -->
+							<p>
+								<table id="task_type_table" border="1">
+									<tr>
+										<td>任務列表</td>
+									</tr>
+									<tr>
+										<td> 新增任務:
+										<input type="text" id="text_type">
+										<button type="button" onclick="appendOption()">
+											新增
+										</button></td>
+									</tr>
+									<tr>
+										<td>
+										<select id="select_type" width="200" size="10" multiple="multiple">
+											<script>
+												getOption();
+											</script>
+											<!--<option value="original1">Orig1</option>
+											<option value="original2">Orig2</option>-->
+										</select></td>
+									</tr>
+								</table>
+							</p>
+
+							<p>
+								<table id="history_manage_table"></table>
+							</p>
+						</form>
 						<script>
-							set_print();
+							setting();
+
 						</script>
 				</li>
+
 			</ul>
 
+		</section>
+
+		<!-- if your tabs are at the top, remove class="bottom" -->
+		<ul role="tablist" data-items="4" class="bottom">
+			<li id="panel1" role="tab">
+				<a href="#panel1" class="icon">comms</a>
+				<div role="tabpanel" >
+					<section role="region" id="cal_mainDiv">
+						<header>
+							<menu type="toolbar">
+								<a href="" class="icon">delect</a>
+							</menu>
+							<h1>Calendar</h1>
+						</header>
+						<script>
+							var div = document.getElementById("cal_mainDiv");
+							ShowCalendar(div);
+						</script>
+					</section>
+
+				</div>
+			</li>
+			<li id="panel2" role="tab">
+				<a href="#panel2" class="icon">contacts</a>
+				<div role="tabpanel">
+					<script>
+						set_status(getStatus());
+						tas_print();
+					</script>
+				</div>
+			</li>
+			<li id="panel3" role="tab">
+				<a href="#panel3" class="icon">dialer</a>
+				<div role="tabpanel">
+					<script>
+						his_print();
+					</script>
+				</div>
+			</li>
+			<li id="panel4" role="tab">
+				<a href="#panel4" class="icon">Tab name</a>
+				<div role="tabpanel">
+					<script>
+						set_print();
+					</script>
+			</li>
+		</ul>
 		</section>
 
 	</body>

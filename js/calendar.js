@@ -5,24 +5,28 @@ var calendarId = "datepicker";
 var messageId = "myMessage";
 
 function ShowCalendar(_div) {
-
 	ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
-	ElementFactory.LoadScript("js/jquery-ui-1.10.3.custom.min.js");
+	ElementFactory.LoadCSS("css/calendarPage.css");
+	//ElementFactory.LoadScript("js/jquery-ui-1.10.3.custom.min.js");
 	//var _div=ElementFactory.CraeteElement("div");
 	calenderDiv = _div;
-	calendarDiv = AddDiv(_div, '#A2A1EF');
+	calendarDiv = AddDiv(_div);
 	calendarDiv.id = calendarId;
 
 	messageDiv = _div;
-	messageDiv = AddDiv(_div, '#E76DA9');
+	messageDiv = AddDiv(_div);
 	messageDiv.id = messageId;
+	messageDiv.className ="dateArea";
+	
+	// var hr=ElementFactory.CraeteElement("hr");
+	// messageDiv.appendChild(hr);
 	Initialize();
 }
 
-function AddDiv(objTo, _color) {
+function AddDiv(objTo) {
 	var divtest = ElementFactory.CraeteElement("div");
 	objTo.appendChild(divtest);
-	divtest.style.background = _color;
+	//divtest.style.background = _color;
 	// divtest.style.overflow="hidden";
 	// divtest.style.clear="both";
 	// divtest.style.height="100%";
