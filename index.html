@@ -7,12 +7,13 @@
   <meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
 
   <link rel="stylesheet" href="./css/tabs.css">
-  <link rel="stylesheet" href="./css/button.css">
+  <link rel="stylesheet" href="./css/buttons.css">
   <link rel="stylesheet" href="./css/value-selector.css">
   <script type="text/javascript" src="./js/calendar.js"></script>
   <script type="text/javascript" src="./js/task.js"></script>
   <script type="text/javascript" src="./js/history.js"></script>
   <script type="text/javascript" src="./js/setting.js"></script>
+  <script type="text/javascript" src="./js/Utility.js"></script>
   <!--
     This <style> and <link> is only used for the example code, is no needed for the real case use
   -->
@@ -95,6 +96,11 @@
 	      		<tr>
 	      			<td>
 	      				<button type="button" onclick="startImdTask();">開始任務</button>
+	  				</td>
+	  			</tr>
+	  			<tr>
+	      			<td>
+	      				<div id="labelDiv"></div>
 	  				</td>
 	  			</tr>
 	          </table>
