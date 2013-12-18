@@ -104,7 +104,7 @@
 					<td id="td_mode">&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td>
 						<select id="select_mode" onchange="setMode()">
 							<option value="sweet">溫柔模式</option>
 							<option value="strict">剽悍模式</option>
@@ -128,9 +128,11 @@
 				</tr>
 				<tr>
 					<td>
-						<select id="select_type" width="200" size="10" multiple="multiple">
+						<select id="select_type" width="200" size="10">
 							<script>getOption();</script>
 						</select>
+						<br>
+						<button type="button" onclick="removeOption()">刪除</button>
 					</td>
 				</tr>
 			</table>

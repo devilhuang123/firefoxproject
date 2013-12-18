@@ -52,7 +52,7 @@ function setMode(){
 function getOption(){
 	xmlhttp = new XMLHttpRequest();
 
-	xmlhttp.open("GET","./task_type.xml",false);
+	xmlhttp.open("GET", "./task_type.xml", false);
 	xmlhttp.send();
 
 	doc = xmlhttp.responseXML;
@@ -64,7 +64,8 @@ function getOption(){
 
 		option.text = nodelist[i].childNodes[0].nodeValue;
 		option.value = nodelist[i].childNodes[0].nodeValue;
-		select_type.add(option, null);
+		
+		select_type.appendChild(option);
 	}
 }
 
@@ -74,7 +75,15 @@ function appendOption(){
 	option.value = document.getElementById("text_type").value;
 	
 	var select_type = document.getElementById('select_type');
-	select_type.add(option, null);
+	select_type.appendChild(option);
+}
+
+function removeOption(){
+	var select_type = document.getElementById('select_type');
+	var index = document.getElementById("select_type").selectedIndex;
+	var option = document.getElementById("select_type").options;
+	
+	select_type.removeChild(option[index]);
 }
 ///
 //Type Functions end
