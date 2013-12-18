@@ -28,23 +28,29 @@ function tas_init()
 	
 	var lstHours = document.getElementById("lstHour");	
 	var lstMins = document.getElementById("lstMins");
+	var lstTaskType = document.getElementById("lstTaskType");
 	
+
 	for(var i=0; i<24; i++)
 	{
 		lstHours.add(new Option(i, i));
 	}
 	
+	lstMins.clearAttributes;
 	for(var i=0; i<60; i++)
 	{
 		lstMins.add(new Option(i, i));
 	}
 	
-	//document.getElementById("labelDiv").innerHTML += "已完成任務：\n";
-	for(var i=1; i<=cptTasks.length; i++)
-	{		
-		document.getElementById("labelDiv").innerHTML += cptTasks[i].Type + "\n";
+	var types = getAllType();
+	for(var i=0; i<types.length; i++)
+	{
+		if(types[i] != "undefine")
+			lstTaskType.add(new Option(types[i].Name, types[i].Value));
 	}
+
 }
+
 
 function startImdTask()
 {
@@ -61,18 +67,20 @@ function startImdTask()
 	{
 		//successfully add a new task and start running it!	
 		
-		switch(mode)
+		var nowMode = getMode();
+		switch(nowMode)
 		{
+			case "sweet":
+				
+			break;
+			
 			case "strict":
+				//do not show quit button
 				document.getElementById("btnQuit").style.display = "none";
 			break;
 			
-			case "sweet":
-				//do anything sweet mode do
-			break;
-			
 			default:
-				assert();//should not here
+				assert();
 			break;
 		}
 		
@@ -121,7 +129,7 @@ function countdown()
 	if(rmdSnd < 10){rmdSnd = "0" + rmdSnd;}
 	
 	
-	document.getElementById("divCntDnd").innerHTML = rmdHour + " : " + rmdMin + " : " + rmdSnd + "\r\n" + tmpTask;
+	document.getElementById("divCntDnd").innerHTML = rmdHour + " : " + rmdMin + " : " + rmdSnd;
 	
 	
 	if(!isRunning)
@@ -179,7 +187,7 @@ function endTask(lastTime, result)
 
 function taskReturn()
 {
-	tas_init();
+	changeTaskPage("tblUnstart");
 }
 
 function poFB()

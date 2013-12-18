@@ -1,20 +1,16 @@
-
-
 //tasks and cptTasks Elements are all start in Upper Case
 //tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }		
 //cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result } 
 var tasks = new Array();
 var cptTasks = new Array();
-var orderId;
-var cptId;
+var orderId = 0;
+var cptId = 0;
 var taskTypes = new Array();
-
-window.onload = function()
-{
-	//initial variable here
-	orderId = 0;
-	cptId = 0;
-}
+var typeId = 0;
+var isLogin = new Boolean();
+var mode;
+initType();
+changeMode("sweet");
 
 /*=========================
  * Task Order
@@ -38,12 +34,9 @@ window.onload = function()
  * */
 function addTaskOrder(startTime, targetTime, type, period)
 {
-	var newId = parseInt(orderId) + 1;
-	orderId = newId;
-	
 	var task = 
 	{
-		Id : newId,
+		Id : parseInt(orderId),
 		StartTime : startTime,
 		TargetTime : targetTime,
 		Type : type,
@@ -51,10 +44,13 @@ function addTaskOrder(startTime, targetTime, type, period)
 		Exclude : null		
 	};
 	
-	tasks[newId] = task;
-	alert("id = "+tasks[newId].Id + ",\nstartTime = " + tasks[newId].StartTime.getTime() + ",\ntargetTime = " + tasks[newId].TargetTime + ",\ntype = " +  tasks[newId].Type);
+	tasks[orderId] = task;
+	alert("成功加入\nid = "+tasks[orderId].Id + ",\nstartTime = " + tasks[orderId].StartTime.getTime() + ",\ntargetTime = " + tasks[orderId].TargetTime + ",\ntype = " +  tasks[orderId].Type);
 	
-	return newId;
+	return orderId;
+	
+	var nextId = parseInt(orderId) + 1;
+	orderId = nextId;
 }
 
 //add the exclusion date of the periodically task
@@ -86,25 +82,23 @@ function deleteTask(taskId)
 
 //when the end of a task(whaever success or fail), add a task complete record
 function addTaskCpt(startTime, targetTime, type, lastTime, result)
-{
-	var newId = parseInt(cptId) + 1;
-	cptId = newId;
-	
+{	
 	var cptTask = 
 	{
-		Id : newId,
+		Id : parseInt(cptId),
 		StartTime : startTime,
 		TargetTime : targetTime,
 		Type : type,
 		LastTime : lastTime,
 		Result : result 
 	};
+	cptTasks[cptId] = cptTask;
+	alert("成功加入\nid:"+cptTasks[cptId].Id+",\nStart:"+cptTasks[cptId].StartTime+",\nTarget:"+cptTasks[cptId].TargetTime+",\ntype:"+cptTasks[cptId].Type+",\nlastTime:"+cptTasks[cptId].LastTime+",\nresult:"+cptTasks[cptId].Result);
 	
+	return cptId;
 	
-	cptTasks[newId] = cptTask;
-	alert("id:"+cptTasks[newId].Id+",\nStart:"+cptTasks[newId].StartTime+",\nTarget:"+cptTasks[newId].TargetTime+",\ntype:"+cptTasks[newId].Type+",\nlastTime:"+cptTasks[newId].LastTime+",\nresult:"+cptTasks[newId].Result);
-	
-	return newId;
+	var nextId = parseInt(cptId) + 1;
+	cptId = nextId;
 }
 
 function getCptTask(id)
@@ -125,14 +119,52 @@ function deleteAllCptTask()
  * Task Type
  =========================*/
 
+function initType()
+{
+	typeId = 0;
+	addTaskType("用功讀書","study");
+	addTaskType("早點睡覺","sleep");
+	addTaskType("努力運動","exercise");
+}
+
+function addTaskType(name, value)
+{	
+	var tastType = 
+	{
+		Name: name,
+		Value: value
+	};
+	taskTypes[typeId] = tastType;
+	typeId = typeId + 1;	
+}
+
+function deleteTaskType(value)
+{
+	for(var i=0; i<taskTypes.length; i++)
+	{
+		if(taskTypes[i].Value == value)
+		{
+			taskTypes[i] = null;
+		}
+	}
+}
+
+function getAllType()
+{
+	return taskTypes;
+}
+
 
 /*=========================
  * Mode
  =========================*/
 
+function changeMode(Mode)
+{
+	this.mode = Mode;
+}
 
-
-
-
-
-
+function getMode()
+{
+	return this.mode;	
+}
