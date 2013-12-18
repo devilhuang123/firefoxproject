@@ -50,19 +50,22 @@ function setMode(){
 //Type Functions
 ///
 function getOption(){
-	var options = ["吃飯","睡覺","寫作業","打林宥均","親鄭永斌教授"];
-	
-	/*
-	var doc = new ActiveXObject("Msxml2.DOMDocument");
-	doc.load("./task_type.xml");
-	alert(doc.xml);
-	var root = doc.documentElement;
-	var nodelist = root.childNodes;
+	xmlhttp = new XMLHttpRequest();
 
+	xmlhttp.open("GET","./task_type.xml",false);
+	xmlhttp.send();
+
+	doc = xmlhttp.responseXML;
+
+	var nodelist = doc.getElementsByTagName("type");
+	var select_type = document.getElementById('select_type');
 	for(var i=0;i<nodelist.length;i++){
-		alert(nodelist[i].value);
+		var option = document.createElement('option');
+
+		option.text = nodelist[i].childNodes[0].nodeValue;
+		option.value = nodelist[i].childNodes[0].nodeValue;
+		select_type.add(option, null);
 	}
-	*/
 }
 
 function appendOption(){
