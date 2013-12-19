@@ -53,6 +53,8 @@ function addTaskOrder(startTime, targetTime, type, period)
 	orderId = nextId;
 }
 
+
+
 //add the exclusion date of the periodically task
 function addTaskExclude(taskOrderId, ExDate)
 {
@@ -72,7 +74,7 @@ function getTask(taskId)
 
 function deleteTask(taskId)
 {
-	tasks[taskId] = null;
+	tasks[parseInt(taskId)] = null;
 }
 
 

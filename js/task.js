@@ -3,6 +3,8 @@ var remainSnd = 0;
 var isRunning = new Boolean();
 isRunning = false;
 var meter;
+var successFeedback = new Array();
+var failFeedback = new Array();
 
 var runningTask = 
 {
@@ -24,6 +26,7 @@ function changeTaskPage(tblName)
 
 function tas_init()
 {
+	//alarm();
 	changeTaskPage("tblUnstart");
 	
 	var lstHours = document.getElementById("lstHour");	
@@ -36,7 +39,6 @@ function tas_init()
 		lstHours.add(new Option(i, i));
 	}
 	
-	lstMins.clearAttributes;
 	for(var i=0; i<60; i++)
 	{
 		lstMins.add(new Option(i, i));
@@ -51,8 +53,12 @@ function tas_init()
 
 }
 
+function initRsvTask()
+{
+	
+}
 
-function startImdTask()
+function initImdTask()
 {
 	var hours = document.getElementById("lstHour").value;
 	var mins = document.getElementById("lstMins").value;
@@ -65,8 +71,7 @@ function startImdTask()
 	}
 	else if( parseInt(hours)!==0 || parseInt(mins)!==0 )
 	{
-		//successfully add a new task and start running it!	
-		
+		//successfully add a new task and start running it!			
 		var nowMode = getMode();
 		switch(nowMode)
 		{
@@ -100,6 +105,11 @@ function startImdTask()
 	{
 		assert();
 	}
+}
+
+function startTask(hours, mins)
+{
+	
 }
 
 function recordRunTask()
