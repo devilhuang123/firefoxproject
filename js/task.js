@@ -1,12 +1,18 @@
 var mode = "sweet";
 var remainSnd = 0;
-var task = 
+var isRunning = new Boolean();
+isRunning = false;
+var meter;
+var successFeedback = new Array();
+var failFeedback = new Array();
+
+var runningTask = 
 {
-	startTime : 0,
-	targetTime : 0,
-	lastTime : 0,
-	type : "none",
-	status : "NOTYET"
+	StartTime : null,
+	TargetTime : 0,
+	Type : null,
+	//LastTime : lastTime,
+	//Result : result 
 };
 
 function changeTaskPage(tblName)
@@ -20,11 +26,14 @@ function changeTaskPage(tblName)
 
 function tas_init()
 {
+	//alarm();
 	changeTaskPage("tblUnstart");
 	
 	var lstHours = document.getElementById("lstHour");	
 	var lstMins = document.getElementById("lstMins");
+	var lstTaskType = document.getElementById("lstTaskType");
 	
+
 	for(var i=0; i<24; i++)
 	{
 		lstHours.add(new Option(i, i));
@@ -34,53 +43,61 @@ function tas_init()
 	{
 		lstMins.add(new Option(i, i));
 	}
+	
+	var types = getAllType();
+	for(var i=0; i<types.length; i++)
+	{
+		if(types[i] != "undefine")
+			lstTaskType.add(new Option(types[i].Name, types[i].Value));
+	}
+
 }
 
-function startImdTask()
+function initRsvTask()
+{
+	
+}
+
+function initImdTask()
 {
 	var hours = document.getElementById("lstHour").value;
 	var mins = document.getElementById("lstMins").value;
 
+
+	//validate
 	if( parseInt(hours)===0 && parseInt(mins)===0 )
 	{
 		alert("任務時長不可為0時0分!");
 	}
-	else if( (hours == 0 && mins == 0 ))
+	else if( parseInt(hours)!==0 || parseInt(mins)!==0 )
 	{
-		alert("請選擇持續時長");
-	}
-	else if( (hours == 0 && parseInt(hours) !== 0)) //hours not been chosed
-	{
-		alert("請選擇持續小時");
-	}
-	else if( (mins == 0 && parseInt(mins) !== 0)) //mins not been chosed
-	{
-		alert("請選擇持續分鐘");
-	}
-	else if((parseInt(hours)!==0 || parseInt(mins)!==0) && hours != null && mins != null)
-	{
-		//successfully add a new task and start running it!
-		changeTaskPage("tblRunTask");	
-		
-		switch(mode)
+		//successfully add a new task and start running it!			
+		var nowMode = getMode();
+		switch(nowMode)
 		{
+			case "sweet":
+				
+			break;
+			
 			case "strict":
+				//do not show quit button
 				document.getElementById("btnQuit").style.display = "none";
 			break;
 			
-			case "sweet":
-				//do anything sweet mode do
-			break;
-			
 			default:
-				assert();//should not here
+				assert();
 			break;
 		}
-		document.getElementById("divCntDnd").innerHTML = "從" + hours + "時" + mins + "分開始倒數!";
 		
+		//switch to task running page
+		changeTaskPage("tblRunTask");
+		document.getElementById("divCntDnd").innerHTML = "從" + hours + "時" + mins + "分開始倒數!";
 		remainSnd = (parseInt(hours) *3600 + parseInt(mins)*60);
-		addNewTask();
+		
+		recordRunTask();
+		
 		countdown();
+		
 		
 		///////// function that other button event wouldn't trigger
 	}
@@ -90,19 +107,25 @@ function startImdTask()
 	}
 }
 
-function addNewTask()
+function startTask(hours, mins)
+{
+	
+}
+
+function recordRunTask()
 {
 	var now = new Date();
 	var type = document.getElementById("lstTaskType").value;
 	var targetTime = remainSnd;
 	var status = "RUNNING";
 	
-	task.startTime = now.getTime;
-	task.targetTime = targetTime;
-	task.type = type;
-	task.status = status;
-	alert("任務開始時間：" + now.getTime() + "\n任務類型：" + type + "\n持續時長：" + targetTime + "秒\n任務狀態：" + status);
-
+	runningTask.StartTime = now;
+	runningTask.TargetTime = targetTime;
+	runningTask.Type = type;
+	
+	addTaskOrder(now, targetTime, type, "ONCE");
+	
+	//alert("任務開始時間：" + now.getTime() + "\n任務類型：" + type + "\n持續時長：" + targetTime + "秒\n任務狀態：" + status);
 }
 
 function countdown()
@@ -115,21 +138,27 @@ function countdown()
 	if(rmdMin < 10){rmdMin = "0" + rmdMin;}
 	if(rmdSnd < 10){rmdSnd = "0" + rmdSnd;}
 	
+	
 	document.getElementById("divCntDnd").innerHTML = rmdHour + " : " + rmdMin + " : " + rmdSnd;
 	
-	if(remainSnd!=0)
+	
+	if(!isRunning)
+	{
+		isRunning = true;	
+		countdown();
+	}
+	else if(remainSnd!=0 && isRunning)
 	{
 		remainSnd--;
-		setTimeout('countdown()',1000);
+		meter = setTimeout('countdown()',1000); 	//do it once 1 sec	
 	}
-	else	//success!
+	else if(remainSnd==0 && isRunning)	//success!
 	{
-		task.lastTime = task.targetTime;
-		task.status = "SUCCESS";
-		document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (task.lastTime/task.targetTime) + "%";
-		document.getElementById("taskCmdDiv").innerHTML = "幹的好!你真是人生勝利組!";
-		
-		changeTaskPage("tblTaskResult");
+		endTask(runningTask.TargetTime, "SUCCESS");
+	}
+	else
+	{
+		assert();
 	}
 }
 
@@ -137,18 +166,38 @@ function quitTask()
 {
 	if(confirm("確定要放棄任務嗎?在堅持一下吧!"))
 	{
-		task.lastTime = parseInt(task.targetTime) - remainSnd;
-		task.status = "FAIL";
-		document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (task.lastTime/task.targetTime) + "%";
-		document.getElementById("taskCmdDiv").innerHTML = "這樣就不行了?!你的未來呢?!";
-		changeTaskPage("tblTaskResult");
+		var lastTime = parseInt(runningTask.TargetTime) - remainSnd;
+		endTask(lastTime, "FAIL");
 	}
 	else{}//do nothing
 }
 
+function endTask(lastTime, result)
+{
+	isRunning = false;
+	remainSnd == 0;
+	clearTimeout(meter);
+	
+	changeTaskPage("tblTaskResult");
+	
+	//add task complete data into database
+	addTaskCpt(runningTask.StartTime, runningTask.TargetTime, runningTask.Type, lastTime, result);
+	
+	//print result
+	document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (parseInt(lastTime)/parseInt(runningTask.TargetTime))*100 + "%";
+	if(result =="SUCCESS")
+		document.getElementById("taskCmdDiv").innerHTML = "幹的好!你真是人生勝利組!";
+	else if(result == "FAIL")
+		document.getElementById("taskCmdDiv").innerHTML = "加把勁啊！";
+	else
+		document.getElementById("taskCmdDiv").innerHTML = "should not go in here!";
+
+	changeTaskPage("tblTaskResult");
+}
+
 function taskReturn()
 {
-	tas_init();
+	changeTaskPage("tblUnstart");
 }
 
 function poFB()
@@ -156,40 +205,3 @@ function poFB()
 	alert("發文到FB!");
 	tas_init();
 }
-
-/*
-function task_varify()
-{
-	var x=2;
-	var y=3;
-	var z=x+y;
-	//alert("z = "+z);
-	document.write(x*z);
-	/*var x = document.getElementById("inNum").value;
-	if(x=="" || isNaN(x))
-	{
-		alert("不合法！");
-	}
-}
-
-function task_array()
-{
-	var arrTest = new Array();
-	arrTest[0] = 0;
-	arrTest[100] = "str";
-	
-	document.write(arrTest);
-}
-
-function task_jsonTest()
-{
-	var dinner =
-	{
-		price : 60,
-		restaurant : "yun-yi",
-		evaluation : 3,
-		comment : "something good eating but not what i want! bit of pitty!"
-	};
-	document.write(dinner.comment);
-}
-*/
