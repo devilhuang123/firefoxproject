@@ -7,7 +7,7 @@
   <meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
   <!-- <link rel="stylesheet" type="text/css" media="all" href="./js/jsdatepick-calendar/jsDatePick_ltr.min.css" /> -->
   <link rel="stylesheet" href="./css/tabs.css">
-  <link rel="stylesheet" href="./css/button.css">
+  <link rel="stylesheet" href="./css/buttons.css">
   <link rel="stylesheet" href="./css/value-selector.css">
   <link rel="stylesheet" href="./css/header.css">
   <link rel="stylesheet" href="./css/ui-darkness/jquery-ui-1.10.3.custom.css">
@@ -15,12 +15,14 @@
   <script src="js/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="./js/Factory.js"></script>
   <script type="text/javascript" src="./js/calendar.js"></script>
-  <script type="text/javascript" src="./js/task.js"></script>
   <script type="text/javascript" src="./js/history.js"></script>
   <script type="text/javascript" src="./js/setting.js"></script>
+  <script type="text/javascript" src="./js/Utility.js"></script>
+  <script type="text/javascript" src="./js/task.js"></script>
   <script type="text/javascript" src="./js/jquery-ui-1.10.3.custom.min.js"></script>
   
   
+
   <!--
     This <style> and <link> is only used for the example code, is no needed for the real case use
   -->
@@ -101,11 +103,11 @@
 	        <form id="frmAddImdTask">	      	
 	          <table id="tblUnstart" align="center">
 	          	<tr>
-	          		<td>任務類型<br>
+	          		<td>任務類型123456<br>
 			          <select id="lstTaskType">
-			          	<option value="sleep" selected="selected">準時睡覺</option>
+			          	<!--<option value="sleep" selected="selected">準時睡覺</option>
 			          	<option value="study">認真唸書</option>
-			          	<option value="excercise">努力運動</option>
+			          	<option value="excercise">努力運動</option>-->
 			          </select>
 	          		</td>
 	          	</tr>
@@ -117,7 +119,12 @@
 	      		</tr>
 	      		<tr>
 	      			<td>
-	      				<button type="button" onclick="startImdTask();">開始任務</button>
+	      				<button type="button" onclick="initImdTask();">開始任務</button>
+	  				</td>
+	  			</tr>
+	  			<tr>
+	      			<td>
+	      				<div id="labelDiv"></div>
 	  				</td>
 	  			</tr>
 	          </table>
@@ -131,7 +138,7 @@
       	  		</tr>
       	  		<tr>
       	  			<td>
-      	  				<div id="divCntDnd"></div>
+      	  				<div id="divCntDnd" style=font-size:36></div></div>
   	  				</td>
   	  			</tr>
           	  </table>
