@@ -22,21 +22,12 @@ function ShowCalendar(_div) {
 	var h1=ElementFactory.CraeteElement("h1");
 	header.appendChild(h1);
 	h1.appendChild(document.createTextNode('Calendar'));
-	// var hr=ElementFactory.CraeteElement("hr");
-	// messageDiv.appendChild(hr);
 	Initialize();
 }
 
 function AddDiv(objTo) {
 	var divtest = ElementFactory.CraeteElement("div");
 	objTo.appendChild(divtest);
-	//divtest.style.background = _color;
-	// divtest.style.overflow="hidden";
-	// divtest.style.clear="both";
-	// divtest.style.height="100%";
-	// divtest.style.width="100%";
-	//divtest.style.width=width;
-	// divtest.style.height=height;
 	return divtest;
 }
 
