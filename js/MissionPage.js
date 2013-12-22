@@ -7,20 +7,17 @@ function MissionPage(headerArea, mainArea) {
 
 	function UpdateMissionArea(headerArea, mainArea) {
 
-		var header = new HeaderView(headerArea);
-
 		var calendarLayout = new InitializeCalendarLayoutArea(mainArea);
 		calendarLayout.div.id = "tabs-1";
 		var calendarView = new CalendarView(calendarLayout.calendarDiv);
 		var messageView = new MessageView(calendarLayout.messageDiv);
-
 		var listLayout = new InitializeListLayoutArea(mainArea);
 		listLayout.div.id = "tabs-2";
-
 		calendarView.OnDateSelected = function(dateText, inst) {
 			messageView.SetText(dateText);
 		};
 
+		var header = new HeaderView(headerArea);
 		// $("#tabpanel").tabs();
 	}
 
@@ -36,49 +33,74 @@ function HeaderView(areaToShow) {//HeaderView class Constructor
 	this.area = areaToShow;
 	var tabData = [{
 		"label" : "Calendar",
-		"elementId" : "tabs-1"
+		"elementId" : "tabs-1",
+		"checked" : true
 	}, {
 		"label" : "List",
-		"elementId" : "tabs-2"
+		"elementId" : "tabs-2",
+		"checked" : false
 	}];
 
 	function Initialize() {
-		var tabs = CreateTabs(tabData);
-		areaToShow.appendChild(tabs);
+		var radioButtons = CreateRadioButtons(tabData);
+		radioButtons.id = "radio";
 		var h1 = ElementFactory.CraeteElement("h1");
-		areaToShow.appendChild(h1);
+		radioButtons.appendChild(h1);
 		h1.appendChild(document.createTextNode('Calendar'));
+		areaToShow.appendChild(radioButtons);
 	}
 
 	Initialize();
 }
 
-function CreateTabs(tabData) {
-	var tabs = [];
+function CreateRadioButtons(tabData) {
+	var inputs = [];
 	var _this = this;
-	function CraeteTab(label, elementId) {
-		var counter = tabs.length + 1;
-		var li = ElementFactory.CraeteElement("li");
-		var a = ElementFactory.CraeteElement("a");
-		var identifier = "tab-" + counter.toString();
-		a.setAttribute("href", "#" + elementId);
-		a.innerHTML = label;
-		li.appendChild(a);
-		tabs[counter - 1] = {
-			"id" : identifier,
-			"label" : label,
-			"element" : elementId
-		};
-		return li;
+	function CraeteInput(checked, id) {
+		var input = ElementFactory.CraeteElement("input");
+		input.setAttribute("type", "radio");
+		input.setAttribute("id", "radio" + inputs.length);
+		input.setAttribute("name", "radio");
+		input.setAttribute("tag", id);
+		if (checked)
+			input.setAttribute("checked", "checked");
+		input.addEventListener("change", this.OnRadioChange, false);
+		return input;
 	}
 
-	var ul = ElementFactory.CraeteElement("ul");
+
+	this.OnRadioChange = function() {
+		inputs.forEach(function(entry) {
+			var checked = entry.checked;
+			var id = entry.getAttribute("tag");
+			if (checked)
+				$("#" + id).slideDown(400);
+			else
+				$("#" + id).slideToggle(400);
+		});
+	};
+	function CraeteLabel(labelText) {
+		var label = ElementFactory.CraeteElement("label");
+		label.setAttribute("for", "radio" + inputs.length);
+		label.innerHTML = labelText;
+		return label;
+	}
+
+	var div = ElementFactory.CraeteElement("div");
+
 	tabData.forEach(function(entry) {
-		label = entry["label"];
-		elementId = entry["elementId"];
-		var li = CraeteTab(label, elementId);
-		ul.appendChild(li);
+		var label = entry["label"];
+		var elementId = entry["elementId"];
+		var checked = entry["checked"];
+		var i = inputs.length;
+		var id = elementId;
+		var input = CraeteInput(checked, id);
+		var label = CraeteLabel(label);
+		inputs.push(input);
+		div.appendChild(input);
+		div.appendChild(label);
 	});
-	return ul;
+	this.OnRadioChange();
+	return div;
 }
 

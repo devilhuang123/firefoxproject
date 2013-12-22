@@ -81,7 +81,7 @@
 					<div role="tabpanel" >
 						<section role="region" id="mainArea">
 							<header id="headerArea">
-								<menu type="toolbar">
+								<menu type="toolbar" id="_menu">
 									<a href="" >delect</a>
 								</menu>
 							</header>
@@ -90,8 +90,7 @@
 								var main = document.getElementById("mainArea");
 								var missionPage = new MissionPage(header, main);
 								missionPage.Show();
-								//ShowCalendar(div);
-								$("#mainArea").tabs();
+								$("#radio").buttonset();
 							</script>
 						</section>
 					</div>

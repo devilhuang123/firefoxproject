@@ -4,5 +4,5 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 
 	var _this = this;
 	this.div = AddDiv(areaToShow);
-	this.div.innerHTML = "LIST";
+	this.div.innerHTML = "LISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLISTLIST";
 }
