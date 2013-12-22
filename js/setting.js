@@ -1,6 +1,5 @@
-var mode = "sweet";
-
 //Constructor
+
 function setting(){
 	document.getElementById("mode_table").style.display = "none";
 	document.getElementById("task_type_table").style.display = "none";
@@ -23,6 +22,7 @@ function Type(){
 ///
 //Mode functions -- getMode(),setMode().
 ///
+
 function getMode(){
 	if(mode == "sweet")
 		document.getElementById("td_mode").textContent = "溫柔模式";
@@ -42,6 +42,7 @@ function setMode(){
 		alert("您選擇了"+option[index].text);
 	}
 }
+
 ///
 //Mode Functions end
 ///
@@ -49,25 +50,6 @@ function setMode(){
 ///
 //Type Functions
 ///
-function getOption(){
-	xmlhttp = new XMLHttpRequest();
-
-	xmlhttp.open("GET", "./task_type.xml", false);
-	xmlhttp.send();
-
-	doc = xmlhttp.responseXML;
-
-	var nodelist = doc.getElementsByTagName("type");
-	var select_type = document.getElementById('select_type');
-	for(var i=0;i<nodelist.length;i++){
-		var option = document.createElement('option');
-
-		option.text = nodelist[i].childNodes[0].nodeValue;
-		option.value = nodelist[i].childNodes[0].nodeValue;
-		
-		select_type.appendChild(option);
-	}
-}
 
 function appendOption(){
 	var option = document.createElement('option');
@@ -85,6 +67,7 @@ function removeOption(){
 	
 	select_type.removeChild(option[index]);
 }
+
 ///
 //Type Functions end
 ///

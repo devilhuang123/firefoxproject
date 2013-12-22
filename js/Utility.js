@@ -1,6 +1,8 @@
 //tasks and cptTasks Elements are all start in Upper Case
 //tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }		
 //cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result } 
+
+var mode; //Task Mode
 var tasks = new Array();
 var cptTasks = new Array();
 var orderId = 0;
@@ -8,9 +10,8 @@ var cptId = 0;
 var taskTypes = new Array();
 var typeId = 0;
 var isLogin = new Boolean();
-var mode;
 initType();
-changeMode("sweet");
+//changeMode("sweet");	//remove recommend -- JoeyC
 
 /*=========================
  * Task Order
@@ -116,11 +117,13 @@ function deleteAllCptTask()
 }
 
 
+//area remove recommend -- JoeyC
 
 /*=========================
  * Task Type
  =========================*/
 
+/*
 function initType()
 {
 	typeId = 0;
@@ -155,12 +158,43 @@ function getAllType()
 {
 	return taskTypes;
 }
+*/
+///
+// area remove recommend end -- JoeyC
+///
 
 
+///
+// Task type Function
+///
+function getOption(select_type){
+	xmlhttp = new XMLHttpRequest();
+
+	xmlhttp.open("GET", "./task_type.xml", false);
+	xmlhttp.send();
+
+	doc = xmlhttp.responseXML;
+
+	var nodelist = doc.getElementsByTagName("type");
+	//var select_type = document.getElementById('select_type');
+	for(var i=0;i<nodelist.length;i++){
+		var option = document.createElement('option');
+
+		option.text = nodelist[i].childNodes[0].nodeValue;
+		option.value = nodelist[i].childNodes[0].nodeValue;
+		
+		select_type.appendChild(option);
+	}
+}
+///
+// Task Type Function End
+///
+
+/////Remove recommend -- JoeyC
 /*=========================
  * Mode
  =========================*/
-
+/*
 function changeMode(Mode)
 {
 	this.mode = Mode;
@@ -170,3 +204,4 @@ function getMode()
 {
 	return this.mode;	
 }
+*/

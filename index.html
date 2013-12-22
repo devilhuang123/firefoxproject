@@ -15,10 +15,14 @@
   <script src="js/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="./js/Factory.js"></script>
   <script type="text/javascript" src="./js/calendar.js"></script>
+  <!--
+	Utility.js must be first include, or you can't use the varibles in setting.js, history.js and task.js
+	-- JoeyC
+  -->
+  <script type="text/javascript" src="./js/Utility.js"></script>
   <script type="text/javascript" src="./js/history.js"></script>
   <script type="text/javascript" src="./js/setting.js"></script>
-  <script type="text/javascript" src="./js/Utility.js"></script>
-  <script type="text/javascript" src="./js/task.js"></script>
+  <!--<script type="text/javascript" src="./js/task.js"></script>-->
   <script type="text/javascript" src="./js/jquery-ui-1.10.3.custom.min.js"></script>
   
   
@@ -105,9 +109,7 @@
 	          	<tr>
 	          		<td>任務類型123456<br>
 			          <select id="lstTaskType">
-			          	<!--<option value="sleep" selected="selected">準時睡覺</option>
-			          	<option value="study">認真唸書</option>
-			          	<option value="excercise">努力運動</option>-->
+						<script>getOption(document.getElementById('lstTaskType'));</script>
 			          </select>
 	          		</td>
 	          	</tr>
@@ -224,7 +226,7 @@
 				<tr>
 					<td>
 						<select id="select_type" width="200" size="10">
-							<script>getOption();</script>
+							<script>getOption(document.getElementById('select_type'));</script>
 						</select>
 						<br>
 						<button type="button" onclick="removeOption()">刪除</button>

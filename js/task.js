@@ -1,4 +1,4 @@
-var mode = "sweet";
+//var mode = "sweet";	//Must remove -- JoeyC
 var remainSnd = 0;
 var isRunning = new Boolean();
 isRunning = false;
@@ -31,8 +31,7 @@ function tas_init()
 	
 	var lstHours = document.getElementById("lstHour");	
 	var lstMins = document.getElementById("lstMins");
-	var lstTaskType = document.getElementById("lstTaskType");
-	
+	//var lstTaskType = document.getElementById("lstTaskType");	
 
 	for(var i=0; i<24; i++)
 	{
@@ -44,13 +43,14 @@ function tas_init()
 		lstMins.add(new Option(i, i));
 	}
 	
-	var types = getAllType();
+	//Must remove -- JoeyC
+	/*var types = getAllType();
+	
 	for(var i=0; i<types.length; i++)
 	{
 		if(types[i] != "undefine")
 			lstTaskType.add(new Option(types[i].Name, types[i].Value));
-	}
-
+	}*/
 }
 
 function initRsvTask()
