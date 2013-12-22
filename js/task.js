@@ -15,6 +15,10 @@ var runningTask =
 	//Result : result 
 };
 
+///
+// Layout exchange
+///
+
 function changeTaskPage(tblName)
 {
 	document.getElementById("tblRunTask").style.display = "none";
@@ -24,14 +28,20 @@ function changeTaskPage(tblName)
 	document.getElementById(tblName).style.display = "";
 }
 
-function tas_init()
-{
+///
+// Layout exchange End
+///
+
+///
+// Constructor
+///
+
+function Task(){
 	//alarm();
 	changeTaskPage("tblUnstart");
 	
 	var lstHours = document.getElementById("lstHour");	
 	var lstMins = document.getElementById("lstMins");
-	//var lstTaskType = document.getElementById("lstTaskType");	
 
 	for(var i=0; i<24; i++)
 	{
@@ -42,27 +52,25 @@ function tas_init()
 	{
 		lstMins.add(new Option(i, i));
 	}
-	
-	//Must remove -- JoeyC
-	/*var types = getAllType();
-	
-	for(var i=0; i<types.length; i++)
-	{
-		if(types[i] != "undefine")
-			lstTaskType.add(new Option(types[i].Name, types[i].Value));
-	}*/
 }
+
+///
+// Constructor End
+///
 
 function initRsvTask()
 {
 	
 }
 
+///
+// Task setup
+///
+
 function initImdTask()
 {
 	var hours = document.getElementById("lstHour").value;
 	var mins = document.getElementById("lstMins").value;
-
 
 	//validate
 	if( parseInt(hours)===0 && parseInt(mins)===0 )
@@ -72,21 +80,11 @@ function initImdTask()
 	else if( parseInt(hours)!==0 || parseInt(mins)!==0 )
 	{
 		//successfully add a new task and start running it!			
-		var nowMode = getMode();
-		switch(nowMode)
-		{
-			case "sweet":
-				
-			break;
-			
-			case "strict":
-				//do not show quit button
-				document.getElementById("btnQuit").style.display = "none";
-			break;
-			
-			default:
-				assert();
-			break;
+		if(mode == "sweet"){
+			//alert("sweet start");
+		}else{
+			//alert("strict start");
+			document.getElementById("btnQuit").style.display = "none";
 		}
 		
 		//switch to task running page
@@ -95,9 +93,7 @@ function initImdTask()
 		remainSnd = (parseInt(hours) *3600 + parseInt(mins)*60);
 		
 		recordRunTask();
-		
 		countdown();
-		
 		
 		///////// function that other button event wouldn't trigger
 	}
@@ -106,6 +102,11 @@ function initImdTask()
 		assert();
 	}
 }
+
+///
+// Task setup End
+///
+
 
 function startTask(hours, mins)
 {
@@ -137,11 +138,9 @@ function countdown()
 	if(rmdHour < 10){rmdHour = "0" + rmdHour;}
 	if(rmdMin < 10){rmdMin = "0" + rmdMin;}
 	if(rmdSnd < 10){rmdSnd = "0" + rmdSnd;}
-	
-	
+		
 	document.getElementById("divCntDnd").innerHTML = rmdHour + " : " + rmdMin + " : " + rmdSnd;
-	
-	
+		
 	if(!isRunning)
 	{
 		isRunning = true;	
@@ -203,5 +202,5 @@ function taskReturn()
 function poFB()
 {
 	alert("發文到FB!");
-	tas_init();
+	Task();
 }

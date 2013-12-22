@@ -2,7 +2,7 @@
 //tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }		
 //cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result } 
 
-var mode; //Task Mode
+var mode = "sweet"; //Task Mode
 var tasks = new Array();
 var cptTasks = new Array();
 var orderId = 0;
@@ -10,7 +10,7 @@ var cptId = 0;
 var taskTypes = new Array();
 var typeId = 0;
 var isLogin = new Boolean();
-initType();
+//initType();	//remove recommend -- JoeyC
 //changeMode("sweet");	//remove recommend -- JoeyC
 
 /*=========================
@@ -33,8 +33,7 @@ initType();
  * Id:
  * Exclude:Array of Date() that won't obey this task's period rule
  * */
-function addTaskOrder(startTime, targetTime, type, period)
-{
+function addTaskOrder(startTime, targetTime, type, period){
 	var task = 
 	{
 		Id : parseInt(orderId),
@@ -53,8 +52,6 @@ function addTaskOrder(startTime, targetTime, type, period)
 	var nextId = parseInt(orderId) + 1;
 	orderId = nextId;
 }
-
-
 
 //add the exclusion date of the periodically task
 function addTaskExclude(taskOrderId, ExDate)

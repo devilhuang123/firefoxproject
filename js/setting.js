@@ -1,4 +1,6 @@
-//Constructor
+///
+// Constructor
+///
 
 function setting(){
 	document.getElementById("mode_table").style.display = "none";
@@ -20,6 +22,10 @@ function Type(){
 }
 
 ///
+// Constructor End
+///
+
+///
 //Mode functions -- getMode(),setMode().
 ///
 
@@ -35,9 +41,11 @@ function setMode(){
 	var option = document.getElementById("select_mode").options;
 	
 	if(option[index].text == "溫柔模式"){
+		mode = "sweet";
 		document.getElementById("td_mode").textContent = "溫柔模式";
 		alert("您選擇了"+option[index].text);
 	}else{
+		mode = "strict";
 		document.getElementById("td_mode").textContent = "剽悍模式";
 		alert("您選擇了"+option[index].text);
 	}
