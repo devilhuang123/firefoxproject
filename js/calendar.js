@@ -1,46 +1,63 @@
-var g_globalObject2;
-var calenderDiv;
-var messageDiv;
-var calendarId = "datepicker";
-var messageId = "myMessage";
-
-function ShowCalendar(_div) {
+function InitializeCalendarLayoutArea(areaToShow) {//layout class Constructor
 	ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
 	ElementFactory.LoadCSS("css/calendarPage.css");
-	//ElementFactory.LoadScript("js/jquery-ui-1.10.3.custom.min.js");
-	//var _div=ElementFactory.CraeteElement("div");
-	calenderDiv = _div;
-	calendarDiv = AddDiv(_div);
-	calendarDiv.id = calendarId;
+	var calendarId = "datepicker";
+	var messageId = "myMessage";
+	var _this = this;
 
-	messageDiv = _div;
-	messageDiv = AddDiv(_div);
-	messageDiv.id = messageId;
-	messageDiv.className ="dateArea";
-	
-	var header=ElementFactory.FindElement("pageHeader");
-	var h1=ElementFactory.CraeteElement("h1");
-	header.appendChild(h1);
-	h1.appendChild(document.createTextNode('Calendar'));
+	this.div = AddDiv(areaToShow);
+
+	this.calenderDiv = areaToShow;
+	this.calendarDiv = AddDiv(this.div);
+	this.calendarDiv.id = calendarId;
+
+	this.messageDiv = areaToShow;
+	this.messageDiv = AddDiv(this.div);
+	this.messageDiv.id = messageId;
+	this.messageDiv.className = "dateArea";
+}
+
+function CalendarView(areaToShow) {//CalendarView class Constructor
+
+	var g_globalObject2;
+
+	this.OnDateSelected = function(date, inst) {//Date(),object
+
+	};
+	var _this = this;
+	_this.showArea = areaToShow;
+
+	var onDatePicked = function(dateStr, inst) {
+		var dateArr = dateStr.split("-");
+		Assert(dateArr.length == 3, "convert Date error!");
+		var date = new Date();
+		date.setFullYear(dateArr[0], dateArr[1], dateArr[2]);
+		_this.OnDateSelected(date, inst);
+	};
+
+	var Initialize = function() {
+		$(function() {
+			$("#" + _this.showArea.id).datepicker({
+				autoSize : true,
+				onSelect : onDatePicked,
+				dateFormat : "yy-mm-dd"
+			});
+		});
+	};
+
 	Initialize();
 }
 
-function AddDiv(objTo) {
-	var divtest = ElementFactory.CraeteElement("div");
-	objTo.appendChild(divtest);
-	return divtest;
-}
+function MessageView(areaToShow) {//MessageView class Constructor
+	var _this = this;
+	_this.area = areaToShow;
+	this.SetText = function(message) {
+		_this.area.innerHTML = message;
+	};
+	var Initialize = function() {
+		_this.SetText("Pick a date");
+	};
 
-function Initialize() {
-	$(function() {
-		$("#datepicker").datepicker({
-			autoSize : true,
-			onSelect : OnDateSelected
-		});
-	});
-}
-
-function OnDateSelected(dateText, inst) {
-	messageDiv.innerHTML = dateText;
+	Initialize();
 }
 

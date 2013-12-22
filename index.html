@@ -16,6 +16,7 @@
 		<script type="text/javascript" src="./js/Factory.js"></script>
 		<script type="text/javascript" src="./js/MissionPage.js"></script>
 		<script type="text/javascript" src="./js/calendar.js"></script>
+		<script type="text/javascript" src="./js/list.js"></script>
 		<script type="text/javascript" src="./js/task.js"></script>
 		<script type="text/javascript" src="./js/history.js"></script>
 		<script type="text/javascript" src="./js/setting.js"></script>
@@ -78,15 +79,19 @@
 					<a href="#panel1" class="icon">comms</a>
 
 					<div role="tabpanel" >
-						<section role="region" id="cal_mainDiv">
-							<header id="pageHeader">
+						<section role="region" id="mainArea">
+							<header id="headerArea">
 								<menu type="toolbar">
 									<a href="" >delect</a>
 								</menu>
 							</header>
 							<script>
-								var div = document.getElementById("cal_mainDiv");
-								ShowCalendar(div);
+								var header = document.getElementById("headerArea");
+								var main = document.getElementById("mainArea");
+								var missionPage = new MissionPage(header, main);
+								missionPage.Show();
+								//ShowCalendar(div);
+								$("#mainArea").tabs();
 							</script>
 						</section>
 					</div>

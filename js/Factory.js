@@ -5,8 +5,8 @@ function ElementFactory(_document) {
 ElementFactory.Document = null;
 
 ElementFactory.CraeteElement = function(type) {
-	var element= ElementFactory.Document.createElement(type);
-	Assert(element!=null,"CraeteElement: "+type+" failed");
+	var element = ElementFactory.Document.createElement(type);
+	Assert(element != null, "CraeteElement: " + type + " failed");
 	return element;
 };
 
@@ -29,11 +29,16 @@ ElementFactory.LoadScript = function(href) {
 	return script;
 };
 
-ElementFactory.FindElement=function(id){
-	var element=ElementFactory.Document.getElementById(id);
-	Assert(element!=null,"can't find element with"+id);
+ElementFactory.FindElement = function(id) {
+	var element = ElementFactory.Document.getElementById(id);
+	Assert(element != null, "can't find element with" + id);
 	return element;
 };
 
+function AddDiv(objTo) {
+	var divtest = ElementFactory.CraeteElement("div");
+	objTo.appendChild(divtest);
+	return divtest;
+};
 
 ElementFactory(document);
