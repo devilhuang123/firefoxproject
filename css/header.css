@@ -201,6 +201,10 @@ section[role="region"] > header:first-child .icon.icon-options {
   background-image: url(headers/images/icons/options.png);
 }
 
+section[role="region"] > header:first-child .icon.delete {
+  background-image: url(./img/delete.png);
+}
+
 /* Navigation links (back, cancel, etc) */
 section[role="region"] > header:first-child > button,
 section[role="region"] > header:first-child > a {

@@ -109,7 +109,7 @@ function addTaskCpt(startTime, targetTime, type, lastTime, result)
 
 function getCptTask(id)
 {
-	return cptTask[id];
+	return cptTasks[id];
 }
 
 function deleteAllCptTask()
