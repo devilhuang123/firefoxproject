@@ -68,6 +68,10 @@
       background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAB4CAYAAADlnULlAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG11AABzoAAA85kAAImUAAB+3gAA7PgAADObAAAQ5ap9ykMAAAE4SURBVHja7JdBTsJQFEUvxlF3I4OSbqKb6DpkgOvoHsiDPVQd1A2oAydMhGEnkNTJJ/m8fAOiDVHPS0jad8M/HfSEy6jve11irnShAQwY8N8E55J692mjfJbIZ1HeJvL8FPB7Yrf+Qr455cwU+E3S1u1eP7nez0t0/eyybTjzKHgnae6+uIju7yWtovtV2O1n6R58Hs48mBG/TniMx3iMTniMx3gMGDBgwIABAwb8D8DXflE1XS7pwa2fJI2jXn3r8jtJ07rIVDVdK+nG5ZO6yB7p1YP36rrIjvfqqunOfmHqIkOnX+Bx+C97lsfhHcFjPMZjPMbjgT1GJ8CAAQMGDBgw4OF7dVmWyV5tZuOQJ3u1mU1DnuzVZkavPhwz+/FeHc6kV+MxHuMxOuExHuMxHgMGDPib8zEAXEF5RgN/yzkAAAAASUVORK5CYII=);
     }
     
+    /*.delete {
+    	background-image: url(./img/delete.png);
+    }*/
+    
   </style>
 </head>
 <body role="application">
@@ -166,13 +170,13 @@
         </div>
       </li>
       <li id="panel3" role="tab">
-        <a href="#panel3" class="icon">dialer</a>
+        <a href="#panel3" class="icon" onclick="his_print()">dialer</a>
         
         <div role="tabpanel">
           <section role="region">
       		<header>
 		      <menu type="toolbar">
-		        <a href="#panel3" onclick="hisdel()"><span class="icon delete">delete</span></a>
+		        <a href="#panel3" onclick="hisdel()"><span class="icon icon-delete">delete</span></a>
 		      </menu>
 		      <h1>History</h1>
 		    </header>

@@ -12,14 +12,13 @@ function his_print(){
 		{
 			printType(taskTypes[i]);
 		}
-
 	}
 }
 
 //print everytype result
 function printType(type){
 	
-	var sum = 0；
+	var sum = 0;
 	var successNo = 0;
 	var failNo = 0;
 	
@@ -47,18 +46,17 @@ function printType(type){
 		}
 	}
 	
-	document.write("任務類型：" + type + "<br>");
 	if (sum == 0)
 	{
-		document.write("尚未進行本類型任務")
+		document.write("尚未進行本類型任務");
 	}
 	else
 	{
-		document.write("其中成功" + successNo + "次，失敗" + failNo + "次，任務成功率為" + successNo/sum。)
+		document.write("任務類型：" + type + "<br>");
+		document.write("其中成功" + successNo + "次，失敗" + failNo + "次，任務成功率為" + successNo/sum + "。");
 	}
 }
 
-	
 //delete history
 function hisdel(){
 	if (confirm("確定要刪除所有歷史記錄嗎？"))

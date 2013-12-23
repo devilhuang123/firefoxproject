@@ -201,7 +201,7 @@ section[role="region"] > header:first-child .icon.icon-options {
   background-image: url(headers/images/icons/options.png);
 }
 
-section[role="region"] > header:first-child .icon.delete {
+section[role="region"] > header:first-child .icon.icon-delete {
   background-image: url(./img/delete.png);
 }
 
