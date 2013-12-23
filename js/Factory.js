@@ -35,6 +35,11 @@ ElementFactory.FindElement = function(id) {
 	return element;
 };
 
+ElementFactory.CreateTextNode = function(str) {
+	var ele = ElementFactory.Document.createTextNode(str);
+	return ele;
+};
+
 function AddDiv(objTo) {
 	var divtest = ElementFactory.CraeteElement("div");
 	objTo.appendChild(divtest);

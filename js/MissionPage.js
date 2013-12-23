@@ -1,3 +1,13 @@
+var tabData = [{
+	"label" : "Calendar",
+	"elementId" : "tabs-1",
+	"checked" : true
+}, {
+	"label" : "List",
+	"elementId" : "tabs-2",
+	"checked" : false
+}];
+
 function MissionPage(headerArea, mainArea) {
 	var calenderArea;
 	var listArea;
@@ -8,19 +18,19 @@ function MissionPage(headerArea, mainArea) {
 	function UpdateMissionArea(headerArea, mainArea) {
 
 		var calendarLayout = new InitializeCalendarLayoutArea(mainArea);
-		calendarLayout.div.id = "tabs-1";
+		calendarLayout.div.id = tabData[0]["elementId"];
 		var calendarView = new CalendarView(calendarLayout.calendarDiv);
-		var messageView = new MessageView(calendarLayout.messageDiv);
-		var listLayout = new InitializeListLayoutArea(mainArea);
-		listLayout.div.id = "tabs-2";
 		calendarView.OnDateSelected = function(dateText, inst) {
 			messageView.SetText(dateText);
 		};
+		var messageView = new MessageView(calendarLayout.messageDiv);
+		
+		var listLayout = new InitializeListLayoutArea(mainArea);
+		listLayout.div.id = tabData[1]["elementId"];
 
 		var header = new HeaderView(headerArea);
-		// $("#tabpanel").tabs();
-	}
 
+	}
 
 	this.Show = function() {
 		UpdateMissionArea(_this.HeadArea, _this.MainArea);
@@ -31,29 +41,21 @@ function MissionPage(headerArea, mainArea) {
 function HeaderView(areaToShow) {//HeaderView class Constructor
 	var _this = this;
 	this.area = areaToShow;
-	var tabData = [{
-		"label" : "Calendar",
-		"elementId" : "tabs-1",
-		"checked" : true
-	}, {
-		"label" : "List",
-		"elementId" : "tabs-2",
-		"checked" : false
-	}];
 
 	function Initialize() {
 		var radioButtons = CreateRadioButtons(tabData);
 		radioButtons.id = "radio";
 		var h1 = ElementFactory.CraeteElement("h1");
-		radioButtons.appendChild(h1);
-		h1.appendChild(document.createTextNode('Calendar'));
+		areaToShow.appendChild(h1);
+		h1.appendChild(ElementFactory.CreateTextNode('Calendar'));
 		areaToShow.appendChild(radioButtons);
+		$("#radio").buttonset();
 	}
 
 	Initialize();
 }
 
-function CreateRadioButtons(tabData) {
+function CreateRadioButtons(radioData) {
 	var inputs = [];
 	var _this = this;
 	function CraeteInput(checked, id) {
@@ -67,7 +69,6 @@ function CreateRadioButtons(tabData) {
 		input.addEventListener("change", this.OnRadioChange, false);
 		return input;
 	}
-
 
 	this.OnRadioChange = function() {
 		inputs.forEach(function(entry) {
@@ -86,9 +87,9 @@ function CreateRadioButtons(tabData) {
 		return label;
 	}
 
-	var div = ElementFactory.CraeteElement("div");
+	var form = ElementFactory.CraeteElement("form");
 
-	tabData.forEach(function(entry) {
+	radioData.forEach(function(entry) {
 		var label = entry["label"];
 		var elementId = entry["elementId"];
 		var checked = entry["checked"];
@@ -97,10 +98,10 @@ function CreateRadioButtons(tabData) {
 		var input = CraeteInput(checked, id);
 		var label = CraeteLabel(label);
 		inputs.push(input);
-		div.appendChild(input);
-		div.appendChild(label);
+		form.appendChild(input);
+		form.appendChild(label);
 	});
 	this.OnRadioChange();
-	return div;
+	return form;
 }
 
