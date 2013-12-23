@@ -232,7 +232,7 @@ button.ui-button-icons-only {
 	line-height: normal;
 }
 .ui-button-text-only .ui-button-text {
-	padding: .4em 1em;
+	padding: .4em .2em;
 }
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
@@ -284,6 +284,7 @@ input.ui-button {
 /* button sets */
 .ui-buttonset {
 	margin-right: 7px;
+    
 }
 .ui-buttonset .ui-button {
 	margin-left: 0;
@@ -353,11 +354,12 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year {
-	width: 49%;
+	width: 100%;
+	font-size: 1em;
 }
 .ui-datepicker table {
 	width: 100%;
-	font-size: .9em;
+	font-size: 1.2em;
 	border-collapse: collapse;
 	margin: 0 0 .4em;
 }

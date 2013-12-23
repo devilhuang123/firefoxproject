@@ -1,6 +1,5 @@
 function InitializeCalendarLayoutArea(areaToShow) {//layout class Constructor
-	ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
-	ElementFactory.LoadCSS("css/calendarPage.css");
+	
 	var calendarId = "datepicker";
 	var messageId = "myMessage";
 	var _this = this;

@@ -1,3 +1,5 @@
+ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
+ElementFactory.LoadCSS("css/calendarPage.css");
 var tabData = [{
 	"label" : "Calendar",
 	"elementId" : "tabs-1",
@@ -24,13 +26,14 @@ function MissionPage(headerArea, mainArea) {
 			messageView.SetText(dateText);
 		};
 		var messageView = new MessageView(calendarLayout.messageDiv);
-		
+
 		var listLayout = new InitializeListLayoutArea(mainArea);
 		listLayout.div.id = tabData[1]["elementId"];
 
 		var header = new HeaderView(headerArea);
 
 	}
+
 
 	this.Show = function() {
 		UpdateMissionArea(_this.HeadArea, _this.MainArea);
@@ -50,6 +53,8 @@ function HeaderView(areaToShow) {//HeaderView class Constructor
 		h1.appendChild(ElementFactory.CreateTextNode('Calendar'));
 		areaToShow.appendChild(radioButtons);
 		$("#radio").buttonset();
+		h1.setAttribute("style", "display: inline;");
+		radioButtons.setAttribute("style", "display: inline;");
 	}
 
 	Initialize();
@@ -70,6 +75,7 @@ function CreateRadioButtons(radioData) {
 		return input;
 	}
 
+
 	this.OnRadioChange = function() {
 		inputs.forEach(function(entry) {
 			var checked = entry.checked;
@@ -87,7 +93,7 @@ function CreateRadioButtons(radioData) {
 		return label;
 	}
 
-	var form = ElementFactory.CraeteElement("form");
+	var form = ElementFactory.CraeteElement("div");
 
 	radioData.forEach(function(entry) {
 		var label = entry["label"];
