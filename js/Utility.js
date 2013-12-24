@@ -3,15 +3,12 @@
 //cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result } 
 
 var mode = "sweet"; //Task Mode
+
 var tasks = new Array();
-var cptTasks = new Array();
 var orderId = 0;
+
+var cptTasks = new Array();
 var cptId = 0;
-var taskTypes = new Array();
-var typeId = 0;
-var isLogin = new Boolean();
-//initType();	//remove recommend -- JoeyC
-//changeMode("sweet");	//remove recommend -- JoeyC
 
 /*=========================
  * Task Order
@@ -33,6 +30,7 @@ var isLogin = new Boolean();
  * Id:
  * Exclude:Array of Date() that won't obey this task's period rule
  * */
+
 function addTaskOrder(startTime, targetTime, type, period){
 	var task = 
 	{
@@ -113,54 +111,6 @@ function deleteAllCptTask()
 	var cptTasks = new Array();
 }
 
-
-//area remove recommend -- JoeyC
-
-/*=========================
- * Task Type
- =========================*/
-
-/*
-function initType()
-{
-	typeId = 0;
-	addTaskType("用功讀書","study");
-	addTaskType("早點睡覺","sleep");
-	addTaskType("努力運動","exercise");
-}
-
-function addTaskType(name, value)
-{	
-	var tastType = 
-	{
-		Name: name,
-		Value: value
-	};
-	taskTypes[typeId] = tastType;
-	typeId = typeId + 1;	
-}
-
-function deleteTaskType(value)
-{
-	for(var i=0; i<taskTypes.length; i++)
-	{
-		if(taskTypes[i].Value == value)
-		{
-			taskTypes[i] = null;
-		}
-	}
-}
-
-function getAllType()
-{
-	return taskTypes;
-}
-*/
-///
-// area remove recommend end -- JoeyC
-///
-
-
 ///
 // Task type Function
 ///
@@ -186,19 +136,3 @@ function getOption(select_type){
 ///
 // Task Type Function End
 ///
-
-/////Remove recommend -- JoeyC
-/*=========================
- * Mode
- =========================*/
-/*
-function changeMode(Mode)
-{
-	this.mode = Mode;
-}
-
-function getMode()
-{
-	return this.mode;	
-}
-*/
