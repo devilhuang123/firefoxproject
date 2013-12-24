@@ -20,7 +20,7 @@ function MissionPage(headerArea, mainArea) {
 	function UpdateMissionArea(headerArea, mainArea) {
 
 		var calendarLayout = new InitializeCalendarLayoutArea(mainArea);
-		calendarLayout.div.id = tabData[0]["elementId"];
+		calendarLayout.area.id = tabData[0]["elementId"];
 		var calendarView = new CalendarView(calendarLayout.calendarDiv);
 		calendarView.OnDateSelected = function(dateText, inst) {
 			messageView.SetText(dateText);
@@ -28,7 +28,7 @@ function MissionPage(headerArea, mainArea) {
 		var messageView = new MessageView(calendarLayout.messageDiv);
 
 		var listLayout = new InitializeListLayoutArea(mainArea);
-		listLayout.div.id = tabData[1]["elementId"];
+		listLayout.area.id = tabData[1]["elementId"];
 
 		var header = new HeaderView(headerArea);
 

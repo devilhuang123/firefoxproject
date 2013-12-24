@@ -32,7 +32,7 @@ changeMode("sweet");
  * Id:
  * Exclude:Array of Date() that won't obey this task's period rule
  * */
-function addTaskOrder(startTime, targetTime, type, period)
+function addTaskOrder(startTime, targetTime, type, period)//定時任務
 {
 	var task = 
 	{
@@ -55,7 +55,7 @@ function addTaskOrder(startTime, targetTime, type, period)
 
 
 
-//add the exclusion date of the periodically task
+//add the exclusion date of the periodically task 立即任務
 function addTaskExclude(taskOrderId, ExDate)
 {
 	//add exclude date into task.Exclude
@@ -81,7 +81,7 @@ function deleteTask(taskId)
 /*=========================
  * Task Completed
  =========================*/
-
+//此function傳入參數只需要傳task跟result不就好了
 //when the end of a task(whaever success or fail), add a task complete record
 function addTaskCpt(startTime, targetTime, type, lastTime, result)
 {	

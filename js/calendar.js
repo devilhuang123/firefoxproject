@@ -1,17 +1,16 @@
 function InitializeCalendarLayoutArea(areaToShow) {//layout class Constructor
-	
+
 	var calendarId = "datepicker";
 	var messageId = "myMessage";
 	var _this = this;
+	var section = ElementFactory.CraeteElement("section");
+	areaToShow.appendChild(section);
+	this.area = section;
 
-	this.div = AddDiv(areaToShow);
-
-	this.calenderDiv = areaToShow;
-	this.calendarDiv = AddDiv(this.div);
+	this.calendarDiv = AddDiv(this.area);
 	this.calendarDiv.id = calendarId;
 
-	this.messageDiv = areaToShow;
-	this.messageDiv = AddDiv(this.div);
+	this.messageDiv = AddDiv(this.area);
 	this.messageDiv.id = messageId;
 	this.messageDiv.className = "dateArea";
 }

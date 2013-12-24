@@ -7,7 +7,7 @@
 		<meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
 		<!-- <link rel="stylesheet" type="text/css" media="all" href="./js/jsdatepick-calendar/jsDatePick_ltr.min.css" /> -->
 		<link rel="stylesheet" href="./css/tabs.css">
-		<link rel="stylesheet" href="./css/button.css">
+		<link rel="stylesheet" href="./css/buttons.css">
 		<link rel="stylesheet" href="./css/value-selector.css">
 		<link rel="stylesheet" href="./css/header.css">
 		<!-- <link rel="stylesheet" href="./css/ui-darkness/jquery-ui-1.10.3.custom.css"> -->
@@ -15,8 +15,8 @@
 		<script src="js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="./js/Factory.js"></script>
 		<script type="text/javascript" src="./js/MissionPage.js"></script>
-		<script type="text/javascript" src="./js/calendar.js"></script>
-		<script type="text/javascript" src="./js/list.js"></script>
+		<script type="text/javascript" src="./js/Calendar.js"></script>
+		<script type="text/javascript" src="./js/List.js"></script>
 		<script type="text/javascript" src="./js/task.js"></script>
 		<script type="text/javascript" src="./js/history.js"></script>
 		<script type="text/javascript" src="./js/setting.js"></script>
@@ -81,7 +81,7 @@
 					<div role="tabpanel" >
 						<section role="region" id="mainArea">
 							<header id="headerArea">
-								<menu type="toolbar" id="_menu">
+								<menu type="toolbar">
 									<a href="" >delect</a>
 								</menu>
 							</header>
@@ -90,7 +90,6 @@
 								var main = document.getElementById("mainArea");
 								var missionPage = new MissionPage(header, main);
 								missionPage.Show();
-								
 							</script>
 						</section>
 					</div>

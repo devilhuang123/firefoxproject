@@ -46,4 +46,11 @@ function AddDiv(objTo) {
 	return divtest;
 };
 
+function CreateSection () {
+  var section = ElementFactory.CraeteElement("section");
+  return section;
+}
+
 ElementFactory(document);
+
+
