@@ -25,6 +25,7 @@ function MissionPage(headerArea, mainArea) {
 		calendarView.OnDateSelected = function(dateText, inst) {
 			messageView.SetText(dateText);
 		};
+		
 		var messageView = new MessageView(calendarLayout.messageDiv);
 
 		var listLayout = new InitializeListLayoutArea(mainArea);
@@ -33,7 +34,6 @@ function MissionPage(headerArea, mainArea) {
 		var header = new HeaderView(headerArea);
 
 	}
-
 
 	this.Show = function() {
 		UpdateMissionArea(_this.HeadArea, _this.MainArea);

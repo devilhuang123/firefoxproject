@@ -38,10 +38,28 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 			$("#" + _this.showArea.id).datepicker({
 				autoSize : true,
 				onSelect : onDatePicked,
-				dateFormat : "yy-mm-dd"
+				dateFormat : "yy-mm-dd",
+				showButtonPanel: true,
+				beforeShowDay : testBeforeShowDay,
+				direction: "up"
 			});
 		});
 	};
+
+	function testBeforeShowDay(date) {
+		var ret = [];
+
+		if (date.getDate() == 26) {
+			ret[0] = false;
+			ret[1] = "";
+			ret[2] = "asdw";
+		} else {
+			ret[0] = true;
+			ret[1] = "";
+			ret[2] = "";
+		}
+		return ret;
+	}
 
 	Initialize();
 }
