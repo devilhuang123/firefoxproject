@@ -359,7 +359,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-datepicker table {
 	width: 100%;
-	font-size: 1.2em;
+	font-size: 1.0em;
 	border-collapse: collapse;
 	margin: 0 0 .4em;
 }
@@ -370,7 +370,7 @@ button.ui-button::-moz-focus-inner {
 	border: 0;
 }
 .ui-datepicker td {
-	border: 0;
+	/*border: 0;*/
 	padding: 1px;
 }
 .ui-datepicker td span,
@@ -379,7 +379,7 @@ button.ui-button::-moz-focus-inner {
 	padding: .2em;
 	text-align: right;
 	text-decoration: none;
-	height: 2.5em;
+	height: 1.5em;
 }
 .ui-datepicker .ui-datepicker-buttonpane {
 	background-image: none;
@@ -793,7 +793,7 @@ body .ui-tooltip {
 ----------------------------------*/
 .ui-widget {
 	font-family: Segoe UI,Arial,sans-serif;
-	font-size: 1.1em;
+	font-size: 1.5em;
 }
 .ui-widget .ui-widget {
 	font-size: 1em;

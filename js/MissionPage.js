@@ -16,17 +16,17 @@ function MissionPage(headerArea, mainArea) {
 	var _this = this;
 	this.HeadArea = headerArea;
 	this.MainArea = mainArea;
+	var calendarView;
+	var messageView;
 
 	function UpdateMissionArea(headerArea, mainArea) {
-
 		var calendarLayout = new InitializeCalendarLayoutArea(mainArea);
 		calendarLayout.area.id = tabData[0]["elementId"];
-		var calendarView = new CalendarView(calendarLayout.calendarDiv);
-		calendarView.OnDateSelected = function(dateText, inst) {
-			messageView.SetText(dateText);
-		};
-		
-		var messageView = new MessageView(calendarLayout.messageDiv);
+		calendarView = new CalendarView(calendarLayout.calendarDiv);
+		calendarView.OnDateSelected = onSelectedDate;
+		calendarView.BeforeShowDay = showTasks;
+
+		messageView = new MessageView(calendarLayout.messageDiv);
 
 		var listLayout = new InitializeListLayoutArea(mainArea);
 		listLayout.area.id = tabData[1]["elementId"];
@@ -35,9 +35,33 @@ function MissionPage(headerArea, mainArea) {
 
 	}
 
+
 	this.Show = function() {
 		UpdateMissionArea(_this.HeadArea, _this.MainArea);
 	};
+
+	function onSelectedDate(date, inst) {
+		var dates = [1, 8, 12, 7, 24, 19, 28, 29, 30];
+		var str="無任務";
+		if (dates.indexOf(date.getDate()) >= 0){
+			 str="任務："+(date.getMonth()+1)+"月"+date.getDate()+"日 ,揪團打宥均";
+		}
+		
+		messageView.SetText(str);
+	}
+
+	function showTasks(date) {
+		var dates = [1, 8, 12, 7, 24, 19, 28, 29, 30];
+		var ret = [];
+		ret[0] = true;
+		ret[1] = "";
+		ret[2] = "";
+		if (dates.indexOf(date.getDate()) >= 0)
+			ret[1] = "ui-state-datepicker-scheduled";
+		else
+			ret[1] = "ui-state-datepicker-unscheduled";
+		return ret;
+	}
 
 }
 
@@ -58,56 +82,5 @@ function HeaderView(areaToShow) {//HeaderView class Constructor
 	}
 
 	Initialize();
-}
-
-function CreateRadioButtons(radioData) {
-	var inputs = [];
-	var _this = this;
-	function CraeteInput(checked, id) {
-		var input = ElementFactory.CraeteElement("input");
-		input.setAttribute("type", "radio");
-		input.setAttribute("id", "radio" + inputs.length);
-		input.setAttribute("name", "radio");
-		input.setAttribute("tag", id);
-		if (checked)
-			input.setAttribute("checked", "checked");
-		input.addEventListener("change", this.OnRadioChange, false);
-		return input;
-	}
-
-
-	this.OnRadioChange = function() {
-		inputs.forEach(function(entry) {
-			var checked = entry.checked;
-			var id = entry.getAttribute("tag");
-			if (checked)
-				$("#" + id).slideDown(400);
-			else
-				$("#" + id).slideToggle(400);
-		});
-	};
-	function CraeteLabel(labelText) {
-		var label = ElementFactory.CraeteElement("label");
-		label.setAttribute("for", "radio" + inputs.length);
-		label.innerHTML = labelText;
-		return label;
-	}
-
-	var form = ElementFactory.CraeteElement("div");
-
-	radioData.forEach(function(entry) {
-		var label = entry["label"];
-		var elementId = entry["elementId"];
-		var checked = entry["checked"];
-		var i = inputs.length;
-		var id = elementId;
-		var input = CraeteInput(checked, id);
-		var label = CraeteLabel(label);
-		inputs.push(input);
-		form.appendChild(input);
-		form.appendChild(label);
-	});
-	this.OnRadioChange();
-	return form;
 }
 

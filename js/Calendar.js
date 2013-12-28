@@ -20,16 +20,25 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 	var g_globalObject2;
 
 	this.OnDateSelected = function(date, inst) {//Date(),object
-
 	};
+	this.BeforeShowDay = function(date) {
+		var ret = [];
+		ret[0] = true;
+		ret[1] = "";
+		ret[2] = "";
+		return ret;
+	};
+
 	var _this = this;
 	_this.showArea = areaToShow;
 
 	var onDatePicked = function(dateStr, inst) {
+		//console.log(dateStr);
 		var dateArr = dateStr.split("-");
 		Assert(dateArr.length == 3, "convert Date error!");
 		var date = new Date();
-		date.setFullYear(dateArr[0], dateArr[1], dateArr[2]);
+		date.setFullYear(dateArr[0], dateArr[1]-1, dateArr[2]);
+		//console.log(date.toDateString());
 		_this.OnDateSelected(date, inst);
 	};
 
@@ -39,27 +48,16 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 				autoSize : true,
 				onSelect : onDatePicked,
 				dateFormat : "yy-mm-dd",
-				showButtonPanel: true,
-				beforeShowDay : testBeforeShowDay,
-				direction: "up"
+				//showButtonPanel: true,
+				beforeShowDay : beforeShowDay
+				//,direction: "up"
 			});
 		});
 	};
 
-	function testBeforeShowDay(date) {
-		var ret = [];
-
-		if (date.getDate() == 26) {
-			ret[0] = false;
-			ret[1] = "";
-			ret[2] = "asdw";
-		} else {
-			ret[0] = true;
-			ret[1] = "";
-			ret[2] = "";
-		}
-		return ret;
-	}
+	var beforeShowDay = function(date) {
+		return _this.BeforeShowDay(date);
+	};
 
 	Initialize();
 }
