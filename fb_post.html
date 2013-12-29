@@ -81,7 +81,14 @@
 
 
 
+
 <script>
+	var body = ['Test',
+				'Test2',
+				'Test3',
+				'Test4',
+				'Test5'];
+	var count = 0;
 function do_post()
 {
 //	FB.login(function(response) {
@@ -128,18 +135,17 @@ function do_post()
       	alert('Post Name\n'+ response.name);
     });*/
     
-	var body = ['ABC' , 'DEF','測試'];
+
 	
-	FB.api('/me/feed', 'post', { message: body[2] }, function(response) {
+	FB.api('/me/feed', 'post', { message: body[count%5] }, function(response) {
 	  if (!response || response.error) {
 	    alert('Error occured');
 	  } else {
 	  	//alert('Post Name' + response.name);
 	  }
 	});		
-	
-	
-	
+	count++;
+
 }
 
 
