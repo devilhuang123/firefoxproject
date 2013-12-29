@@ -31,7 +31,7 @@
       	FB.api('/me', function(response) {
 			alert('Post Name\n'+ response.name);
     	});
-      	
+      	init();
       	//do_post();
     } else if (response.status === 'not_authorized') {
       // In this case, the person is logged into Facebook, but not into the app, so we call
@@ -41,8 +41,8 @@
       // (1) JavaScript created popup windows are blocked by most browsers unless they 
       // result from direct interaction from people using the app (such as a mouse click)
       // (2) it is a bad experience to be continually prompted to login upon page load.
-      document.location.href="https://m.facebook.com/dialog/oauth/?client_id=534601883297900&redirect_uri=http://web.cc.ncu.edu.tw/~102522071/fb.html";
-      //FB.login();
+      //document.location.href="https://m.facebook.com/dialog/oauth/?client_id=534601883297900&redirect_uri=http://web.cc.ncu.edu.tw/~102522071/fb.html";
+      //login();
     } else {
       // In this case, the person is not logged into Facebook, so we call the login() 
       // function to prompt them to do so. Note that at this stage there is no indication
@@ -76,6 +76,15 @@
      // Insert the Facebook JS SDK into the DOM
      firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
    }());
+
+/*function login() {
+    FB.login(function(response) {
+        if (response.authResponse) {
+            init();
+        }
+    }, {scope: 'publish_actions,publish_stream'});
+}*/
+	
    
 </script>
 
@@ -91,9 +100,6 @@
 	var count = 0;
 function do_post()
 {
-//	FB.login(function(response) {
-   // handle the response
-	//}, {scope: 'publish_actions,user_likes'});
 	
         /*var attachment = {
                 'name':'Quiz',
@@ -135,6 +141,14 @@ function do_post()
       	alert('Post Name\n'+ response.name);
     });*/
 
+/*function login() {
+    FB.login(function(response) {
+        if (response.authResponse) {
+            init();
+        }
+    }, {scope: 'publish_actions,publish_stream'});
+}
+	login();*/
 	FB.api('/me/feed', 'post', { message: body[count%5] }, function(response) {
 	  if (!response || response.error) {
 	    alert('Error occured');
