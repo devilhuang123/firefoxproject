@@ -1,6 +1,7 @@
 //tasks and cptTasks Elements are all start in Upper Case
 //tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }		
 //cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result } 
+var TaskPeriod={ONCE:0, DAILY:1, WORKDAY:2, WEEKLY:3, MONTHLY:4, YEARLY:4};
 var tasks = new Array();
 var cptTasks = new Array();
 var orderId = 0;

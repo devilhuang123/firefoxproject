@@ -18,10 +18,14 @@ function CreateRadioButtons(radioData) {
 		inputs.forEach(function(entry) {
 			var checked = entry.checked;
 			var id = entry.getAttribute("tag");
+			var optionShow = {};
+			var optionHide = {};
 			if (checked)
-				$("#" + id).slideDown(400);
+				$("#" + id).show("blind", optionShow, 350, null);
+			// $("#" + id).slideDown(400);
 			else
-				$("#" + id).slideToggle(400);
+				$("#" + id).hide("blind", optionHide, 350, null);
+			//$("#" + id).slideToggle(400);
 		});
 	};
 	function CraeteLabel(labelText) {
