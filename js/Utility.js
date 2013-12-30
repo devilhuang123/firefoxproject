@@ -163,10 +163,10 @@ function getAllType()
 
 function changeMode(Mode)
 {
-	this.mode = Mode;
+	mode = Mode;
 }
 
-function getMode()
+function getNowMode()
 {
-	return this.mode;	
+	return mode;	
 }
