@@ -1,0 +1,114 @@
+<html>
+	<meta charset="utf-8">
+	<body>
+		123
+		<script>
+		var type_list = [];
+		var request = indexedDB.open("db_type", 3);
+		request.onerror = function(event){
+			alert("connect to database db_type has a wrong!");
+		};
+		request.onsuccess = function(event){
+			var db = request.result;
+			
+			alert(db.objectStoreNames.length);
+			if(db.objectStoreNames.length != 0){
+				var objectStore = db.transaction("task_type").objectStore("task_type");
+				objectStore.openCursor().onsuccess = function(event){
+					var cursor = event.target.result;
+					if(cursor){
+						type_list.push(cursor.value);
+						cursor.continue();
+					}else{
+						alert("got all customers: " + type_list);
+					}
+				}		
+			}else{
+				//new_db();
+			}
+		};
+		
+		function new_db(){
+			alert("newdb");
+			var request = indexedDB.open("db_type", 3);
+			
+			request.onerror = function(event){
+				alert("connect to database db_type has a wrong!");
+			};
+			
+			request.onupgradeneeded = function(event){
+				const type_list = [{id:"1", name:"吃飯"},{id:"2", name:"睡覺"}];
+				var db = event.target.result;
+				var objectStore = db.createObjectStore("task_type", { keypath: "id"});
+				//objectStore.createIndex("name", "name", { unique: false })
+				objectStore.add(type_list[0]);
+				objectStore.add(type_list[1]);
+			}
+			//test();
+		}
+		
+		function test(){
+			var request = indexedDB.open("db_type", 3);
+			request.onerror = function(event){
+				alert("connect to database db_type has a wrong!");
+			}
+			request.onsuccess = function(event){
+				var db = request.result;
+			
+				alert(db.objectStoreNames.length);
+				/*db.transaction("type").objectStore("type").get("1").onsucess = function(event){
+					alert("123");
+				}*/
+				var objectStore = db.transaction("type_type").objectStore("type_type");
+				
+				objectStore.openCursor().onsuccess = function(event) {
+				var cursor = event.target.result;
+				if (cursor) {
+					alert("Name for SSN " + cursor.key + " is " + cursor.value.name);
+					cursor.continue();
+				}else{
+					alert("No more entries!");
+				}
+			};
+				
+				/*if(db.objectStoreNames.length != 0){
+					var objectStore = db.transaction("type").objectStore("type");
+					objectStore.openCursor().onsuccess = function(event){
+						var cursor = event.target.result;
+						if(cursor){
+							type_list.push(cursor.value);
+							cursor.continue();
+						}else{
+							alert("got all customers: " + type_list);
+						}
+					}		
+				}*/			
+		}
+		/*else{
+				const type = [{name:"吃飯"},{name:"睡覺"}];
+				request = indexedDB.open("db_type", 3);
+				
+				request.onupgradeneeded = function(event){
+					var db2 = event.target.result;
+					var objectStore = db.createObjectStore("type", {keyPath: "name"});
+					objectStore.createIndex("name", "name", {unique: true});
+					objectStore.put(type[0]);
+					objectStore.put(type[1]);
+
+					objectStore = db2.transaction("type").objectStore("type");
+					objectStore.openCursor().onsuccess = function(event) {
+						var cursor = event.target.result;
+						if (cursor) {
+							alert("Name for SSN " + cursor.key + " is " + cursor.value.name);
+							cursor.continue();
+						}else{
+							alert("No more entries!");
+						}
+					};
+				}
+				
+			}*/
+		
+		</script>
+	</body>
+</html>

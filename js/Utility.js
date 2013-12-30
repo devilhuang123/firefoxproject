@@ -1,6 +1,6 @@
 //tasks and cptTasks Elements are all start in Upper Case
-//tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }		
-//cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result } 
+//tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }
+//cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result }
 
 var mode = "sweet"; //Task Mode
 
@@ -52,8 +52,7 @@ function addTaskOrder(startTime, targetTime, type, period){
 }
 
 //add the exclusion date of the periodically task
-function addTaskExclude(taskOrderId, ExDate)
-{
+function addTaskExclude(taskOrderId, ExDate){
 	//add exclude date into task.Exclude
 	var excludeDate = new Array();
 	excludeDate[excludeDate.length] = ExDate;
@@ -63,13 +62,11 @@ function addTaskExclude(taskOrderId, ExDate)
 /* Input: string/int
  * Output: task
  */
-function getTask(taskId)
-{
+function getTask(taskId){
 	return tasks[parseInt(taskId)];
 }
 
-function deleteTask(taskId)
-{
+function deleteTask(taskId){
 	tasks[parseInt(taskId)] = null;
 }
 
@@ -79,8 +76,7 @@ function deleteTask(taskId)
  =========================*/
 
 //when the end of a task(whaever success or fail), add a task complete record
-function addTaskCpt(startTime, targetTime, type, lastTime, result)
-{	
+function addTaskCpt(startTime, targetTime, type, lastTime, result){	
 	var cptTask = 
 	{
 		Id : parseInt(cptId),
@@ -99,13 +95,11 @@ function addTaskCpt(startTime, targetTime, type, lastTime, result)
 	cptId = nextId;
 }
 
-function getCptTask(id)
-{
+function getCptTask(id){
 	return cptTask[id];
 }
 
-function deleteAllCptTask()
-{
+function deleteAllCptTask(){
 	//here should go to database to delete all completed task data
 	cptTasks = null;
 	var cptTasks = new Array();
@@ -113,14 +107,112 @@ function deleteAllCptTask()
 
 ///
 // Task type Function
-///
+///	
 function getOption(select_type){
-	xmlhttp = new XMLHttpRequest();
+	//alert("123");
+	/*for(var i=0;i<3;i++){
+		var option = document.createElement('option');
 
-	xmlhttp.open("GET", "./task_type.xml", false);
-	xmlhttp.send();
+		option.text = "1";//nodelist[i].childNodes[0].nodeValue;
+		option.value = "1";//nodelist[i].childNodes[0].nodeValue;
+		
+		select_type.appendChild(option);
+	}*/
+	var type_lise = [];
+	var request = indexedDB.open("db_type", 3);
+	request.onerror = function(event) {
+		alert("connect to database db_type has a wrong!");
+	};
+	request.onsuccess = function(event) {
+		var db = request.result;
+		if(db.objectStoreNames.length > 0){
+			var objectStore = db.transaction("type").objectStore("type");
+			objectStore.openCursor().onsuccess = function(event){
+				var cursor = event.target.result;
+				if(cursor){
+					type_list.push(cursor.value);
+					cursor.continue();
+				}else{
+					alert("got all customers: " + type_list);
+				}
+			}		
+		}else{
+			request.result.close();
+			new new_db();
+		}
+	};
+}
 
-	doc = xmlhttp.responseXML;
+function new_db(){
+	var request = indexedDB.open("db_type", 3);
+			
+	request.onerror = function(event){
+		alert("connect to database db_type has a wrong!");
+	};
+	
+	request.onupgradeneeded = function(event){
+		alert("up");
+		const type_list = [{id:"1", name:"吃飯"},{id:"2", name:"睡覺"}];
+		var db = event.target.result;
+		var objectStore = db.createObjectStore("task_type", { keypath: "id"});
+		//objectStore.createIndex("name", "name", { unique: false })
+		objectStore.add(type_list[0]);
+		objectStore.add(type_list[1]);
+	}
+	
+	/*request.onsuccess = function(event){
+		alert("su");
+		var db = request.result;
+		var objectStore = db.transaction("task_type").objectStore("task_type");
+
+		objectStore.openCursor().onsuccess = function(event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				alert("Name for id " + cursor.key + " is " + cursor.value.name);
+				cursor.continue();
+			}else{
+				alert("No more entries!");
+			}
+		};
+	};*/
+}
+
+
+
+	/*var sdcard = navigator.getDeviceStorage("sdcard");
+	var request = sdcard.get("task_type.xml");
+	var fname;
+	request.onsuccess = function () {
+		fname = this.result.name;
+		alert("File "+fname+" successfully retrieved from the sdcard storage area");
+		alert("test" + this.result.name);
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET", this.result.name, false);
+		xmlhttp.send();
+		
+		doc = xmlhttp.responseXML;
+
+	var nodelist = doc.getElementsByTagName("type");
+	
+	for(var i=0;i<nodelist.length;i++){
+		var option = document.createElement('option');
+
+		option.text = nodelist[i].childNodes[0].nodeValue;
+		option.value = nodelist[i].childNodes[0].nodeValue;
+		
+		select_type.appendChild(option);
+	}
+		
+	}
+	request.onerror = function () {
+		alert("Unable to get the file: "+this.error);
+	}*/
+	
+	//xmlhttp = new XMLHttpRequest();
+	//xmlhttp.open("GET", file.mozFullPath, false);
+	//xmlhttp.send();
+
+	/*doc = xmlhttp.responseXML;
 
 	var nodelist = doc.getElementsByTagName("type");
 	//var select_type = document.getElementById('select_type');
@@ -131,8 +223,8 @@ function getOption(select_type){
 		option.value = nodelist[i].childNodes[0].nodeValue;
 		
 		select_type.appendChild(option);
-	}
-}
+	}*/
+
 ///
 // Task Type Function End
 ///

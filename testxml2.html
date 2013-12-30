@@ -1,0 +1,45 @@
+<html>
+	<meta charset="utf-8">
+	<body>
+	123
+	<script>
+	const type2 = [
+	{id:"1", name:"Bill"},
+	{id:"2", name:"Donna"}];
+
+	//const dbName = "the_name";
+
+	var request = indexedDB.open("task_type", 3);
+
+	request.onerror = function(event) {
+	// Handle errors.
+	};
+
+	request.onupgradeneeded = function(event) {
+		var db = event.target.result;
+		var objectStore = db.createObjectStore("task_type", { keyPath: "id" });
+
+		objectStore.createIndex("name", "name", { unique: false });
+
+		for (var i in type2) {
+			objectStore.add(type2[i]);
+		}
+	};
+
+	request.onsuccess = function(event){
+		var db = request.result;
+		var objectStore = db.transaction("task_type").objectStore("task_type");
+
+		objectStore.openCursor().onsuccess = function(event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				alert("Name for id " + cursor.key + " is " + cursor.value.name);
+				cursor.continue();
+			}else{
+				alert("No more entries!");
+			}
+		};
+	};
+	</script>
+	</body>
+</html>
