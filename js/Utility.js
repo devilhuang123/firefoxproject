@@ -109,7 +109,6 @@ function deleteAllCptTask(){
 // Task type Function
 ///	
 function getOption(select_type){
-	//alert("123");
 	/*for(var i=0;i<3;i++){
 		var option = document.createElement('option');
 
@@ -118,7 +117,7 @@ function getOption(select_type){
 		
 		select_type.appendChild(option);
 	}*/
-	var type_lise = [];
+	var type_list = [];
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
@@ -135,48 +134,50 @@ function getOption(select_type){
 				}else{
 					alert("got all customers: " + type_list);
 				}
-			}		
+			};		
 		}else{
-			request.result.close();
-			new new_db();
+			db.close();
+			indexedDB.deleteDatabase("db_type");
+			new_db();
 		}
 	};
 }
 
 function new_db(){
 	var request = indexedDB.open("db_type", 3);
-			
+	
 	request.onerror = function(event){
 		alert("connect to database db_type has a wrong!");
 	};
 	
 	request.onupgradeneeded = function(event){
-		alert("up");
-		const type_list = [{id:"1", name:"吃飯"},{id:"2", name:"睡覺"}];
+		const type_list = [{name:"吃飯"}, {name:"睡覺"}, {name:"上課"}];
 		var db = event.target.result;
-		var objectStore = db.createObjectStore("task_type", { keypath: "id"});
-		//objectStore.createIndex("name", "name", { unique: false })
-		objectStore.add(type_list[0]);
-		objectStore.add(type_list[1]);
-	}
+		var objectStore = db.createObjectStore("task_type", {autoIncrement : true});
+
+		for (var i in type_list) {
+			objectStore.add(type_list[i].name);
+		}
+	};
 	
-	/*request.onsuccess = function(event){
-		alert("su");
+	request.onsuccess = function(event){
 		var db = request.result;
 		var objectStore = db.transaction("task_type").objectStore("task_type");
 
 		objectStore.openCursor().onsuccess = function(event) {
 			var cursor = event.target.result;
 			if (cursor) {
-				alert("Name for id " + cursor.key + " is " + cursor.value.name);
+				alert("Name for id " + cursor.key + " is " + cursor.value);
 				cursor.continue();
 			}else{
 				alert("No more entries!");
 			}
 		};
-	};*/
+	};
 }
-
+///
+// Task Type Function End
+///
 
 
 	/*var sdcard = navigator.getDeviceStorage("sdcard");
@@ -225,6 +226,3 @@ function new_db(){
 		select_type.appendChild(option);
 	}*/
 
-///
-// Task Type Function End
-///
