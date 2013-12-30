@@ -79,9 +79,10 @@ function IndexDBObject(dbName) {
 			autoIncrement : true
 		});
 
-		objectStore.createIndex("Id", "Id", {
-			unique : true
-		});
+		// objectStore.createIndex("Id", "Id", {
+		// unique : true
+		// });
+
 		objectStore.createIndex("StartTime", "StartTime", {
 			unique : false
 		});
@@ -100,30 +101,42 @@ function IndexDBObject(dbName) {
 		console.log("onupgradeneeded");
 	};
 
-	this.GetAllTask = function() {
-		var transaction = db.transaction(name, IDBTransaction.READ_WRITE);
+	this.AllTask = function() {
+		var transaction = db.transaction(name, "readwrite");
 		var objectStore = transaction.objectStore("tasks");
-		console.log("GetAllTask");
+		var _tasks=[];
+		var _this=this;
 		objectStore.openCursor().onsuccess = function(event) {
 			var cursor = event.target.result;
 			if (cursor) {
-				tasks.push(cursor.value);
-				cursor.
-				continue();
+				_tasks.push(cursor.value);
+				cursor.continue();
 			} else {
-				alert("Got all customers: " + tasks);
+				console.log("GetAllTask all");
+				_this.OnGetAllTasks(_tasks);
+				//alert("Got all customers: " + tasks);
 			}
 		};
-		return tasks;
+		this.OnGetAllTasks=function(tasks){};
 	};
 
 	this.Add = function(task) {
-		var transaction = db.transaction(name, IDBTransaction.READ_WRITE);
+		var transaction = db.transaction(name, "readwrite");
 		var objectStore = transaction.objectStore("tasks");
 		var request = objectStore.add(task);
 		request.onsuccess = function(evt) {
 			console.log("add:" + task);
 		};
+		return request;
+	};
+	
+	this.AddArray = function(tasks) {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("tasks");
+		var request=null;
+		tasks.forEach(function(entry) {
+			request = objectStore.add(entry);
+		});
 		return request;
 	};
 
