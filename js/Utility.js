@@ -109,15 +109,6 @@ function deleteAllCptTask(){
 // Task type Function
 ///	
 function getOption(select_type){
-	/*for(var i=0;i<3;i++){
-		var option = document.createElement('option');
-
-		option.text = "1";//nodelist[i].childNodes[0].nodeValue;
-		option.value = "1";//nodelist[i].childNodes[0].nodeValue;
-		
-		select_type.appendChild(option);
-	}*/
-	var type_list = [];
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
@@ -125,20 +116,24 @@ function getOption(select_type){
 	request.onsuccess = function(event) {
 		var db = request.result;
 		if(db.objectStoreNames.length > 0){
-			var objectStore = db.transaction("type").objectStore("type");
+			var objectStore = db.transaction("task_type").objectStore("task_type");
 			objectStore.openCursor().onsuccess = function(event){
 				var cursor = event.target.result;
 				if(cursor){
-					type_list.push(cursor.value);
+					var option = document.createElement('option');
+					option.text = cursor.value;
+					option.value = cursor.value;
+		
+					select_type.appendChild(option);
 					cursor.continue();
 				}else{
-					alert("got all customers: " + type_list);
+					//alert("got all customers: " + type_list);
 				}
 			};		
 		}else{
 			db.close();
 			indexedDB.deleteDatabase("db_type");
-			new_db();
+			new_db(select_type);
 		}
 	};
 }
@@ -167,62 +162,20 @@ function new_db(){
 		objectStore.openCursor().onsuccess = function(event) {
 			var cursor = event.target.result;
 			if (cursor) {
-				alert("Name for id " + cursor.key + " is " + cursor.value);
+				//alert("Name for id " + cursor.key + " is " + cursor.value);
+				var option = document.createElement('option');
+				option.text = cursor.value;
+				option.value = cursor.value;
+		
+				select_type.appendChild(option);
 				cursor.continue();
-			}else{
+			}/*else{
 				alert("No more entries!");
-			}
+			}*/
 		};
 	};
 }
 ///
 // Task Type Function End
 ///
-
-
-	/*var sdcard = navigator.getDeviceStorage("sdcard");
-	var request = sdcard.get("task_type.xml");
-	var fname;
-	request.onsuccess = function () {
-		fname = this.result.name;
-		alert("File "+fname+" successfully retrieved from the sdcard storage area");
-		alert("test" + this.result.name);
-		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET", this.result.name, false);
-		xmlhttp.send();
-		
-		doc = xmlhttp.responseXML;
-
-	var nodelist = doc.getElementsByTagName("type");
-	
-	for(var i=0;i<nodelist.length;i++){
-		var option = document.createElement('option');
-
-		option.text = nodelist[i].childNodes[0].nodeValue;
-		option.value = nodelist[i].childNodes[0].nodeValue;
-		
-		select_type.appendChild(option);
-	}
-		
-	}
-	request.onerror = function () {
-		alert("Unable to get the file: "+this.error);
-	}*/
-	
-	//xmlhttp = new XMLHttpRequest();
-	//xmlhttp.open("GET", file.mozFullPath, false);
-	//xmlhttp.send();
-
-	/*doc = xmlhttp.responseXML;
-
-	var nodelist = doc.getElementsByTagName("type");
-	//var select_type = document.getElementById('select_type');
-	for(var i=0;i<nodelist.length;i++){
-		var option = document.createElement('option');
-
-		option.text = nodelist[i].childNodes[0].nodeValue;
-		option.value = nodelist[i].childNodes[0].nodeValue;
-		
-		select_type.appendChild(option);
-	}*/
 
