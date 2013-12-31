@@ -104,16 +104,57 @@
 								</tr>
 							</table>
 
-							<table id="tblRunTask" align="center">
-								<tr>
-									<td>
-									<button id="btnQuit" type="button" onclick="quitTask();">
-										放棄任務
-									</button></td>
-								</tr>
-								<tr>
-									<td><div id="divCntDnd"></div></td>
-								</tr>
+							<div role="tabpanel">
+								<form id="frmImdTask">
+									<table id="tblUnstart" align="center">
+										<tr>
+											<td>任務類型
+											<br>
+											<select id="lstTaskType"></select></td>
+										</tr>
+										<tr>
+											<td>持續時長：
+											<br>
+											<select id="lstHour"></select>時 <select id="lstMins"></select>分 </td>
+										</tr>
+										<tr>
+											<td>
+											<button type="button" onclick="initImdTask();">
+												開始任務
+											</button><!--<button onclick="notifyMe()">Notify me!</button>--><!--<button onclick="setAlarmSecsAfter(3)">Alarm 3s after</button>-->
+											<input type="text" id="h">
+											點
+											<input type="text" id="m">
+											分
+											<select id="routine">
+												<option value="once" selected="selected">一次</option>
+												<option value="daily" selected="selected">每天</option>
+												<option value="workday" selected="selected">工作天</option>
+												<option value="weekly" selected="selected">每週這天</option>
+												<option value="monthly" selected="selected">每月這天</option>
+												<option value="yearly" selected="selected">每年這天</option>
+											</select>
+											<input type="submit" id="submit" value="Set Alarm">
+											</td>
+										</tr>
+										<tr>
+											<td><div id="labelDiv"></div></td>
+										</tr>
+									</table>
+								</form>
+
+								<table id="tblRunTask" align="center">
+									<tr>
+										<td>
+										<button id="btnQuit" type="button" onclick="quitTask();">
+											放棄任務
+										</button></td>
+									</tr>
+									<tr>
+										<td><div id="divCntDnd" style=font-size:36></div>
+							</div>
+							</td>
+							</tr>
 							</table>
 
 							<table id="tblTaskResult" align = "center">
@@ -137,6 +178,109 @@
 							<script>
 								tas_init();
 							</script>
+					</div>
+				</li>
+				<li id="panel3" role="tab">
+					<a href="#panel3" class="icon">dialer</a>
+					<div role="tabpanel">
+						<section role="region">
+							<header>
+								<menu type="toolbar">
+									<a href="" class="icon">delect</a>
+								</menu>
+								<h1>History</h1>
+							</header>
+						</section>
+						<script>
+							his_print();
+						</script>
+					</div>
+				</li>
+				<li id="panel4" role="tab">
+					<a href="#panel4" class="icon">Tab name</a>
+					<div role="tabpanel">
+						<form id="setting_form" name="setting_form">
+							<p>
+								<button type="button" onclick="Mode()">
+									任務模式設置
+								</button>
+								<button type="button" onclick="Type()">
+									任務類型設置
+								</button>
+								<button type="button" onclick="historyManage()">
+									歷史數據管理
+								</button>
+							</p>
+							<!-- Mode area -->
+							<p>
+								<table id="mode_table">
+									<tr>
+										<td>當前模式:</td>
+										<td id="td_mode">&nbsp;</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+										<select id="select_mode" onchange="setMode()">
+											<option value="sweet">溫柔模式</option>
+											<option value="strict">剽悍模式</option>
+										</select></td>
+									</tr>
+								</table>
+							</p>
+							<!-- end Mode -->
+
+							<!-- Type area -->
+							<p>
+								<table id="task_type_table" border="1">
+									<tr>
+										<td>任務列表</td>
+									</tr>
+									<tr>
+										<td> 新增任務:
+										<input type="text" id="text_type">
+										<button type="button" onclick="appendOption()">
+											新增
+										</button></td>
+									</tr>
+									<tr>
+										<td>
+										<select id="select_type" width="200" size="10" multiple="multiple">
+											<script>
+												getOption();
+											</script>
+											<!--<option value="original1">Orig1</option>
+											<option value="original2">Orig2</option>-->
+										</select></td>
+									</tr>
+								</table>
+							</p>
+
+							<p>
+								<table id="history_manage_table"></table>
+							</p>
+						</form>
+						<script>
+														<table id="tblTaskResult" align = "center">
+							<tr>
+							<td><div id="taskCmdDiv"></div></td>
+							</tr>
+							<tr>
+							<td><div id="cpltRateDiv"></div></td>
+							</tr>
+							<tr>
+							<td>
+							<button type="button" onclick="taskReturn();">
+							返回
+							</button>
+							<button type="button" onclick="poFB();">
+							發文至塗鴉牆
+							</button></td>
+							</tr>
+
+							</table>
+							<script>
+							tas_init();
+						</script>
 						</form>
 					</div>
 				</li>
