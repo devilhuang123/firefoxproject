@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Daily,Workday,Weekly,Monthly,Yearly -->
+<tasks>
+	<task>
+		<StartTime>1387890344683</StartTime>
+		<During>7200</During>
+		<type>吃飯</type>
+		<Period>Daily</Period>
+	</task>
+	<task>
+		<StartTime>1387891344283</StartTime>
+		<During>7200</During>
+		<type>睡覺</type>
+		<Period>Workday</Period>
+	</task>
+	<task>
+		<StartTime>1381891344283</StartTime>
+		<During>2500</During>
+		<type>讀書</type>
+		<Period>Monthly</Period>
+	</task>
+</tasks>

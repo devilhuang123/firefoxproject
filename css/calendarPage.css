@@ -1,0 +1,51 @@
+.ui-state-datepicker-scheduled {
+	border: .05em groove #DF3B39;
+	/*background: #eeeeee url(images/ui-bg_glass_40_0078a3_1x400.png) 50% top repeat-x;*/
+	/*color: #511789;*/
+}
+
+.ui-state-datepicker-unscheduled {
+	border: .05em;
+	/*background: #eeeeee url(images/ui-bg_glass_40_0078a3_1x400.png) 50% top repeat-x;*/
+	/*color: #511789;*/
+}
+
+.dateArea {
+	color: #FF9D37;
+	font-size: 20px;
+}
+
+.list-scrollable {
+	height: 360px; /* or any value */
+	overflow-y: auto;
+}
+
+.list-tasks {
+	margin-top: 5px;
+	margin-left: 10%;
+	margin-right: auto;
+	margin-bottom: 20px;
+}
+
+/*#feedback { font-size: 1.4em; }*/
+
+/*#listView .ui-selecting {
+	background: #FECA40;
+}
+#listView .ui-selected {
+	background: #F39814;
+	color: white;
+}*/
+#listView {
+	list-style-type: none;
+	margin-left: 0%;
+	padding: 0;
+	width: 100%;
+}
+#listView li {
+	margin: 3px;
+	padding: 0.6em;
+	font-size: 1.4em;
+	height: 25px;
+}
+
