@@ -1,6 +1,7 @@
-var mode = "sweet";
+///
+// Constructor
+///
 
-//Constructor
 function setting(){
 	document.getElementById("mode_table").style.display = "none";
 	document.getElementById("task_type_table").style.display = "none";
@@ -21,8 +22,13 @@ function Type(){
 }
 
 ///
+// Constructor End
+///
+
+///
 //Mode functions -- getMode(),setMode().
 ///
+
 function getMode(){
 	if(mode == "sweet")
 		document.getElementById("td_mode").textContent = "溫柔模式";
@@ -35,13 +41,16 @@ function setMode(){
 	var option = document.getElementById("select_mode").options;
 	
 	if(option[index].text == "溫柔模式"){
+		mode = "sweet";
 		document.getElementById("td_mode").textContent = "溫柔模式";
 		alert("您選擇了"+option[index].text);
 	}else{
+		mode = "strict";
 		document.getElementById("td_mode").textContent = "剽悍模式";
 		alert("您選擇了"+option[index].text);
 	}
 }
+
 ///
 //Mode Functions end
 ///
@@ -49,21 +58,6 @@ function setMode(){
 ///
 //Type Functions
 ///
-function getOption(){
-	var options = ["吃飯","睡覺","寫作業","打林宥均","親鄭永斌教授"];
-	
-	/*
-	var doc = new ActiveXObject("Msxml2.DOMDocument");
-	doc.load("./task_type.xml");
-	alert(doc.xml);
-	var root = doc.documentElement;
-	var nodelist = root.childNodes;
-
-	for(var i=0;i<nodelist.length;i++){
-		alert(nodelist[i].value);
-	}
-	*/
-}
 
 function appendOption(){
 	var option = document.createElement('option');
@@ -71,8 +65,17 @@ function appendOption(){
 	option.value = document.getElementById("text_type").value;
 	
 	var select_type = document.getElementById('select_type');
-	select_type.add(option, null);
+	select_type.appendChild(option);
 }
+
+function removeOption(){
+	var select_type = document.getElementById('select_type');
+	var index = document.getElementById("select_type").selectedIndex;
+	var option = document.getElementById("select_type").options;
+	
+	select_type.removeChild(option[index]);
+}
+
 ///
 //Type Functions end
 ///
