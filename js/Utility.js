@@ -1,7 +1,3 @@
-//tasks and cptTasks Elements are all start in Upper Case
-//tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }
-//cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result }
-
 var TaskPeriod = {
 	ONCE : 0,
 	DAILY : 1,
@@ -18,38 +14,16 @@ TaskPeriod.toString = function(value) {
 	return "Go to DMC!";
 };
 
-
-var mode = "sweet"; //Task Mode
+var mode = "sweet";
+//Task Mode
 var tasks = new Array();
 var orderId = 0;
 
 var cptTasks = new Array();
 var cptId = 0;
 
-/*=========================
- * Task Order
- *=========================/
-
- /* addTaskOrder:
- * 		action that user request for add new task, return this order task Id
- *
- * Input:
- * startTime:Date(),
- * targetTime:int/string(seconds),
- * type:string (Excercise, Study, Sleep, etc...)
- * period:string (ONCE, DAILY, WORKDAY, WEEKLY, MONTHLY, YEARLY)
- *
- * Output:
- * this new order task Id
- *
- * Content:
- * Id:
- * Exclude:Array of Date() that won't obey this task's period rule
- * */
-function addTaskOrder(startTime, targetTime, type, period)//定時任務
-{
+function addTaskOrder(startTime, targetTime, type, period) {
 	var task = {
-
 		Id : parseInt(orderId),
 		StartTime : startTime,
 		TargetTime : targetTime,
@@ -66,7 +40,6 @@ function addTaskOrder(startTime, targetTime, type, period)//定時任務
 	var nextId = parseInt(orderId) + 1;
 	orderId = nextId;
 }
-
 
 //add the exclusion date of the periodically task 立即任務
 function addTaskExclude(taskOrderId, ExDate) {
@@ -113,7 +86,6 @@ function addTaskCpt(startTime, targetTime, type, lastTime, result) {
 	cptId = nextId;
 }
 
-
 function getCptTask(id) {
 	return cptTask[id];
 }
@@ -123,7 +95,6 @@ function deleteAllCptTask() {
 	cptTasks = null;
 	var cptTasks = new Array();
 }
-
 
 /*=========================
  * Task Type
@@ -149,19 +120,22 @@ function deleteTaskType(value) {
 	for (var i = 0; i < taskTypes.length; i++) {
 		if (taskTypes[i].Value == value) {
 			taskTypes[i] = null;
+		}
+	}
+}
 
 ///
 // Task type Function
-///	
-function getOption(select_type){
+///
+function getOption(select_type) {
 	/*for(var i=0;i<3;i++){
-		var option = document.createElement('option');
+	 var option = document.createElement('option');
 
-		option.text = "1";//nodelist[i].childNodes[0].nodeValue;
-		option.value = "1";//nodelist[i].childNodes[0].nodeValue;
-		
-		select_type.appendChild(option);
-	}*/
+	 option.text = "1";//nodelist[i].childNodes[0].nodeValue;
+	 option.value = "1";//nodelist[i].childNodes[0].nodeValue;
+
+	 select_type.appendChild(option);
+	 }*/
 	var type_list = [];
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
@@ -169,18 +143,19 @@ function getOption(select_type){
 	};
 	request.onsuccess = function(event) {
 		var db = request.result;
-		if(db.objectStoreNames.length > 0){
+		if (db.objectStoreNames.length > 0) {
 			var objectStore = db.transaction("type").objectStore("type");
-			objectStore.openCursor().onsuccess = function(event){
+			objectStore.openCursor().onsuccess = function(event) {
 				var cursor = event.target.result;
-				if(cursor){
+				if (cursor) {
 					type_list.push(cursor.value);
-					cursor.continue();
-				}else{
+					cursor.
+					continue();
+				} else {
 					alert("got all customers: " + type_list);
 				}
-			};		
-		}else{
+			};
+		} else {
 			db.close();
 			indexedDB.deleteDatabase("db_type");
 			new_db();
@@ -188,25 +163,33 @@ function getOption(select_type){
 	};
 }
 
-function new_db(){
+function new_db() {
 	var request = indexedDB.open("db_type", 3);
-	
-	request.onerror = function(event){
+
+	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
 	};
-	
-	request.onupgradeneeded = function(event){
-		const type_list = [{name:"吃飯"}, {name:"睡覺"}, {name:"上課"}];
+
+	request.onupgradeneeded = function(event) {
+		const type_list = [{
+			name : "吃飯"
+		}, {
+			name : "睡覺"
+		}, {
+			name : "上課"
+		}];
 		var db = event.target.result;
-		var objectStore = db.createObjectStore("task_type", {autoIncrement : true});
+		var objectStore = db.createObjectStore("task_type", {
+			autoIncrement : true
+		});
 
 		for (var i in type_list) {
 			objectStore.add(type_list[i].name);
 
 		}
 	};
-	
-	request.onsuccess = function(event){
+
+	request.onsuccess = function(event) {
 		var db = request.result;
 		var objectStore = db.transaction("task_type").objectStore("task_type");
 
@@ -214,44 +197,14 @@ function new_db(){
 			var cursor = event.target.result;
 			if (cursor) {
 				alert("Name for id " + cursor.key + " is " + cursor.value);
-				cursor.continue();
-			}else{
+				cursor.
+				continue();
+			} else {
 				alert("No more entries!");
 			}
 		};
 	};
 }
-///
-// Task Type Function End
-///
-
-
-	/*var sdcard = navigator.getDeviceStorage("sdcard");
-	var request = sdcard.get("task_type.xml");
-	var fname;
-	request.onsuccess = function () {
-		fname = this.result.name;
-		alert("File "+fname+" successfully retrieved from the sdcard storage area");
-		alert("test" + this.result.name);
-		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET", this.result.name, false);
-		xmlhttp.send();
-		
-		doc = xmlhttp.responseXML;
-
-	var nodelist = doc.getElementsByTagName("type");
-	
-	for(var i=0;i<nodelist.length;i++){
-		var option = document.createElement('option');
-
-<<<<<<< HEAD
-function getAllType() {
-	return taskTypes;
-}
-
-/*=========================
- * Mode
- =========================*/
 
 function changeMode(Mode) {
 	this.mode = Mode;
@@ -260,33 +213,3 @@ function changeMode(Mode) {
 function getMode() {
 	return this.mode;
 }
-/*
-		option.text = nodelist[i].childNodes[0].nodeValue;
-		option.value = nodelist[i].childNodes[0].nodeValue;
-		
-		select_type.appendChild(option);
-	}
-		
-	}
-	request.onerror = function () {
-		alert("Unable to get the file: "+this.error);
-	}
-	
-	//xmlhttp = new XMLHttpRequest();
-	//xmlhttp.open("GET", file.mozFullPath, false);
-	//xmlhttp.send();
-
-	/*doc = xmlhttp.responseXML;
-
-	var nodelist = doc.getElementsByTagName("type");
-	//var select_type = document.getElementById('select_type');
-	for(var i=0;i<nodelist.length;i++){
-		var option = document.createElement('option');
-
-		option.text = nodelist[i].childNodes[0].nodeValue;
-		option.value = nodelist[i].childNodes[0].nodeValue;
-		
-		select_type.appendChild(option);
-	}*/
-
-

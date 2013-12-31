@@ -57,7 +57,8 @@ function IndexDBObject(dbName) {
 	var db;
 	var name = dbName;
 	var _this = this;
-	this.OnDbReaady = function() {
+	this.DB;
+	this.OnDbReaady = function(_db) {
 	};
 	if (!indexedDB)
 		alert("indexedDB not support!");
@@ -65,8 +66,9 @@ function IndexDBObject(dbName) {
 	var request = indexedDB.open(name, 1);
 	request.onsuccess = function(evt) {// 將db暫存起來供以後操作
 		db = request.result;
+		_this.DB=db;
 		console.log("IndexedDB success");
-		_this.OnDbReaady();
+		_this.OnDbReaady(_this);
 	};
 
 	request.onerror = function(evt) {
@@ -78,10 +80,6 @@ function IndexDBObject(dbName) {
 			keyPath : "Id",
 			autoIncrement : true
 		});
-
-		// objectStore.createIndex("Id", "Id", {
-		// unique : true
-		// });
 
 		objectStore.createIndex("StartTime", "StartTime", {
 			unique : false
@@ -104,8 +102,8 @@ function IndexDBObject(dbName) {
 	this.AllTask = function() {
 		var transaction = db.transaction(name, "readwrite");
 		var objectStore = transaction.objectStore("tasks");
-		var _tasks=[];
-		var _this=this;
+		var _tasks = [];
+		var _this = this;
 		objectStore.openCursor().onsuccess = function(event) {
 			var cursor = event.target.result;
 			if (cursor) {
@@ -113,11 +111,13 @@ function IndexDBObject(dbName) {
 				cursor.continue();
 			} else {
 				console.log("GetAllTask all");
-				_this.OnGetAllTasks(_tasks);
+				_this.OnAllTasksGot(_tasks);
 				//alert("Got all customers: " + tasks);
 			}
 		};
-		this.OnGetAllTasks=function(tasks){};
+		this.OnAllTasksGot = function(tasks) {
+		};
+		return this;
 	};
 
 	this.Add = function(task) {
@@ -129,17 +129,17 @@ function IndexDBObject(dbName) {
 		};
 		return request;
 	};
-	
-	this.AddArray = function(tasks) {
+
+	this.AddArray = function(_array) {
 		var transaction = db.transaction(name, "readwrite");
 		var objectStore = transaction.objectStore("tasks");
-		var request=null;
-		tasks.forEach(function(entry) {
+		var request = null;
+		_array.forEach(function(entry) {
 			request = objectStore.add(entry);
 		});
 		return request;
 	};
-
+	return this;
 }
 
 ElementFactory(document);

@@ -32,12 +32,9 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 
 	$("#listView").selectable();
 
-	var taskDB = new IndexDBObject("tasks");
-	taskDB.OnDbReaady = function() {
-		var request = taskDB.AddArray(tasksDemo);
-		request.onsuccess = function(evt) {
-			var allTasks=new taskDB.AllTask();
-			allTasks.OnGetAllTasks = function(arr) {
+	IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
+		indexDbObject.AddArray(tasksDemo).onsuccess = function(evt) {
+			indexDbObject.AllTask().OnAllTasksGot = function(arr) {
 				var list = CreateList(arr);
 				console.log("CreateList");
 				section.appendChild(list);
@@ -48,18 +45,34 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 
 }
 
+function deleteTask(argument) {
+
+}
+
 function CreateTask(task) {
 	var p = ElementFactory.CraeteElement('p');
 	var text = "Null";
 	if (task != null) {
+		var id = task.Id;
 		var startDate = new Date(task.StartTime * 1000);
 		var during = task.During / (60);
 		var type = task.Type;
 		var period = TaskPeriod.toString(task.Period);
-		text = ElementFactory.CreateTextNode(startDate + "," + during + "," + type + "," + period);
+		text = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
+		p.onclick = function() {
+			alert(id);
+		};
 	}
 	p.appendChild(text);
+
 	return p;
+}
+
+function Dialog(dialogId) {
+	var id=dialogId;
+	this.Open= function() {
+
+	};
 }
 
 function CreateList(arr) {
@@ -81,3 +94,4 @@ function CreateListItem(content) {
 	item.setAttribute('class', "ui-widget-content");
 	return item;
 }
+
