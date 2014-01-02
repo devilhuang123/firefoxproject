@@ -126,39 +126,33 @@ function deleteTaskType(value) {
 
 ///
 // Task type Function
-///
-function getOption(select_type) {
-	/*for(var i=0;i<3;i++){
-	 var option = document.createElement('option');
-
-	 option.text = "1";//nodelist[i].childNodes[0].nodeValue;
-	 option.value = "1";//nodelist[i].childNodes[0].nodeValue;
-
-	 select_type.appendChild(option);
-	 }*/
-	var type_list = [];
+///	
+function getOption(select_type){
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
 	};
 	request.onsuccess = function(event) {
 		var db = request.result;
-		if (db.objectStoreNames.length > 0) {
-			var objectStore = db.transaction("type").objectStore("type");
-			objectStore.openCursor().onsuccess = function(event) {
+		if(db.objectStoreNames.length > 0){
+			var objectStore = db.transaction("task_type").objectStore("task_type");
+			objectStore.openCursor().onsuccess = function(event){
 				var cursor = event.target.result;
-				if (cursor) {
-					type_list.push(cursor.value);
-					cursor.
-					continue();
-				} else {
-					alert("got all customers: " + type_list);
+				if(cursor){
+					var option = document.createElement('option');
+					option.text = cursor.value;
+					option.value = cursor.value;
+		
+					select_type.appendChild(option);
+					cursor.continue();
+				}else{
+					//alert("got all customers: " + type_list);
 				}
 			};
 		} else {
 			db.close();
 			indexedDB.deleteDatabase("db_type");
-			new_db();
+			new_db(select_type);
 		}
 	};
 }
@@ -196,20 +190,17 @@ function new_db() {
 		objectStore.openCursor().onsuccess = function(event) {
 			var cursor = event.target.result;
 			if (cursor) {
-				alert("Name for id " + cursor.key + " is " + cursor.value);
-				cursor.
-				continue();
-			} else {
+				var option = document.createElement('option');
+				option.text = cursor.value;
+				option.value = cursor.value;
+		
+				select_type.appendChild(option);
+				cursor.continue();
+			}/*else{
+>>>>>>> origin/setting
 				alert("No more entries!");
-			}
+			}*/
 		};
 	};
 }
 
-function changeMode(Mode) {
-	this.mode = Mode;
-}
-
-function getMode() {
-	return this.mode;
-}
