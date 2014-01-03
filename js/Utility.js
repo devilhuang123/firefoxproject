@@ -98,7 +98,7 @@ function deleteAllCptTask() {
 /*=========================
  * Task Type
  =========================*/
-
+/*
 function initType() {
 	typeId = 0;
 	addTaskType("用功讀書", "study");
@@ -122,7 +122,7 @@ function deleteTaskType(value) {
 		}
 	}
 }
-
+*/
 ///
 // Task type Function
 ///	
