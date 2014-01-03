@@ -1,5 +1,4 @@
 
-
 var TaskPeriod = {
 	ONCE : 0,
 	DAILY : 1,
