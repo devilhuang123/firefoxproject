@@ -14,6 +14,8 @@
 		<!-- <link rel="stylesheet" href="./css/ui-darkness/jquery-ui-1.10.3.custom.css"> -->
 		<script src="js/Debuger.js"></script>
 		<script src="js/jquery-1.9.1.js"></script>
+		<script src="js/FB_init.js"></script>
+		<script src="js/FB_post.js"></script>
 		<script type="text/javascript" src="./js/Utility.js"></script>
 		<script type="text/javascript" src="./js/Factory.js"></script>
 		<script type="text/javascript" src="./js/RadioButton.js"></script>
@@ -59,7 +61,7 @@
 			<!-- if your tabs are at the top, remove class="bottom" -->
 			<ul role="tablist" data-items="4" class="bottom">
 				<li id="panel1" role="tab">
-					<a href="#panel1" class="icon"><img src="./img/calendar.png">comms</a>
+					<a href="#panel1" class="icon"><img src="./img/calendar.png" align="middle">comms</a>
 
 					<div role="tabpanel" >
 						<section role="region" id="mainArea">
@@ -125,6 +127,18 @@
 										<td><div id="labelDiv"></div></td>
 									</tr>
 								</form>
+
+							</table>
+
+							<table id="tblRunTask" align="center">
+								<tr>
+									<td><div id="divCntDnd" class="taskLabel"></div></td>
+								</tr>
+								<tr>
+									<td>
+										<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>										
+									</td>
+								</tr>
 							</table>
 
 							<!--<table id="tblRunTask" align="center">
@@ -158,13 +172,14 @@
 							</script>
 						</div>
 				</li>
+				
 				<li id="panel3" role="tab">
-					<a href="#panel3" class="icon"><img src="./img/history.png">dialer</a>
+					<a href="#panel3" class="icon"><img src="./img/history.png" align="middle">dialer</a>
 					<div role="tabpanel">
 						<section role="region">
 							<header>
 								<menu type="toolbar">
-									<a href="" class="icon">delect</a>
+									<a href="" ><img src="./img/delete.png" align="middle"></a>
 								</menu>
 								<h1>History</h1>
 							</header>
@@ -175,7 +190,7 @@
 					</div>
 				</li>
 				<li id="panel4" role="tab">
-					<a href="#panel4" class="icon"><img src="./img/setting.png">Tab name</a>
+					<a href="#panel4" class="icon"><img src="./img/setting.png" align="middle">Tab name</a>
 					<div role="tabpanel">
 						<form id="setting_form" name="setting_form">
 							<p>
@@ -241,13 +256,15 @@
 						</form>
 						<script>
 							setting();
-
 						</script>
 				</li>
 			</ul>
 		</section>
 		
-		
+		<div id="tblRunTask">
+			<div id="divCntDnd" class="taskLabel"></div>
+			<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>
+		</div>
 		
 
 	</body>

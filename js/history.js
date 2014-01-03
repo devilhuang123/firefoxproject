@@ -1,4 +1,4 @@
-function his_print(){
+/*function his_print(){
 	
 	var task = doc.getElementsByTagName("Task");
 
@@ -12,8 +12,8 @@ function his_print(){
 		//我這邊好像也需要吃到任務的type，否則無法判定每一個task裡面的Type和什麽做對比，決定每一種任務類型分別的成功失敗結果。
 	}
 	
-}
-
+}*/
+/*
 function printtable(){
 	
 	document.write("<table border='1'>");
@@ -43,7 +43,7 @@ function printtable(){
 	
 	document.write("</table>");
 }
-
+*/
 /*function his_print(){
 	if(cptTasks.length==0)
 	{
@@ -105,7 +105,7 @@ function printType(type){
 		document.write("其中成功" + successNo + "次，失敗" + failNo + "次，任務成功率為" + successNo/sum + "。");
 	}
 }*/
-
+/*
 //delete history
 function hisdel(){
 	if (confirm("確定要刪除所有歷史記錄嗎？"))
@@ -116,4 +116,4 @@ function hisdel(){
 	{
 		document.getElementById(panel3).style.display = "";
 	}
-}
+}*/

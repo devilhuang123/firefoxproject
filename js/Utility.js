@@ -1,3 +1,4 @@
+
 var TaskPeriod = {
 	ONCE : 0,
 	DAILY : 1,
@@ -14,8 +15,7 @@ TaskPeriod.toString = function(value) {
 	return "Go to DMC!";
 };
 
-var mode = "strict";
-//Task Mode
+var mode = "sweet";	
 var tasks = new Array();
 var orderId = 0;
 
@@ -99,7 +99,7 @@ function deleteAllCptTask() {
 /*=========================
  * Task Type
  =========================*/
-
+/*
 function initType() {
 	typeId = 0;
 	addTaskType("用功讀書", "study");
@@ -123,7 +123,7 @@ function deleteTaskType(value) {
 		}
 	}
 }
-
+*/
 ///
 // Task type Function
 ///	
@@ -145,11 +145,9 @@ function getOption(select_type){
 		
 					select_type.appendChild(option);
 					cursor.continue();
-				}else{
-					//alert("got all customers: " + type_list);
 				}
 			};
-		} else {
+		}else{
 			db.close();
 			indexedDB.deleteDatabase("db_type");
 			new_db(select_type);
@@ -157,49 +155,37 @@ function getOption(select_type){
 	};
 }
 
-function new_db() {
+function new_db(){
 	var request = indexedDB.open("db_type", 3);
 
-	request.onerror = function(event) {
+	request.onerror = function(event){
 		alert("connect to database db_type has a wrong!");
 	};
 
-	request.onupgradeneeded = function(event) {
-		const type_list = [{
-			name : "吃飯"
-		}, {
-			name : "睡覺"
-		}, {
-			name : "上課"
-		}];
+	request.onupgradeneeded = function(event){
+		const type_list = [{name : "吃飯"}, {name : "睡覺"}, {name : "上課"}];
 		var db = event.target.result;
-		var objectStore = db.createObjectStore("task_type", {
-			autoIncrement : true
-		});
+		var objectStore = db.createObjectStore("task_type", {autoIncrement : true});
 
-		for (var i in type_list) {
+		for (var i in type_list){
 			objectStore.add(type_list[i].name);
-
 		}
 	};
 
-	request.onsuccess = function(event) {
+	request.onsuccess = function(event){
 		var db = request.result;
 		var objectStore = db.transaction("task_type").objectStore("task_type");
 
-		objectStore.openCursor().onsuccess = function(event) {
+		objectStore.openCursor().onsuccess = function(event){
 			var cursor = event.target.result;
-			if (cursor) {
+			if (cursor){
 				var option = document.createElement('option');
 				option.text = cursor.value;
 				option.value = cursor.value;
 		
 				select_type.appendChild(option);
 				cursor.continue();
-			}/*else{
->>>>>>> origin/setting
-				alert("No more entries!");
-			}*/
+			}
 		};
 	};
 }

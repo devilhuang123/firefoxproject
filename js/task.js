@@ -188,8 +188,10 @@ function taskReturn() {
 
 function poFB() {
 	alert("發文到FB!");
+	do_post();
 	bottomVisibility("");
 	changeTaskPage("tblUnstart");
+
 
 }
 
