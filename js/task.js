@@ -15,8 +15,7 @@ var runningTask = {
 };
 
 ///////////get the submit event, use in alarm
-var
-taskForm;
+var taskForm;
 
 /*================
  Task Page
@@ -52,11 +51,11 @@ function tas_init() {
 		lstMins.add(new Option(i, i));
 	}
 
-	var types = getAllType();
+	//var types = getAllType();
 	for (var i = 0; i < types.length; i++) {
 		////////////////////////////////////
-		if (types[i] != "undefine")
-			lstTaskType.add(new Option(types[i].Name, types[i].Value));
+		if (types[i] != "undefine"){}
+			//lstTaskType.add(new Option(types[i].Name, types[i].Value));
 	}
 
 }
@@ -71,7 +70,7 @@ function initImdTask() {
 	} else if (parseInt(hours) !== 0 || parseInt(mins) !== 0) {
 		//successfully add a new task and start running it!
 
-		var nowMode = getNowMode();
+		var nowMode = mode;
 		switch(nowMode) {
 			case "sweet":
 
@@ -126,6 +125,7 @@ function countdown() {
 	}
 
 	document.getElementById("divCntDnd").innerHTML = rmdHour + " : " + rmdMin + " : " + rmdSnd;
+	
 
 	if (!isRunning) {
 		isRunning = true;
@@ -161,11 +161,18 @@ function endTask(lastTime, result) {
 	addTaskCpt(runningTask.StartTime, runningTask.TargetTime, runningTask.Type, lastTime, result);
 
 	//print result
-	document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (parseInt(lastTime) / parseInt(runningTask.TargetTime)) * 100 + "%";
+	document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (parseInt((parseInt(lastTime) / parseInt(runningTask.TargetTime)) * 100,10)/100) * 100 + "%";
 	if (result == "SUCCESS")
+	{
+		document.getElementById("returnBtn").style.display = "";
 		document.getElementById("taskCmdDiv").innerHTML = "幹的好!你真是人生勝利組!";
+	}
 	else if (result == "FAIL")
+	{
+		if(mode == "strict")
+			document.getElementById("returnBtn").style.display = "none";
 		document.getElementById("taskCmdDiv").innerHTML = "加把勁啊！";
+	}
 	else
 		console.log("End task false!");
 
@@ -188,14 +195,15 @@ function poFB() {
 
 function bottomVisibility(visibility) {
 	document.getElementById("panel1").style.display = visibility;
+	document.getElementById("panel2").style.display = visibility;
 	document.getElementById("panel3").style.display = visibility;
 	document.getElementById("panel4").style.display = visibility;
 
 }
 
-/*================
- Alarm
- =================*/
+/*=====================
+ Alarm -- by pmkw52525
+ ======================*/
 
 function setAlarm(e) {
 	// prevent default - we don't want the form to submit in the conventional way

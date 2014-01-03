@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="./css/buttons.css">
 		<link rel="stylesheet" href="./css/value-selector.css">
 		<link rel="stylesheet" href="./css/header.css">
+		<link rel="stylesheet" href="./css/task.css">
 		<!-- <link rel="stylesheet" href="./css/ui-darkness/jquery-ui-1.10.3.custom.css"> -->
 		<script src="js/Debuger.js"></script>
 		<script src="js/jquery-1.9.1.js"></script>
@@ -78,107 +79,84 @@
 				</li>
 				<li id="panel2" role="tab">
 					<a href="#panel2" class="icon"><img src="./img/task.png">contacts</a>
-
 					<div role="tabpanel">
-						<form id="frmAddImdTask">
+						<section role="region">
+							<header>
+								<menu type="toolbar"></menu>
+								<h1>Task</h1>
+							</header>
+						</section>
+													
 							<table id="tblUnstart" align="center">
+								<form id="frmImdTask">
+									<tr>
+										<td class="taskLabel">
+											任務類型<br>
+											<select id="lstTaskType"></select>
+										</td>
+									</tr>
+									<tr>
+										<td class="taskLabel">
+											持續時長：<br>
+											<select id="lstHour"></select>時 <select id="lstMins"></select>分 
+										</td>
+									</tr>
+									<tr>
+										<td>
+										<button type="button" onclick="initImdTask();">開始任務</button>
+										
+										<!-- for test -->
+										<input type="text" id="h">
+										點
+										<input type="text" id="m">
+										分
+										<select id="routine">
+											<option value="once" selected="selected">一次</option>
+											<option value="daily" selected="selected">每天</option>
+											<option value="workday" selected="selected">工作天</option>
+											<option value="weekly" selected="selected">每週這天</option>
+											<option value="monthly" selected="selected">每月這天</option>
+											<option value="yearly" selected="selected">每年這天</option>
+										</select>
+										<input type="submit" id="submit" value="Set Alarm">
+										</td>
+									</tr>
+									<tr>
+										<td><div id="labelDiv"></div></td>
+									</tr>
+								</form>
+							</table>
+
+							<!--<table id="tblRunTask" align="center">
 								<tr>
-									<td>任務類型
-									<br>
-									<select id="lstTaskType">
-										<option value="sleep" selected="selected">準時睡覺</option>
-										<option value="study">認真唸書</option>
-										<option value="excercise">努力運動</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>持續時長：
-									<br>
-									<select id="lstHour"></select>時 <select id="lstMins"></select>分 </td>
+									<td><div id="divCntDnd" class="taskLabel"></div></td>
 								</tr>
 								<tr>
 									<td>
-									<button type="button" onclick="startImdTask();">
-										開始任務
-									</button></td>
+										<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>										
+									</td>
 								</tr>
-							</table>
 
-							<div role="tabpanel">
-								<form id="frmImdTask">
-									<table id="tblUnstart" align="center">
-										<tr>
-											<td>任務類型
-											<br>
-											<select id="lstTaskType"></select></td>
-										</tr>
-										<tr>
-											<td>持續時長：
-											<br>
-											<select id="lstHour"></select>時 <select id="lstMins"></select>分 </td>
-										</tr>
-										<tr>
-											<td>
-											<button type="button" onclick="initImdTask();">
-												開始任務
-											</button><!--<button onclick="notifyMe()">Notify me!</button>--><!--<button onclick="setAlarmSecsAfter(3)">Alarm 3s after</button>-->
-											<input type="text" id="h">
-											點
-											<input type="text" id="m">
-											分
-											<select id="routine">
-												<option value="once" selected="selected">一次</option>
-												<option value="daily" selected="selected">每天</option>
-												<option value="workday" selected="selected">工作天</option>
-												<option value="weekly" selected="selected">每週這天</option>
-												<option value="monthly" selected="selected">每月這天</option>
-												<option value="yearly" selected="selected">每年這天</option>
-											</select>
-											<input type="submit" id="submit" value="Set Alarm">
-											</td>
-										</tr>
-										<tr>
-											<td><div id="labelDiv"></div></td>
-										</tr>
-									</table>
-								</form>
-
-								<table id="tblRunTask" align="center">
-									<tr>
-										<td>
-										<button id="btnQuit" type="button" onclick="quitTask();">
-											放棄任務
-										</button></td>
-									</tr>
-									<tr>
-										<td><div id="divCntDnd" style=font-size:36></div>
-							</div>
-							</td>
-							</tr>
-							</table>
+							</table>-->
 
 							<table id="tblTaskResult" align = "center">
 								<tr>
-									<td><div id="taskCmdDiv"></div></td>
+									<td><div id="taskCmdDiv" class="taskLabel"></div></td>
 								</tr>
 								<tr>
-									<td><div id="cpltRateDiv"></div></td>
+									<td><div id="cpltRateDiv" class="taskLabel"></div></td>
 								</tr>
 								<tr>
 									<td>
-									<button type="button" onclick="taskReturn();">
-										返回
-									</button>
-									<button type="button" onclick="poFB();">
-										發文至塗鴉牆
-									</button></td>
+										<button id="returnBtn" type="button" onclick="taskReturn();">返回</button>
+										<button type="button" onclick="poFB();">發文至塗鴉牆</button>
+									</td>
 								</tr>
-
 							</table>
 							<script>
 								tas_init();
 							</script>
-					</div>
+						</div>
 				</li>
 				<li id="panel3" role="tab">
 					<a href="#panel3" class="icon"><img src="./img/history.png">dialer</a>
@@ -268,6 +246,9 @@
 				</li>
 			</ul>
 		</section>
+		
+		
+		
 
 	</body>
 </html>

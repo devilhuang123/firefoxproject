@@ -14,7 +14,7 @@ TaskPeriod.toString = function(value) {
 	return "Go to DMC!";
 };
 
-var mode = "sweet";
+var mode = "strict";
 //Task Mode
 var tasks = new Array();
 var orderId = 0;
