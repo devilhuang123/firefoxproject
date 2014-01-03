@@ -67,7 +67,7 @@
 									<a href="" >delect</a>
 								</menu>
 							</header>
-							<script>
+							<script src="./js/MissionPage.js">
 								var header = document.getElementById("headerArea");
 								var main = document.getElementById("mainArea");
 								var missionPage = new MissionPage(header, main);
@@ -147,7 +147,7 @@
 			                        	</td>
 			                        </tr>    
 		                      	</table>
-                				<script>tas_init();</script>
+                				<script src="./js/task.js">tas_init();</script>
         			</div>
       			</li>
 				<li id="panel3" role="tab">
@@ -162,7 +162,7 @@
 							</header>
 						</section>
 						<script>
-							his_print();
+							//his_print();
 						</script>
 					</div>
 				</li>
@@ -215,7 +215,7 @@
 									<tr>
 										<td>
 										<select id="select_type" width="200" size="10">
-											<script>
+											<script src="./js/Utility.js">
 												getOption(document.getElementById('select_type'));
 											</script>
 										</select>
@@ -231,7 +231,7 @@
 								<table id="history_manage_table"></table>
 							</p>
 						</form>
-						<script>
+						<script src="./js/setting.js">
 							setting();
 
 						</script>
