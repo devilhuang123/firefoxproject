@@ -139,6 +139,17 @@ function IndexDBObject(dbName) {
 		});
 		return request;
 	};
+	
+	this.DeleteArray=function(ids){
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("tasks");
+		var request = null;
+		ids.forEach(function(entry) {
+			request = objectStore.delete(entry);
+		});
+		return request;
+	};
+	
 	return this;
 }
 
