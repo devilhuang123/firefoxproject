@@ -19,6 +19,7 @@ function Type(){
 	document.getElementById("mode_table").style.display = "none";
 	document.getElementById("task_type_table").style.display = null;
 	document.getElementById("history_manage_table").style.display = "none";
+	getOption();
 }
 
 ///
@@ -66,6 +67,16 @@ function appendOption(){
 	
 	var select_type = document.getElementById('select_type');
 	select_type.appendChild(option);
+}
+
+function getOption(){
+	for(var i=0;i<task_list.length;i++){
+		var option = document.createElement('option');
+		option.text = task_list[i];
+		option.value = task_list[i];
+		var select_type = document.getElementById('select_type');
+		select_type.appendChild(option);
+	}
 }
 
 function removeOption(){

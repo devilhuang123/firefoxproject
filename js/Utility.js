@@ -17,7 +17,6 @@ TaskPeriod.toString = function(value) {
 var mode = "sweet";		//Task Mode
 var tasks = new Array();
 var orderId = 0;
-//var tasktype = new Array();		//Task Type List
 
 var cptTasks = new Array();
 var cptId = 0;
@@ -99,23 +98,10 @@ function deleteAllCptTask() {
 ///
 // Task type Function
 ///
+var task_list = new Array();	// Task Type List
+getTasktype(task_list);
 
-function Utility(){
-	//var tasktype = new Array();
-	getTasktype();
-	
-	var select_type = document.getElementById('select_type');
-	for(var i=0;i<tasktype.length;i++){
-		var option = document.createElement('option');
-		option.text = tasktype[i];
-		option.value = tasktype[i];
-		
-		select_type.appendChild(option);
-	}
-}
-
-function getTasktype(){
-	var tasktype = new Array();
+function getTasktype(task_list){
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
@@ -127,55 +113,20 @@ function getTasktype(){
 			objectStore.openCursor().onsuccess = function(event){
 				var cursor = event.target.result;
 				if(cursor){
-					tasktype.push(cursor.value);
+					task_list.push(cursor.value);
 					cursor.continue();
 				}
 			};
 		}else{
-			tasktype.push("吃飯");
-			tasktype.push("睡覺");
-			tasktype.push("上課");
-		}
-	};
-}
-
-function getOption(select_type){
-	alert(tasktype.length);
-	for(var i=0;i<tasktype.length;i++){
-		var option = document.createElement('option');
-		option.text = tasktype[i];
-		option.value = tasktype[i];
-		
-		select_type.appendChild(option);
-	}
-	//getTasktype();
-	/*
-	var request = indexedDB.open("db_type", 3);
-	request.onerror = function(event) {
-		alert("connect to database db_type has a wrong!");
-	};
-	request.onsuccess = function(event) {
-		var db = request.result;
-		if(db.objectStoreNames.length > 0){
-			var objectStore = db.transaction("task_type").objectStore("task_type");
-			objectStore.openCursor().onsuccess = function(event){
-				var cursor = event.target.result;
-				if(cursor){
-					var option = document.createElement('option');
-					option.text = cursor.value;
-					option.value = cursor.value;
-		
-					select_type.appendChild(option);
-					cursor.continue();
-				}
-			};
-		}else{
+			task_list.push("吃飯");
+			task_list.push("睡覺");
+			task_list.push("上課");
 			db.close();
 			indexedDB.deleteDatabase("db_type");
-			new_db(select_type);
+			new_db();
 		}
 	};
-	*/
+	return task_list;
 }
 
 function new_db(){
@@ -195,7 +146,7 @@ function new_db(){
 		}
 	};
 
-	request.onsuccess = function(event){
+	/*request.onsuccess = function(event){
 		var db = request.result;
 		var objectStore = db.transaction("task_type").objectStore("task_type");
 
@@ -210,6 +161,6 @@ function new_db(){
 				cursor.continue();
 			}
 		};
-	};
+	};*/
 }
 
