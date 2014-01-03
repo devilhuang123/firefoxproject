@@ -94,7 +94,7 @@
 									<tr>
 										<td class="taskLabel">
 											任務類型<br>
-											<select id="lstTaskType"></select>
+											<select id="lstTaskType"><script>//getOption(document.getElementById('lstTaskType'));</script></select>
 										</td>
 									</tr>
 									<tr>
@@ -172,8 +172,11 @@
 								<h1>History</h1>
 							</header>
 						</section>
+						<select id="history_task_type" width="200" size="10">
+							<script>//getOption(document.getElementById('history_task_type'));</script>
+						</select>
 						<script>
-							his_print();
+							//his_print();
 						</script>
 					</div>
 				</li>
@@ -227,7 +230,8 @@
 										<td>
 										<select id="select_type" width="200" size="10">
 											<script>
-												getOption(document.getElementById('select_type'));
+												Utility();
+												//getOption(document.getElementById('select_type'));
 											</script>
 										</select>
 										<br>

@@ -1,4 +1,3 @@
-
 var TaskPeriod = {
 	ONCE : 0,
 	DAILY : 1,
@@ -18,6 +17,7 @@ TaskPeriod.toString = function(value) {
 var mode = "sweet";		//Task Mode
 var tasks = new Array();
 var orderId = 0;
+//var tasktype = new Array();		//Task Type List
 
 var cptTasks = new Array();
 var cptId = 0;
@@ -96,38 +96,60 @@ function deleteAllCptTask() {
 	var cptTasks = new Array();
 }
 
-/*=========================
- * Task Type
- =========================*/
-/*
-function initType() {
-	typeId = 0;
-	addTaskType("用功讀書", "study");
-	addTaskType("早點睡覺", "sleep");
-	addTaskType("努力運動", "exercise");
-}
-
-function addTaskType(name, value) {
-	var tastType = {
-		Name : name,
-		Value : value
-	};
-	taskTypes[typeId] = tastType;
-	typeId = typeId + 1;
-}
-
-function deleteTaskType(value) {
-	for (var i = 0; i < taskTypes.length; i++) {
-		if (taskTypes[i].Value == value) {
-			taskTypes[i] = null;
-		}
-	}
-}
-*/
 ///
 // Task type Function
-///	
+///
+
+function Utility(){
+	//var tasktype = new Array();
+	getTasktype();
+	
+	var select_type = document.getElementById('select_type');
+	for(var i=0;i<tasktype.length;i++){
+		var option = document.createElement('option');
+		option.text = tasktype[i];
+		option.value = tasktype[i];
+		
+		select_type.appendChild(option);
+	}
+}
+
+function getTasktype(){
+	var tasktype = new Array();
+	var request = indexedDB.open("db_type", 3);
+	request.onerror = function(event) {
+		alert("connect to database db_type has a wrong!");
+	};
+	request.onsuccess = function(event) {
+		var db = request.result;
+		if(db.objectStoreNames.length > 0){
+			var objectStore = db.transaction("task_type").objectStore("task_type");
+			objectStore.openCursor().onsuccess = function(event){
+				var cursor = event.target.result;
+				if(cursor){
+					tasktype.push(cursor.value);
+					cursor.continue();
+				}
+			};
+		}else{
+			tasktype.push("吃飯");
+			tasktype.push("睡覺");
+			tasktype.push("上課");
+		}
+	};
+}
+
 function getOption(select_type){
+	alert(tasktype.length);
+	for(var i=0;i<tasktype.length;i++){
+		var option = document.createElement('option');
+		option.text = tasktype[i];
+		option.value = tasktype[i];
+		
+		select_type.appendChild(option);
+	}
+	//getTasktype();
+	/*
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
@@ -153,6 +175,7 @@ function getOption(select_type){
 			new_db(select_type);
 		}
 	};
+	*/
 }
 
 function new_db(){
