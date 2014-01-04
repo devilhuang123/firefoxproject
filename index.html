@@ -22,6 +22,7 @@
 		<script type="text/javascript" src="./js/MissionPage.js"></script>
 		<script type="text/javascript" src="./js/Calendar.js"></script>
 		<script type="text/javascript" src="./js/List.js"></script>
+		<script type="text/javascript" src="./js/cptTaskDB.js"></script>
 		<script type="text/javascript" src="./js/task.js"></script>
 		<script type="text/javascript" src="./js/history.js"></script>
 		<script type="text/javascript" src="./js/setting.js"></script>
@@ -56,6 +57,20 @@
 		</style>
 	</head>
 	<body role="application">
+		
+		<div id="taskRunning" class="taskLabel">
+			<div id="divRunTask" align="center" style="display: none;">
+				<div id="divCntDnd"></div>
+				<button  id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>
+			</div>
+			
+			<div id="divTaskResult" align = "center" style="display: none;">
+				<div id="taskCmdDiv"></div>
+				<div id="cpltRateDiv"></div>
+				<button id="returnBtn" type="button" onclick="taskReturn();">返回</button>
+				<button type="button" onclick="poFB();">發文至塗鴉牆</button>
+			</div>
+		</div>
 
 		<section role="region">
 			<!-- if your tabs are at the top, remove class="bottom" -->
@@ -125,47 +140,9 @@
 									</tr>
 									<tr>
 										<td><div id="labelDiv"></div></td>
+										<input type="button" id="btnTest" value="Set Alarm2">
 									</tr>
 								</form>
-
-							</table>
-
-							<table id="tblRunTask" align="center">
-								<tr>
-									<td><div id="divCntDnd" class="taskLabel"></div></td>
-								</tr>
-								<tr>
-									<td>
-										<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>										
-									</td>
-								</tr>
-							</table>
-
-							<!--<table id="tblRunTask" align="center">
-								<tr>
-									<td><div id="divCntDnd" class="taskLabel"></div></td>
-								</tr>
-								<tr>
-									<td>
-										<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>										
-									</td>
-								</tr>
-
-							</table>-->
-
-							<table id="tblTaskResult" align = "center">
-								<tr>
-									<td><div id="taskCmdDiv" class="taskLabel"></div></td>
-								</tr>
-								<tr>
-									<td><div id="cpltRateDiv" class="taskLabel"></div></td>
-								</tr>
-								<tr>
-									<td>
-										<button id="returnBtn" type="button" onclick="taskReturn();">返回</button>
-										<button type="button" onclick="poFB();">發文至塗鴉牆</button>
-									</td>
-								</tr>
 							</table>
 							<script>
 								tas_init();
@@ -261,11 +238,7 @@
 			</ul>
 		</section>
 		
-		<div id="tblRunTask">
-			<div id="divCntDnd" class="taskLabel"></div>
-			<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>
-		</div>
-		
+			
 
 	</body>
 </html>

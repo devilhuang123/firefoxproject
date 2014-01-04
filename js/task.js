@@ -16,23 +16,39 @@ var runningTask = {
 
 ///////////get the submit event, use in alarm
 var taskForm;
+var btnTest;
 
 /*================
  Task Page
  =================*/
 
+var cptTasksDemo = 
+[
+	{
+		StartTime : 111,
+		TargetTime : 60,
+		Type : "sleep",
+		LastTime : 55,
+		Result : "fail"
+	}
+];
+
 function changeTaskPage(tblName) {
-	document.getElementById("tblRunTask").style.display = "none";
+	document.getElementById("divRunTask").style.display = "none";
 	document.getElementById("tblUnstart").style.display = "none";
-	document.getElementById("tblTaskResult").style.display = "none";
+	document.getElementById("divTaskResult").style.display = "none";
 
 	document.getElementById(tblName).style.display = "";
 }
 
 function tas_init() {
 
-	changeTaskPage("tblUnstart");
-
+	//changeTaskPage("tblUnstart");
+	document.getElementById("tblUnstart").style.display = "";
+	
+	//init Index DB
+	cptTaskDBInit();
+	
 	var lstHours = document.getElementById("lstHour");
 	var lstMins = document.getElementById("lstMins");
 
@@ -41,6 +57,9 @@ function tas_init() {
 	///////////////////////////////////////////////////
 	taskForm = document.getElementById("frmImdTask");
 	taskForm.addEventListener('submit', setAlarm, false);
+	
+	btnTest = document.getElementById("btnTest");
+	btnTest.addEventListener('click', setAlarm, false);
 	///////////////////////////////////////////////////
 
 	for (var i = 0; i < 24; i++) {
@@ -52,11 +71,11 @@ function tas_init() {
 	}
 
 	//var types = getAllType();
-	for (var i = 0; i < types.length; i++) {
+	/*for (var i = 0; i < types.length; i++) {
 		////////////////////////////////////
 		if (types[i] != "undefine"){}
-			//lstTaskType.add(new Option(types[i].Name, types[i].Value));
-	}
+			lstTaskType.add(new Option(types[i].Name, types[i].Value));
+	}*/
 
 }
 
@@ -89,7 +108,7 @@ function initImdTask() {
 
 		addTaskOrder(new Date(), (parseInt(hours) * 3600 + parseInt(mins) * 60), document.getElementById("lstTaskType").value, "ONCE");
 		setRunningTask(new Date(), (parseInt(hours) * 3600 + parseInt(mins) * 60), document.getElementById("lstTaskType").value);
-		changeTaskPage("tblRunTask");
+		changeTaskPage("divRunTask");
 		countdown();
 
 	} else {
@@ -105,6 +124,7 @@ function setRunningTask(startTime, targetTime, type) {
 	remainSnd = parseInt(targetTime);
 
 	bottomVisibility("none");
+	document.getElementById("divCntDnd").style.display = "";
 	//alert("任務開始時間：" + now.getTime() + "\n任務類型：" + type + "\n持續時長：" + targetTime);
 }
 
@@ -155,7 +175,8 @@ function endTask(lastTime, result) {
 	remainSnd == 0;
 	clearTimeout(countdownMeter);
 
-	changeTaskPage("tblTaskResult");
+	
+	changeTaskPage("divTaskResult");
 
 	//add task complete data into database
 	addTaskCpt(runningTask.StartTime, runningTask.TargetTime, runningTask.Type, lastTime, result);
@@ -176,13 +197,14 @@ function endTask(lastTime, result) {
 	else
 		console.log("End task false!");
 
-	changeTaskPage("tblTaskResult");
+	changeTaskPage("divTaskResult");
 }
 
 //use in index.html
 function taskReturn() {
-	bottomVisibility("");
+	//bottomVisibility("");
 	changeTaskPage("tblUnstart");
+	bottomVisibility("");
 
 }
 
@@ -191,8 +213,6 @@ function poFB() {
 	do_post();
 	bottomVisibility("");
 	changeTaskPage("tblUnstart");
-
-
 }
 
 function bottomVisibility(visibility) {
@@ -301,7 +321,7 @@ function alarmCallback() {
 				new Notification(alarm.data.taskType + " task start now!");
 
 				setRunningTask(new Date(), alarm.data.during, alarm.data.taskType);
-				changeTaskPage("tblRunTask");
+				changeTaskPage("divRunTask");
 				countdown();
 
 				//////if alarm is periodically, set the next time alarm and change the AlarmId in task list
