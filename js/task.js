@@ -17,6 +17,7 @@ var runningTask = {
 ///////////get the submit event, use in alarm
 var taskForm;
 var btnTest;
+//var panel2ChangeEvt;
 
 /*================
  Task Page
@@ -47,35 +48,44 @@ function tas_init() {
 	document.getElementById("tblUnstart").style.display = "";
 	
 	//init Index DB
-	cptTaskDBInit();
+	//cptTaskDBInit();
 	
 	var lstHours = document.getElementById("lstHour");
 	var lstMins = document.getElementById("lstMins");
 
 	var lstTaskType = document.getElementById("lstTaskType");
 
-	///////////////////////////////////////////////////
-	taskForm = document.getElementById("frmImdTask");
-	taskForm.addEventListener('submit', setAlarm, false);
-	
+	///////////////////////////////////////////////////	
 	btnTest = document.getElementById("btnTest");
 	btnTest.addEventListener('click', setAlarm, false);
 	///////////////////////////////////////////////////
-
-	for (var i = 0; i < 24; i++) {
-		lstHours.add(new Option(i, i));
+	
+	
+	if(lstHours.options.length == 0)
+	{
+		for (var i = 0; i < 24; i++) {
+			lstHours.add(new Option(i, i));
+		}
 	}
 
-	for (var i = 0; i < 60; i++) {
-		lstMins.add(new Option(i, i));
+	if(lstMins.options.length == 0)
+	{
+		for (var i = 0; i < 60; i++) {
+			lstMins.add(new Option(i, i));
+		}
 	}
-
-	//var types = getAllType();
-	/*for (var i = 0; i < types.length; i++) {
-		////////////////////////////////////
-		if (types[i] != "undefine"){}
-			lstTaskType.add(new Option(types[i].Name, types[i].Value));
-	}*/
+	
+	//getTasktype(task_list);
+	//var types = task_list;
+	for(var i=lstTaskType.options.length-1; i>=0; i--)
+	{
+		lstTaskType.options[i].remove();
+	}
+	for (var i = 0; i < task_list.length; i++) 
+	{
+		if(task_list[i] != "undefine")
+			lstTaskType.add(new Option(task_list[i], task_list[i]));			
+	}
 
 }
 
@@ -144,7 +154,7 @@ function countdown() {
 		rmdSnd = "0" + rmdSnd;
 	}
 
-	document.getElementById("divCntDnd").innerHTML = rmdHour + " : " + rmdMin + " : " + rmdSnd;
+	document.getElementById("divCntDnd").innerHTML = "<br><br><br>" + rmdHour + " : " + rmdMin + " : " + rmdSnd;
 	
 
 	if (!isRunning) {

@@ -67,6 +67,7 @@ function appendOption(){
 	
 	var select_type = document.getElementById('select_type');
 	select_type.appendChild(option);
+	task_list[task_list.length] = document.getElementById("text_type").value;
 }
 
 function getOption(){
