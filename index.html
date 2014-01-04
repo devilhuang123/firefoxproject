@@ -171,6 +171,22 @@
 								</menu>
 								<h1>History</h1>
 							</header>
+							
+								任務類型<br>
+								<select id="history_type" onchange="getSelectedChange()">
+									<script>
+										getOption(document.getElementById('history_type'));
+									</script>
+								</select>
+								
+							<div role = "circle">			
+						  		<p>  
+                          			<canvas id="canvas_circle" width="500" height="300" style="border:2px solid #0026ff;" ></canvas>  
+        				  		</p> 
+								<script>
+									//window.onload = init; 
+								</script>
+							</div>
 						</section>
 						<script>
 							his_print();
