@@ -14,9 +14,8 @@ var runningTask = {
 };
 
 ///////////get the submit event, use in alarm
-var taskForm;
 var btnTest;
-//var panel2ChangeEvt;
+var btnDeleteTest;
 
 /*================
  Task Page
@@ -43,11 +42,7 @@ function changeTaskPage(tblName) {
 
 function tas_init() {
 
-	//changeTaskPage("tblUnstart");
 	document.getElementById("tblUnstart").style.display = "";
-	
-	//init Index DB
-	//cptTaskDBInit();
 	
 	var lstHours = document.getElementById("lstHour");
 	var lstMins = document.getElementById("lstMins");
@@ -57,6 +52,9 @@ function tas_init() {
 	///////////////////////////////////////////////////	
 	btnTest = document.getElementById("btnTest");
 	btnTest.addEventListener('click', setAlarm, false);
+	
+	btnDeleteTest = document.getElementById("btnDelete");
+	btnDeleteTest.addEventListener('click', deleteAlarm, false);
 	///////////////////////////////////////////////////
 	
 	
@@ -74,8 +72,7 @@ function tas_init() {
 		}
 	}
 	
-	//getTasktype(task_list);
-	//var types = task_list;
+
 	for(var i=lstTaskType.options.length-1; i>=0; i--)
 	{
 		lstTaskType.options[i].remove();

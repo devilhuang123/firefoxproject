@@ -43,16 +43,19 @@ function setAlarm(e) {
 
 		//new alarm
 		var request = navigator.mozAlarms.add(testAlarmTime, "ignoreTimezone", alarmData);
-		request.onsuccess = function() {
-			notifyMe();
-			console.log("Alarm sucessfully scheduled");
+		request.onsuccess = function() 
+		{
+			notifyMe("successfully add alarm");
+			//console.log("Alarm sucessfully scheduled");
 			var alarmRequest = navigator.mozAlarms.getAll();
-			alarmRequest.onsuccess = function() {
+			alarmRequest.onsuccess = function() 
+			{
 				//this is the new alarm Id and it should be store into task data
 				newAlarmId = this.result[(this.result.length) - 1].id;
-				console.log("this is the new alarm Id and it should be store into task data : " + newAlarmId);
+				console.log(newAlarmId);
 			};
 
+			/////Set Alarm Callback here!!
 			alarmCallback();
 		};
 
@@ -84,10 +87,12 @@ function alarmCallback() {
 
 				var request = navigator.mozAlarms.add(AlarmTime, "ignoreTimezone", alarmData);
 
-				request.onsuccess = function() {
+				request.onsuccess = function() 
+				{
 					console.log("Alarm 2 sucessfully scheduled");
 				};
-				request.onerror = function() {
+				request.onerror = function() 
+				{
 					console.log("An error occurred: " + this.error.name);
 				};
 			} else if (alarm.data.alarmType == "start")//if the task start alarm ring
@@ -100,11 +105,14 @@ function alarmCallback() {
 				countdown();
 
 				//////if alarm is periodically, set the next time alarm and change the AlarmId in task list
-				switch(alarm.data.period) {
+				switch(alarm.data.period) 
+				{
 					case "ONCE":
+						//do nothing
 						break;
 
 					case "DAILY":
+						//
 						break;
 
 					case "WORKDAY":
@@ -126,13 +134,19 @@ function alarmCallback() {
 	}
 }
 
-function notifyMe() {
-	if (!("Notification" in window)) {
+function notifyMe(notifyStr) {
+	if (!("Notification" in window)) 
+	{
 		alert("This browser does not support desktop notification");
-	} else if (Notification.permission === "granted") {
-		var notification = new Notification("Hi there!");
-	} else if (Notification.permission !== 'denied') {
-		Notification.requestPermission(function(permission) {
+	}
+	else if (Notification.permission === "granted") 
+	{
+		var notification = new Notification(notifyStr);
+	}
+	else if (Notification.permission !== 'denied') 
+	{
+		Notification.requestPermission(function(permission) 
+		{
 			if (!('permission' in Notification)) {
 				Notification.permission = permission;
 			}
@@ -142,4 +156,13 @@ function notifyMe() {
 			}
 		});
 	}
+}
+
+function deleteAlarm(alarmId)
+{
+	if(navigator.mozAlarms) 
+    {
+    	notifyMe("delete Alarm" + newAlarmId);
+      	navigator.mozAlarms.remove(newAlarmId);
+    }
 }
