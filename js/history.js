@@ -1,6 +1,6 @@
-/*function his_print(){
+function his_print(){
 	
-	var task = doc.getElementsByTagName("Task");
+	/*var task = doc.getElementsByTagName("Task");
 
 	if(task.length==0)
 	{
@@ -10,9 +10,9 @@
 	{
 		document.write("現已完成" + task.length + "次任務" + "<br>");
 		//我這邊好像也需要吃到任務的type，否則無法判定每一個task裡面的Type和什麽做對比，決定每一種任務類型分別的成功失敗結果。
-	}
+	}*/
 	
-}*/
+}
 /*
 function printtable(){
 	
