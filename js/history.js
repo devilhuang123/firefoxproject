@@ -16,6 +16,16 @@ function his_init()
 			type.add(new Option(task_list[i], task_list[i]));			
 	}
     
+	createCptIndexDb().OnDbReaady = function(indexDbObject) {
+		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
+			if (arr.length > 0) {
+				//CreateTasksList(indexDbObject);
+				console.log(arr);
+			} else {
+				console.log("nothing in DB");
+			}
+		};
+	};
 }
 
 
@@ -27,35 +37,34 @@ function getSelectedChange()
 
 
 function showCircle(selectedType)
-{
-	createCptIndexDb().OnDbReaady = function(indexDbObject) {
-		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
-			if (arr.length > 0) {
-				//CreateTasksList(indexDbObject);
-				console.log(arr);
-			} else {
-				console.log("nothing in DB");
-			}
-		};
-	};
-	
+{	
 	//if(arr.length == 0) alert("no!");
-	
-	var data_arr = 0;
+	var sum = 0;
+	var data_rate = 0;
+	var data = 0;
 	
 	for (var i=0; i<arr.length; i++)
 	{
 		if (selectedType == arr[i].Type)
-		{
+		{				
 			if (arr.result == "SUCCESS")
-				data_arr[0] = data_arr[0] + 1;
+			{
+				data[0] = data[0] + 1;
+				sum = sum + 1;
+			}
 			else 
-				data_arr[1] = data_arr[1] + 1;
+			{
+				data[1] = data[1] + 1;
+				sum = sum + 1;
+			}
 		}
 		else{ }
 	}
 	
-	drawCircle("canvas_circle", data_arr, color_arr, text_arr);
+	data_rate[0] = data[0] / sum;
+	data_rate[1] = data[1] / sum;
+	
+	drawCircle("canvas_circle", data_rate, color_arr, text_arr);
 }
 
 //绘制饼图  
