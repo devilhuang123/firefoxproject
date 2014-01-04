@@ -14,8 +14,7 @@ TaskPeriod.toString = function(value) {
 	return "Go to DMC!";
 };
 
-var mode = "sweet";
-//Task Mode
+var mode = "sweet";		//Task Mode
 var tasks = new Array();
 var orderId = 0;
 
@@ -96,38 +95,13 @@ function deleteAllCptTask() {
 	var cptTasks = new Array();
 }
 
-/*=========================
- * Task Type
- =========================*/
-
-function initType() {
-	typeId = 0;
-	addTaskType("用功讀書", "study");
-	addTaskType("早點睡覺", "sleep");
-	addTaskType("努力運動", "exercise");
-}
-
-function addTaskType(name, value) {
-	var tastType = {
-		Name : name,
-		Value : value
-	};
-	taskTypes[typeId] = tastType;
-	typeId = typeId + 1;
-}
-
-function deleteTaskType(value) {
-	for (var i = 0; i < taskTypes.length; i++) {
-		if (taskTypes[i].Value == value) {
-			taskTypes[i] = null;
-		}
-	}
-}
-
 ///
 // Task type Function
-///	
-function getOption(select_type){
+///
+var task_list = new Array();	// Task Type List
+getTasktype(task_list);
+
+function getTasktype(task_list){
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
@@ -139,68 +113,54 @@ function getOption(select_type){
 			objectStore.openCursor().onsuccess = function(event){
 				var cursor = event.target.result;
 				if(cursor){
-					var option = document.createElement('option');
-					option.text = cursor.value;
-					option.value = cursor.value;
-		
-					select_type.appendChild(option);
+					task_list.push(cursor.value);
 					cursor.continue();
-				}else{
-					//alert("got all customers: " + type_list);
 				}
 			};
-		} else {
+		}else{
+			task_list.push("吃飯");
+			task_list.push("睡覺");
+			task_list.push("上課");
 			db.close();
 			indexedDB.deleteDatabase("db_type");
-			new_db(select_type);
+			new_db();
 		}
 	};
+	return task_list;
 }
 
-function new_db() {
+function new_db(){
 	var request = indexedDB.open("db_type", 3);
 
-	request.onerror = function(event) {
+	request.onerror = function(event){
 		alert("connect to database db_type has a wrong!");
 	};
 
-	request.onupgradeneeded = function(event) {
-		const type_list = [{
-			name : "吃飯"
-		}, {
-			name : "睡覺"
-		}, {
-			name : "上課"
-		}];
+	request.onupgradeneeded = function(event){
+		const type_list = [{name : "吃飯"}, {name : "睡覺"}, {name : "上課"}];
 		var db = event.target.result;
-		var objectStore = db.createObjectStore("task_type", {
-			autoIncrement : true
-		});
+		var objectStore = db.createObjectStore("task_type", {autoIncrement : true});
 
-		for (var i in type_list) {
+		for (var i in type_list){
 			objectStore.add(type_list[i].name);
-
 		}
 	};
 
-	request.onsuccess = function(event) {
+	/*request.onsuccess = function(event){
 		var db = request.result;
 		var objectStore = db.transaction("task_type").objectStore("task_type");
 
-		objectStore.openCursor().onsuccess = function(event) {
+		objectStore.openCursor().onsuccess = function(event){
 			var cursor = event.target.result;
-			if (cursor) {
+			if (cursor){
 				var option = document.createElement('option');
 				option.text = cursor.value;
 				option.value = cursor.value;
 		
 				select_type.appendChild(option);
 				cursor.continue();
-			}/*else{
->>>>>>> origin/setting
-				alert("No more entries!");
-			}*/
+			}
 		};
-	};
+	};*/
 }
 

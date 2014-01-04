@@ -1,17 +1,17 @@
 {
   "name": "Strive",
   "description": "This app allows you to check your battery levels!",
-  "launch_path": "/index.html",
+  "launch_path": "index.html",
   "developer": {
     "name": "Huang",
     "url": ""
   },
   "icons": {
-    "16": "/img/icon16.png",
-    "32": "/img/icon32.png",
-    "48": "/img/icon48.png",
-    "64": "/img/icon64.png",
-    "128": "/img/icon128.png"
+    "16": "/~102522102/firefoxproject/img/icon16.png",
+    "32": "/~102522102/firefoxproject/img/icon32.png",
+    "48": "/~102522102/firefoxproject/img/icon48.png",
+    "64": "/~102522102/firefoxproject/img/icon64.png",
+    "128": "/~102522102/firefoxproject/img/icon128.png"
   },
   "default_locale": "en",
   
