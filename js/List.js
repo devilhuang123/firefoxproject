@@ -27,11 +27,12 @@ var tasksDemo = [{
 
 function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	var _this = this;
+	var listId = "listView";
 	var section = CreateSection();
 	this.area = section;
 	areaToShow.appendChild(section);
 
-	$("#listView").selectable();
+	$("#" + listId).selectable();
 
 	IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
 		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
@@ -54,12 +55,17 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		};
 	}
 
-	function Refresh() {
-
+	function RefreshList() {
+		var list = ElementFactory.FindElement(listId);
+		section.removeChild(list);
+		IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
+			CreateTasksList(indexDbObject);
+		};
 	}
 
 	function Dialog() {
 	}
+
 
 	Dialog.Open = function(title, content, _buttons) {
 		var id = "dialog_" + title;
@@ -70,20 +76,18 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		div.setAttribute('id', id);
 		div.setAttribute('title', title);
 		section.appendChild(div);
-		var _s=section;
-		
-		function onclose(event, ui){
-			//_s.removeChild(div);
+		var _s = section;
+
+		function onclose(event, ui) {
+			$(this).dialog('destroy').remove();
 		}
-		
+
 		$("#" + id).dialog({
 			autoOpen : false,
 			closeOnEscape : false,
 			beforeclose : function(event, ui) {
 				return false;
-			}
-			//,     dialogClass : "noclose",
-			,
+			},
 			buttons : _buttons,
 			close : onclose
 		});
@@ -94,7 +98,8 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
 			var arr = [recordId];
 			indexDbObject.DeleteArray(arr).onsuccess = function(evt) {
-				alert("task:"+recordId+" deleted!");
+				alert("task:" + recordId + " deleted!");
+				RefreshList();
 			};
 		};
 	}
@@ -111,13 +116,13 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 			text = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
 			p.onclick = function() {
 				var buttons = [{
-					text : "Delete",
+					text : "Delete:" + id,
 					click : function() {
 						deleteTask(id);
 						$(this).dialog("close");
 					}
 				}];
-				Dialog.Open("action", "msg", buttons);
+				Dialog.Open("action", "msg:"+id, buttons);
 			};
 		}
 		p.appendChild(text);
@@ -127,7 +132,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 
 	function CreateList(arr) {
 		var list = ElementFactory.CraeteElement("ol");
-		list.setAttribute('id', "listView");
+		list.setAttribute('id', listId);
 		//list.setAttribute('class', "list-tasks");
 		arr.forEach(function(entry) {
 			console.log("entry:" + entry);
