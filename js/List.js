@@ -1,7 +1,3 @@
-function mm_includejs (jsFile){
-	document .write('<script type="text/javascript" src="' + jsFile + '"></script>');
-}
-mm_includejs('js/Utility.js');
 
 var listDataTest = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var tasksDemo = [{
