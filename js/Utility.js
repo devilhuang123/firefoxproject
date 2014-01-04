@@ -1,4 +1,3 @@
-
 var TaskPeriod = {
 	ONCE : 0,
 	DAILY : 1,
@@ -96,38 +95,13 @@ function deleteAllCptTask() {
 	var cptTasks = new Array();
 }
 
-/*=========================
- * Task Type
- =========================*/
-/*
-function initType() {
-	typeId = 0;
-	addTaskType("用功讀書", "study");
-	addTaskType("早點睡覺", "sleep");
-	addTaskType("努力運動", "exercise");
-}
-
-function addTaskType(name, value) {
-	var tastType = {
-		Name : name,
-		Value : value
-	};
-	taskTypes[typeId] = tastType;
-	typeId = typeId + 1;
-}
-
-function deleteTaskType(value) {
-	for (var i = 0; i < taskTypes.length; i++) {
-		if (taskTypes[i].Value == value) {
-			taskTypes[i] = null;
-		}
-	}
-}
-*/
 ///
 // Task type Function
-///	
-function getOption(select_type){
+///
+var task_list = new Array();	// Task Type List
+getTasktype(task_list);
+
+function getTasktype(task_list){
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
@@ -139,20 +113,20 @@ function getOption(select_type){
 			objectStore.openCursor().onsuccess = function(event){
 				var cursor = event.target.result;
 				if(cursor){
-					var option = document.createElement('option');
-					option.text = cursor.value;
-					option.value = cursor.value;
-		
-					select_type.appendChild(option);
+					task_list.push(cursor.value);
 					cursor.continue();
 				}
 			};
 		}else{
+			task_list.push("吃飯");
+			task_list.push("睡覺");
+			task_list.push("上課");
 			db.close();
 			indexedDB.deleteDatabase("db_type");
-			new_db(select_type);
+			new_db();
 		}
 	};
+	return task_list;
 }
 
 function new_db(){
@@ -172,7 +146,7 @@ function new_db(){
 		}
 	};
 
-	request.onsuccess = function(event){
+	/*request.onsuccess = function(event){
 		var db = request.result;
 		var objectStore = db.transaction("task_type").objectStore("task_type");
 
@@ -187,6 +161,6 @@ function new_db(){
 				cursor.continue();
 			}
 		};
-	};
+	};*/
 }
 

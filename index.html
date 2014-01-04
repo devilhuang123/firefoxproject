@@ -161,8 +161,9 @@
 								<h1>History</h1>
 							</header>
 						</section>
+						<select id="history_task_type"></select>
 						<script>
-							his_print();
+							//his_print();
 						</script>
 					</div>
 				</li>
@@ -214,11 +215,7 @@
 									</tr>
 									<tr>
 										<td>
-										<select id="select_type" width="200" size="10">
-											<script>
-												getOption(document.getElementById('select_type'));
-											</script>
-										</select>
+										<select id="select_type" width="200" size="10"></select>
 										<br>
 										<button type="button" onclick="removeOption()">
 											刪除
