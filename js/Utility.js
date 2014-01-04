@@ -164,3 +164,91 @@ function new_db(){
 	};*/
 }
 
+function createCptIndexDb() 
+{
+	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+	var db;
+	var name = "cpt_tasks";
+	var _this = this;
+	this.DB;
+	this.OnDbReaady = function(_db) {
+	};
+	if (!indexedDB)
+		alert("cpt indexedDB not support!");
+
+	var request = indexedDB.open(name, 1);
+	request.onsuccess = function(evt) {// 將db暫存起來供以後操作
+		db = request.result;
+		_this.DB=db;
+		console.log("cpt IndexedDB success");
+		_this.OnDbReaady(_this);
+	};
+
+	request.onerror = function(evt) {
+		console.log("cpt IndexedDB error: " + evt.target.errorCode);
+	};
+
+	request.onupgradeneeded = function(evt) {
+		var objectStore = evt.currentTarget.result.createObjectStore("cpt_tasks", {
+			keyPath : "Id",
+			autoIncrement : true
+		});
+
+		objectStore.createIndex("StartTime", "StartTime", {
+			unique : false
+		});
+		objectStore.createIndex("During", "During", {
+			unique : false
+		});
+		objectStore.createIndex("Type", "Type", {
+			unique : false
+		});
+		objectStore.createIndex("lastTime", "lastTime", {
+			unique : false
+		});
+		objectStore.createIndex("result", "result", {
+			unique : false
+		});
+		console.log("cpt onupgradeneeded");
+	};
+
+	this.Add = function(task) {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var request = objectStore.add(task);
+		request.onsuccess = function(evt) {
+			console.log("add:" + task);
+		};
+		return request;
+	};
+	this.AddArray = function(_array) {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var request = null;
+		_array.forEach(function(entry) {
+			request = objectStore.add(entry);
+		});
+		return request;
+	};
+	this.AllTask = function() {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var _tasks = [];
+		var _this = this;
+		objectStore.openCursor().onsuccess = function(event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				_tasks.push(cursor.value);
+				cursor.continue();
+			} else {
+				console.log("GetAllTask all");
+				_this.OnAllTasksGot(_tasks);
+				//alert("Got all customers: " + tasks);
+			}
+		};
+		this.OnAllTasksGot = function(tasks) {
+		};
+		return this;
+	};
+	return this;
+}

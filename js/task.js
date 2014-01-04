@@ -43,6 +43,16 @@ function changeTaskPage(tblName) {
 
 function tas_init() {
 
+	createCptIndexDb().OnDbReaady = function(indexDbObject) {
+		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
+			if (arr.length > 0) {
+				//CreateTasksList(indexDbObject);
+				console.log(arr);
+			} else {
+				console.log("nothing in DB");
+			}
+		};
+	};
 	//changeTaskPage("tblUnstart");
 	document.getElementById("tblUnstart").style.display = "";
 	
@@ -189,7 +199,20 @@ function endTask(lastTime, result) {
 
 	//add task complete data into database
 	addTaskCpt(runningTask.StartTime, runningTask.TargetTime, runningTask.Type, lastTime, result);
-
+	////////////////////////////////////////
+	var cptTask = [{
+	StartTime : runningTask.StartTime,
+	During : runningTask.TargetTime,
+	Type : runningTask.Type,
+	lastTime : lastTime,
+	result : result
+	}];
+	createCptIndexDb().OnDbReaady = function(indexDbObject) {
+		indexDbObject.AddArray(cptTask).onsuccess = function(evt) {
+			console.log("success to add data");
+		};
+	}
+	///////////////////////////////////////////
 	//print result
 	document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (parseInt((parseInt(lastTime) / parseInt(runningTask.TargetTime)) * 100,10)/100) * 100 + "%";
 	if (result == "SUCCESS")

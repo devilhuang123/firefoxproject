@@ -1,5 +1,6 @@
 
 var listDataTest = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+/*
 var tasksDemo = [{
 	StartTime : 755775872,
 	During : 77777,
@@ -21,12 +22,12 @@ var tasksDemo = [{
 }, {
 	StartTime : 7752788,
 	During : 77752025,
-	Type : "Study",
+	Type : "Study",IndexDBObject
 	Period : TaskPeriod.WORKDAY,
 	Exclude : null
 
 }];
-
+*/
 function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	var _this = this;
 	var section = CreateSection();
