@@ -32,6 +32,9 @@ function MissionPage(headerArea, mainArea) {
 		listLayout.area.id = tabData[1]["elementId"];
 
 		var header = new HeaderView(headerArea);
+		header.OnButtonClick=function(){
+			AddTaskDialog();
+		};
 
 	}
 
@@ -42,11 +45,11 @@ function MissionPage(headerArea, mainArea) {
 
 	function onSelectedDate(date, inst) {
 		var dates = [1, 8, 12, 7, 24, 19, 28, 29, 30];
-		var str="無任務";
-		if (dates.indexOf(date.getDate()) >= 0){
-			 str="任務："+(date.getMonth()+1)+"月"+date.getDate()+"日 ,揪團打宥均";
+		var str = "無任務";
+		if (dates.indexOf(date.getDate()) >= 0) {
+			str = "任務：" + (date.getMonth() + 1) + "月" + date.getDate() + "日 ,揪團打宥均";
 		}
-		
+
 		messageView.SetText(str);
 	}
 
@@ -63,13 +66,45 @@ function MissionPage(headerArea, mainArea) {
 		return ret;
 	}
 
+	function AddTaskDialog() {
+		var contain = ElementFactory.CreateTextNode("DEMO");
+		
+		var buttons = [{
+					text : "OK" ,
+					click : function() {
+						
+						$(this).dialog("close");
+					}
+				}];
+		Dialog.Open("Add Task", contain, buttons);
+		alert("AddTaskDialog()");
+	
+	
+	
+	}
+	
 }
 
 function HeaderView(areaToShow) {//HeaderView class Constructor
 	var _this = this;
 	this.area = areaToShow;
+	var onButtonClick = function() {
+		_this.OnButtonClick();
+	};
+	
+	this.OnButtonClick = function() {
+		
+	};
 
 	function Initialize() {
+		var menu = ElementFactory.CraeteElement('menu');
+		areaToShow.appendChild(menu);
+		var a = ElementFactory.CraeteElement('a');
+		menu.appendChild(a);
+		menu.setAttribute('type', "toolbar");
+		a.innerHTML = "+";
+		a.onclick = onButtonClick;
+
 		var radioButtons = CreateRadioButtons(tabData);
 		radioButtons.id = "radio";
 		var h1 = ElementFactory.CraeteElement("h1");

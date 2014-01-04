@@ -9,24 +9,25 @@ var tasksDemo = [{
 	During : 77777,
 	Type : "Study",
 	Period : TaskPeriod.ONCE,
+	alramId:150,
 	Exclude : null
 }, {
 	StartTime : 7257827,
 	During : 7777222,
 	Type : "Study",
-	Period : TaskPeriod.YEARLY,
+	Period : TaskPeriod.YEARLY,alramId:150,
 	Exclude : null
 }, {
 	StartTime : 725527362,
 	During : 1125252,
 	Type : "Study",
-	Period : TaskPeriod.MONTHLY,
+	Period : TaskPeriod.MONTHLY,alramId:150,
 	Exclude : null
 }, {
 	StartTime : 7752788,
 	During : 77752025,
 	Type : "Study",
-	Period : TaskPeriod.WORKDAY,
+	Period : TaskPeriod.WORKDAY,alramId:150,
 	Exclude : null
 }];
 
@@ -68,37 +69,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		};
 	}
 
-	function Dialog() {
-	}
-
-
-	Dialog.Open = function(title, content, _buttons) {
-		var id = "dialog_" + title;
-		var div = AddDiv(section);
-		var p = ElementFactory.CraeteElement('p');
-		//p.appendChild(ElementFactory.CreateTextNode("Action?"));
-		div.appendChild(p);
-		div.setAttribute('id', id);
-		div.setAttribute('title', title);
-		section.appendChild(div);
-		var _s = section;
-
-		function onclose(event, ui) {
-			$(this).dialog('destroy').remove();
-		}
-
-		$("#" + id).dialog({
-			autoOpen : false,
-			closeOnEscape : false,
-			beforeclose : function(event, ui) {
-				return false;
-			},
-			buttons : _buttons,
-			close : onclose
-		});
-		$("#" + id).dialog("open");
-	};
-
+	
 	function deleteTask(recordId) {
 		IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
 			var arr = [recordId];
@@ -111,17 +82,15 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 
 	function CreateTask(task) {
 		var p = ElementFactory.CraeteElement('p');
-		var text = "Null";
+		var textNode = "Null";
 		if (task != null) {
 			var id = task.Id;
 			var startDate = new Date(task.StartTime * 1000);
-			var during = task.During / (60);
+			var during = getTime(task.During);
 			var type = task.Type;
 			var period = TaskPeriod.toString(task.Period);
 			
-			
-			
-			text = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
+			textNode = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
 			p.onclick = function() {
 				var buttons = [{
 					text : "Delete:" + id,
@@ -130,12 +99,14 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 						$(this).dialog("close");
 					}
 				}];
-				Dialog.Open("action", "msg:"+id, buttons);
+				var contain=ElementFactory.CreateTextNode(startDate + "," + during + "," + type + "," + period);
+				Dialog.Open("action", contain, buttons);
 			};
 		}
-		p.appendChild(text);
+		p.appendChild(textNode);
 
 		return p;
+		
 	}
 
 	function CreateList(arr) {

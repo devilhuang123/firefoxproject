@@ -57,7 +57,7 @@ function IndexDBObject(dbName) {
 	var db;
 	var name = dbName;
 	var _this = this;
-	this.DB;
+	this.DB
 	this.OnDbReaady = function(_db) {
 	};
 	if (!indexedDB)
@@ -66,7 +66,7 @@ function IndexDBObject(dbName) {
 	var request = indexedDB.open(name, 1);
 	request.onsuccess = function(evt) {// 將db暫存起來供以後操作
 		db = request.result;
-		_this.DB=db;
+		_this.DB = db;
 		console.log("IndexedDB success");
 		_this.OnDbReaady(_this);
 	};
@@ -108,7 +108,8 @@ function IndexDBObject(dbName) {
 			var cursor = event.target.result;
 			if (cursor) {
 				_tasks.push(cursor.value);
-				cursor.continue();
+				cursor.
+				continue();
 			} else {
 				console.log("GetAllTask all");
 				_this.OnAllTasksGot(_tasks);
@@ -139,18 +140,56 @@ function IndexDBObject(dbName) {
 		});
 		return request;
 	};
-	
-	this.DeleteArray=function(ids){
+
+	this.DeleteArray = function(ids) {
 		var transaction = db.transaction(name, "readwrite");
 		var objectStore = transaction.objectStore("tasks");
 		var request = null;
 		ids.forEach(function(entry) {
-			request = objectStore.delete(entry);
+			request = objectStore.
+			delete (entry);
 		});
 		return request;
 	};
-	
+
 	return this;
+}
+
+function Dialog() {
+
+}
+
+Dialog.Open = function(title, content, _buttons) {
+	var parentNote = ElementFactory.Document.body;
+	var id = "dialog_" + title.replace(/ /g,"");
+	var div = ElementFactory.CraeteElement("div");
+	div.appendChild(content);
+	div.setAttribute('id', id);
+	div.setAttribute('title', title);
+	parentNote.appendChild(div);
+
+	function onclose(event, ui) {
+		$(this).dialog('destroy').remove();
+	}
+
+	$("#" + id).dialog({
+		autoOpen : false,
+		closeOnEscape : false,
+		beforeclose : function(event, ui) {
+			return false;
+		},
+		buttons : _buttons,
+		close : onclose
+	});
+	$("#" + id).dialog("open");
+	//alert("ddd");
+};
+
+function getTime(sec) {
+	var tm = parseInt(sec / (60));
+	var hr = parseInt(tm / (60));
+	var min = parseInt(tm % (60));
+	return hr + ":" + min;
 }
 
 ElementFactory(document);
