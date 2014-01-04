@@ -24,6 +24,7 @@ var tasksDemo = [{
 	Type : "Study",
 	Period : TaskPeriod.WORKDAY,
 	Exclude : null
+
 }];
 
 function InitializeListLayoutArea(areaToShow) {//layout class Constructor

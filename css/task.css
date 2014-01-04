@@ -1,4 +1,9 @@
 .taskLabel{
-	font-size : 30px;
+	font-size : 24px;
+	font-family:"Arial", "微軟正黑體",Georgia,Serif;
+}
+
+.countDownLabel{
+	font-size : 44px;
 	font-family:"Showcard Gothic",Georgia,Serif;
-} 
+}
