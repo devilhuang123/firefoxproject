@@ -113,6 +113,9 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 			var during = task.During / (60);
 			var type = task.Type;
 			var period = TaskPeriod.toString(task.Period);
+			
+			
+			
 			text = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
 			p.onclick = function() {
 				var buttons = [{
