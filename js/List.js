@@ -1,33 +1,36 @@
-function mm_includejs (jsFile){
-	document .write('<script type="text/javascript" src="' + jsFile + '"></script>');
+function mm_includejs(jsFile) {
+	document.write('<script type="text/javascript" src="' + jsFile + '"></script>');
 }
+
 mm_includejs('js/Utility.js');
 
-var listDataTest = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var tasksDemo = [{
-	StartTime : 755775872,
+	StartTime : new Date(),
 	During : 77777,
 	Type : "Study",
 	Period : TaskPeriod.ONCE,
-	alramId:150,
+	AlramId : 150,
 	Exclude : null
 }, {
-	StartTime : 7257827,
+	StartTime : new Date(),
 	During : 7777222,
 	Type : "Study",
-	Period : TaskPeriod.YEARLY,alramId:150,
+	Period : TaskPeriod.YEARLY,
+	AlramId : 150,
 	Exclude : null
 }, {
-	StartTime : 725527362,
+	StartTime : new Date(),
 	During : 1125252,
 	Type : "Study",
-	Period : TaskPeriod.MONTHLY,alramId:150,
+	Period : TaskPeriod.MONTHLY,
+	AlramId : 150,
 	Exclude : null
 }, {
-	StartTime : 7752788,
+	StartTime : new Date(),
 	During : 77752025,
 	Type : "Study",
-	Period : TaskPeriod.WORKDAY,alramId:150,
+	Period : TaskPeriod.WORKDAY,
+	AlramId : 150,
 	Exclude : null
 }];
 
@@ -40,7 +43,8 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 
 	$("#" + listId).selectable();
 
-	IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
+	var listDB = new IndexDBObject("tasks");
+	listDB.OnDbReaady = function(indexDbObject) {
 		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
 			if (arr.length > 0) {
 				CreateTasksList(indexDbObject);
@@ -69,9 +73,11 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		};
 	}
 
-	
+
+	this.Refresh = RefreshList;
 	function deleteTask(recordId) {
-		IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
+		var deleteDB = new IndexDBObject("tasks");
+		deleteDB.OnDbReaady = function(indexDbObject) {
 			var arr = [recordId];
 			indexDbObject.DeleteArray(arr).onsuccess = function(evt) {
 				alert("task:" + recordId + " deleted!");
@@ -80,7 +86,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		};
 	}
 
-	function CreateTask(task) {
+	function CreateTaskItem(task) {
 		var p = ElementFactory.CraeteElement('p');
 		var textNode = "Null";
 		if (task != null) {
@@ -89,7 +95,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 			var during = getTime(task.During);
 			var type = task.Type;
 			var period = TaskPeriod.toString(task.Period);
-			
+
 			textNode = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
 			p.onclick = function() {
 				var buttons = [{
@@ -99,14 +105,13 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 						$(this).dialog("close");
 					}
 				}];
-				var contain=ElementFactory.CreateTextNode(startDate + "," + during + "," + type + "," + period);
+				var contain = ElementFactory.CreateTextNode(startDate + "," + during + "," + type + "," + period);
 				Dialog.Open("action", contain, buttons);
 			};
 		}
 		p.appendChild(textNode);
 
 		return p;
-		
 	}
 
 	function CreateList(arr) {
@@ -124,7 +129,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	function CreateListItem(content) {
 		console.log(content);
 		var item = ElementFactory.CraeteElement("li");
-		item.appendChild(CreateTask(content));
+		item.appendChild(CreateTaskItem(content));
 		item.setAttribute('class', "ui-widget-content");
 		return item;
 	}

@@ -57,7 +57,7 @@ function IndexDBObject(dbName) {
 	var db;
 	var name = dbName;
 	var _this = this;
-	this.DB
+	this.DB;
 	this.OnDbReaady = function(_db) {
 	};
 	if (!indexedDB)
@@ -94,6 +94,9 @@ function IndexDBObject(dbName) {
 			unique : false
 		});
 		objectStore.createIndex("Exclude", "Exclude", {
+			unique : false
+		});
+		objectStore.createIndex("AlramId", "AlramId", {
 			unique : false
 		});
 		console.log("onupgradeneeded");
@@ -155,13 +158,10 @@ function IndexDBObject(dbName) {
 	return this;
 }
 
-function Dialog() {
+function Dialog(title, content, _buttons) {
 
-}
-
-Dialog.Open = function(title, content, _buttons) {
 	var parentNote = ElementFactory.Document.body;
-	var id = "dialog_" + title.replace(/ /g,"");
+	var id = "dialog_" + title.replace(/ /g, "");
 	var div = ElementFactory.CraeteElement("div");
 	div.appendChild(content);
 	div.setAttribute('id', id);
@@ -172,6 +172,7 @@ Dialog.Open = function(title, content, _buttons) {
 		$(this).dialog('destroy').remove();
 	}
 
+
 	$("#" + id).dialog({
 		autoOpen : false,
 		closeOnEscape : false,
@@ -181,8 +182,17 @@ Dialog.Open = function(title, content, _buttons) {
 		buttons : _buttons,
 		close : onclose
 	});
-	$("#" + id).dialog("open");
-	//alert("ddd");
+	this.Id = id;
+
+	this.Open = function() {
+		$("#" + id).dialog("open");
+	};
+
+}
+
+Dialog.Open = function(title, content, _buttons) {
+	var dialog = new Dialog(title, content, _buttons);
+	$("#" + dialog.Id).dialog("open");
 };
 
 function getTime(sec) {
@@ -190,6 +200,14 @@ function getTime(sec) {
 	var hr = parseInt(tm / (60));
 	var min = parseInt(tm % (60));
 	return hr + ":" + min;
+}
+
+function stringToDate(dateStr) {
+	var dateArr = dateStr.split("-");
+	Assert(dateArr.length == 3, "convert Date error!");
+	var date = new Date();
+	date.setFullYear(dateArr[0], dateArr[1] - 1, dateArr[2]);
+	return date;
 }
 
 ElementFactory(document);

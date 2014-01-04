@@ -7,14 +7,22 @@ var TaskPeriod = {
 	YEARLY : 5
 };
 TaskPeriod.toString = function(value) {
-	for (var i in TaskPeriod) {
-		if (value == TaskPeriod[i])
-			return i;
+	for (var key in TaskPeriod) {
+		if (value == TaskPeriod[key])
+			return key;
 	}
 	return "Go to DMC!";
 };
 
-var mode = "sweet";		//Task Mode
+TaskPeriod.fotEach = function(callBack) {
+	for (var key in TaskPeriod) {
+		if (TaskPeriod[key] <= 5 && TaskPeriod[key] >= 0)
+			callBack(key);
+	}
+};
+
+var mode = "sweet";
+//Task Mode
 var tasks = new Array();
 var orderId = 0;
 
@@ -98,26 +106,28 @@ function deleteAllCptTask() {
 ///
 // Task type Function
 ///
-var task_list = new Array();	// Task Type List
+var task_list = new Array();
+// Task Type List
 getTasktype(task_list);
 
-function getTasktype(task_list){
+function getTasktype(task_list) {
 	var request = indexedDB.open("db_type", 3);
 	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
 	};
 	request.onsuccess = function(event) {
 		var db = request.result;
-		if(db.objectStoreNames.length > 0){
+		if (db.objectStoreNames.length > 0) {
 			var objectStore = db.transaction("task_type").objectStore("task_type");
-			objectStore.openCursor().onsuccess = function(event){
+			objectStore.openCursor().onsuccess = function(event) {
 				var cursor = event.target.result;
-				if(cursor){
+				if (cursor) {
 					task_list.push(cursor.value);
-					cursor.continue();
+					cursor.
+					continue();
 				}
 			};
-		}else{
+		} else {
 			task_list.push("吃飯");
 			task_list.push("睡覺");
 			task_list.push("上課");
@@ -129,38 +139,46 @@ function getTasktype(task_list){
 	return task_list;
 }
 
-function new_db(){
+function new_db() {
 	var request = indexedDB.open("db_type", 3);
 
-	request.onerror = function(event){
+	request.onerror = function(event) {
 		alert("connect to database db_type has a wrong!");
 	};
 
-	request.onupgradeneeded = function(event){
-		const type_list = [{name : "吃飯"}, {name : "睡覺"}, {name : "上課"}];
+	request.onupgradeneeded = function(event) {
+		const type_list = [{
+			name : "吃飯"
+		}, {
+			name : "睡覺"
+		}, {
+			name : "上課"
+		}];
 		var db = event.target.result;
-		var objectStore = db.createObjectStore("task_type", {autoIncrement : true});
+		var objectStore = db.createObjectStore("task_type", {
+			autoIncrement : true
+		});
 
-		for (var i in type_list){
+		for (var i in type_list) {
 			objectStore.add(type_list[i].name);
 		}
 	};
 
 	/*request.onsuccess = function(event){
-		var db = request.result;
-		var objectStore = db.transaction("task_type").objectStore("task_type");
+	 var db = request.result;
+	 var objectStore = db.transaction("task_type").objectStore("task_type");
 
-		objectStore.openCursor().onsuccess = function(event){
-			var cursor = event.target.result;
-			if (cursor){
-				var option = document.createElement('option');
-				option.text = cursor.value;
-				option.value = cursor.value;
-		
-				select_type.appendChild(option);
-				cursor.continue();
-			}
-		};
-	};*/
+	 objectStore.openCursor().onsuccess = function(event){
+	 var cursor = event.target.result;
+	 if (cursor){
+	 var option = document.createElement('option');
+	 option.text = cursor.value;
+	 option.value = cursor.value;
+
+	 select_type.appendChild(option);
+	 cursor.continue();
+	 }
+	 };
+	 };*/
 }
 
