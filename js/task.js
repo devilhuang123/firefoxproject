@@ -101,11 +101,12 @@ function initImdTask()
 	{
 		alert("任務時長不可為0時0分!");
 	}
-	else if (parseInt(hours) !== 0 || parseInt(mins) !== 0) 
+	else
 	{
 		switch(mode) 
 		{
 			case "sweet":
+				document.getElementById("btnQuit").style.display = "";
 				break;
 
 			case "strict":
@@ -123,7 +124,6 @@ function initImdTask()
 		changeTaskPage("divRunTask");
 		countdown();
 	}
-	else {console.log("!");}
 }
 
 function setRunningTask(startTime, targetTime, type) {
@@ -221,7 +221,7 @@ function endTask(lastTime, result)
 	else
 		console.log("End task false!");
 
-	changeTaskPage("divTaskResult");
+	//changeTaskPage("divTaskResult");
 }
 
 //use in index.html

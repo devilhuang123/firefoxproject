@@ -16,6 +16,8 @@ function setAlarm(startTime, lastTime, type, period) {
 	var now = new Date();
 	var alarmTypeStr = "";
 	var returnAlarmId = "";
+	var _startTime = new Date();
+	_startTime.setTime(startTime);
 	//////////////////Here get the alarm time from the input data in task page, date is today
 	//var h = document.getElementById("h");
 	//var m = document.getElementById("m");
@@ -29,11 +31,17 @@ function setAlarm(startTime, lastTime, type, period) {
 
 	if (navigator.mozAlarms) {
 		//if the time set alarm is within 10 mins, we won't set the notify alarm. Only the start alarm will be set.
-		if (startTime.getTime() - now.getTime() > preNotify) {
+		if (_startTime.getTime() - now.getTime() >= preNotify)
+		{
 			alarmTypeStr = "notify";
-			startTime.setTime(startTime.getTime() - preNotify);
-		} else
+			_startTime.setTime(_startTime.getTime() - preNotify);
+		}
+		else if(_startTime.getTime() - now.getTime() < preNotify && _startTime.getTime() - now.getTime() >= 0)
+		{
 			alarmTypeStr = "start";
+		}
+		else
+			return;
 
 		var alarmData = {
 			taskType : type,
@@ -43,7 +51,7 @@ function setAlarm(startTime, lastTime, type, period) {
 		};
 
 		//new alarm
-		var request = navigator.mozAlarms.add(startTime, "ignoreTimezone", alarmData);
+		var request = navigator.mozAlarms.add(_startTime, "ignoreTimezone", alarmData);
 		request.onsuccess = function() 
 		{
 			notifyMe("successfully add alarm");
