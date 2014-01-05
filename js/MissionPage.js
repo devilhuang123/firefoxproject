@@ -135,13 +135,18 @@ function MissionPage(headerArea, mainArea) {
 				var selectedDate = stringToDate(schedualTaskstartDate.value);
 				selectedDate.setHours(schedualTaskStartHour.value);
 				selectedDate.setMinutes(schedualTaskStartMins.value);
+				selectedDate.setSeconds(0);
 				var during=schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins.value * 60;
+				
+				//setAlarm(month, day, hour, minute, type, schedualTaskRoutine.value)
+				var returnAlarmId = setAlarm(selectedDate, during, selectSchedualTaskType.value, schedualTaskRoutine.value);
+				
 				var task = {
 					StartTime : selectedDate,
 					During : during,
 					Type : selectSchedualTaskType.value,
 					Period : schedualTaskRoutine.value,
-					AlramId : 150,
+					AlramId : returnAlarmId,
 					Exclude : null
 				};
 

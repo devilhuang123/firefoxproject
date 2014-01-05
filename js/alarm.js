@@ -2,46 +2,48 @@
     Alarm -- by pmkw52525, student ID:101522094
  =================================================*/
 
-function setAlarm(e) {
+function setAlarm(startTime, lastTime, type, period) {
 	// prevent default - we don't want the form to submit in the conventional way
-	e.preventDefault();
+	//e.preventDefault();
 
 	//here we get any information we want to put into the alarm data for what we have to do after alarm ring! ex.during->for how long the task is
 	/*
 	 * taskType: sleep, study...
 	 * alarmType: "notify", "start"
-	 * period: ONCE, DAILY...
+	 * alarmPeriod: ONCE, DAILY...
 	 * during
 	 *  */
 	var now = new Date();
 	var alarmTypeStr = "";
+	var returnAlarmId = "";
 	//////////////////Here get the alarm time from the input data in task page, date is today
-	var h = document.getElementById("h");
-	var m = document.getElementById("m");
-	var Period = "ONCE";
-	var testAlarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h.value, m.value, 0);
-	var testTargetTime = 20;
-	//sec
-	var testTaskType = "sleep";
+	//var h = document.getElementById("h");
+	//var m = document.getElementById("m");
+	//var Period = "ONCE";
+	
+	//var testAlarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h.value, m.value, 0);
+	//var testTargetTime = 20;
+	
+	//var testTaskType = "sleep";
 	/////////////////////////////////
 
 	if (navigator.mozAlarms) {
 		//if the time set alarm is within 10 mins, we won't set the notify alarm. Only the start alarm will be set.
-		if (testAlarmTime.getTime() - now.getTime() > preNotify) {
+		if (startTime.getTime() - now.getTime() > preNotify) {
 			alarmTypeStr = "notify";
-			testAlarmTime.setTime(testAlarmTime.getTime() - preNotify);
+			startTime.setTime(startTime.getTime() - preNotify);
 		} else
 			alarmTypeStr = "start";
 
 		var alarmData = {
-			taskType : testTaskType,
+			taskType : type,
 			alarmType : alarmTypeStr,
-			period : Period,
-			during : testTargetTime,
+			alarmPeriod : period,
+			during : lastTime,
 		};
 
 		//new alarm
-		var request = navigator.mozAlarms.add(testAlarmTime, "ignoreTimezone", alarmData);
+		var request = navigator.mozAlarms.add(startTime, "ignoreTimezone", alarmData);
 		request.onsuccess = function() 
 		{
 			notifyMe("successfully add alarm");
@@ -50,8 +52,8 @@ function setAlarm(e) {
 			alarmRequest.onsuccess = function() 
 			{
 				//this is the new alarm Id and it should be store into task data
-				newAlarmId = this.result[(this.result.length) - 1].id;
-				console.log(newAlarmId);
+				returnAlarmId = this.result[(this.result.length) - 1].id;
+				console.log(returnAlarmId);
 			};
 
 			/////Set Alarm Callback here!!
@@ -64,6 +66,8 @@ function setAlarm(e) {
 	} else {
 		console.log("An error occurred: " + this.error.name);
 	};
+	
+	return returnAlarmId;
 
 }
 
@@ -82,7 +86,7 @@ function alarmCallback() {
 					taskType : alarm.data.taskType,
 					alarmType : "start",
 					during : alarm.data.during,
-					period : alarm.data.period,
+					alarmPeriod : alarm.data.alarmPeriod,
 				};
 
 				var request = navigator.mozAlarms.add(AlarmTime, "ignoreTimezone", alarmData);
@@ -111,16 +115,16 @@ function alarmCallback() {
 				var oneDayMsec = 1000*60*60*24;
 				//////if alarm is periodically, set the next time alarm and change the AlarmId in task list
 				//get the next time period
-				switch(alarm.data.period) 
+				switch(alarm.data.alarmPeriod) 
 				{
-					case "ONCE":
+					case TaskPeriod.ONCE :
 						break;
 
-					case "DAILY":
+					case TaskPeriod.DAILY:
 						nextAddTime = oneDayMsec;
 						break;
 
-					case "WORKDAY":
+					case TaskPeriod.WORKDAY:
 						if(now.getDay() == 5)
 							nextAddTime = oneDayMsec*3;
 						else if(now.getDay() == 1 || now.getDay() == 2 || now.getDay() == 3 || now.getDay() == 4)
@@ -131,11 +135,11 @@ function alarmCallback() {
 							console.log("workday alarm error");
 						break;
 
-					case "WEEKLY":
+					case TaskPeriod.WEEKLY:
 						nextAddTime = oneDayMsec*7;
 						break;
 
-					case "MONTHLY":
+					case TaskPeriod.MONTHLY:
 						//31 days per month
 						if(now.getMonth() == 0 || now.getMonth() == 2 || now.getMonth() == 4 || now.getMonth() == 6 || now.getMonth() == 7 || now.getMonth() == 9 || now.getMonth() == 11)
 							nextAddTime = oneDayMsec*31;
@@ -153,7 +157,7 @@ function alarmCallback() {
 						else console.log("month error");
 						break;
 
-					case "YEARLY":
+					case TaskPeriod.YEARLY:
 						if(now.getFullYear() % 4 == 0)
 							nextAddTime = oneDayMsec*366;
 						else
@@ -162,7 +166,7 @@ function alarmCallback() {
 				}
 				
 				//set the period alarm and modify the task DB alarmId
-				if(alarm.data.period != "ONCE")
+				if(alarm.data.alarmPeriod != TaskPeriod.ONCE)
 				{
 					var AlarmTime = new Date();
 					AlarmTime.setTime(AlarmTime.getTime() + nextAddTime);
@@ -171,7 +175,7 @@ function alarmCallback() {
 						taskType : alarm.data.taskType,
 						alarmType : "start",
 						during : alarm.data.during,
-						period : alarm.data.period
+						alarmPeriod : alarm.data.alarmPeriod
 					};
 	
 					var request = navigator.mozAlarms.add(AlarmTime, "ignoreTimezone", alarmData);
@@ -186,8 +190,7 @@ function alarmCallback() {
 					};
 					///////////////////////////////////////////////////Go to modify the
 				}
-				 
-				
+				 				
 				
 			} else {
 				console.log("alarm.data.alarmType error");

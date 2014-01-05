@@ -61,8 +61,8 @@ function tas_init() {
 	var lstTaskType = document.getElementById("lstTaskType");
 
 	///////////////////////////////////////////////////	
-	btnTest = document.getElementById("btnTest");
-	btnTest.addEventListener('click', setAlarm, false);
+	//btnTest = document.getElementById("btnTest");
+	//btnTest.addEventListener('click', setAlarm, false);
 	///////////////////////////////////////////////////
 	
 	
