@@ -37,11 +37,10 @@
 				margin: 0;
 				padding: 0;
 				font-size: 10px;
-				background-color: #fff;
 			}
 
 			body {
-				background: none;
+				background-image:none;
 			}
 
 			h2.bb-docs {
@@ -63,18 +62,18 @@
 		<div id="taskRunning" class="taskLabel">
 			<div id="divRunTask" align="center" style="display: none;">
 				<div id="divCntDnd" class="countDownLabel"></div>
-				<button  id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>
+				<input type="button" class = "color red button1" id="btnQuit" value="放棄任務" onclick="quitTask();"></button>
 			</div>
 			
 			<div id="divTaskResult" align = "center" style="display: none;">
 				<div id="taskCmdDiv"></div>
 				<div id="cpltRateDiv"></div>
-				<button id="returnBtn" type="button" onclick="taskReturn();">返回</button>
-				<button type="button" onclick="poFB();">發文至塗鴉牆</button>
+				<input type="button"  class="button1" id="returnBtn" value="返回" onclick="taskReturn();">
+				<input type="button"  class="button1" value="發文至塗鴉牆" onclick="poFB();">
 			</div>
 		</div>
 
-		<section role="region">
+		<section id="listSection" role="region">
 			<!-- if your tabs are at the top, remove class="bottom" -->
 			<ul role="tablist" data-items="4" class="bottom">
 				<li id="panel1" role="tab">
@@ -106,44 +105,48 @@
 							</header>
 						</section>
 													
-							<table id="tblUnstart" align="center">								
+							<table id="tblUnstart" align="center"  class="taskLabel">								
 								<tr>
-									<td class="taskLabel">
+									<td>
 										任務類型<br>
-										<select id="lstTaskType"></select>
-									</td>
-								</tr>
-								<tr>
-									<td class="taskLabel">
-										持續時長：<br>
-										<select id="lstHour"></select>時 <select id="lstMins"></select>分 
+										<select align="center" class="styled-select" id="lstTaskType"></select>
+										
 									</td>
 								</tr>
 								<tr>
 									<td>
-									<button type="button" onclick="initImdTask();">開始任務</button>
-									
+										<br>持續時長<br>
+										<select id="lstHour" class="styled-select" ></select>時<br>
+										<select id="lstMins" class="styled-select" ></select>分
+									</td>
+								</tr>
+								<tr>
+									<td>
+									<br><input type="button"  class="button1" value="開始任務" onclick="initImdTask();">
+									<td>
+								<tr>
+								<tr>
+									<td>
 									<!-- for test -->
-									<input type="text" id="h">
+									<!--<input type="text" id="h">
 									點
 									<input type="text" id="m">
 									分
 									<select id="routine">
-										<option value="once" selected="selected">一次</option>
-										<option value="daily" selected="selected">每天</option>
-										<option value="workday" selected="selected">工作天</option>
-										<option value="weekly" selected="selected">每週這天</option>
-										<option value="monthly" selected="selected">每月這天</option>
-										<option value="yearly" selected="selected">每年這天</option>
+										<option value="ONCE" selected="selected">一次</option>
+										<option value="DAILY" selected="selected">每天</option>
+										<option value="WORKDAY" selected="selected">工作天</option>
+										<option value="WEEKLY" selected="selected">每週這天</option>
+										<option value="MONTHLY" selected="selected">每月這天</option>
+										<option value="YEARLY" selected="selected">每年這天</option>
 									</select>
-									<input type="button" id="btnTest" value="Set Alarm">
-									</td>
-								</tr>
+									
+									<br><input type="button" id="btnDelete" value="delete alarm" onclick="deleteAlarm();">-->
+									<br><input type="button" id="btnTest" value="Set Alarm">
+									<td>
 								<tr>
-									<td><div id="labelDiv"></div></td>									
-								</tr>								
 							</table>
-						</div>
+					</div>
 				</li>
 				
 				<li id="panel3" role="tab">
