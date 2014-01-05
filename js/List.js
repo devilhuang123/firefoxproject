@@ -1,42 +1,47 @@
-
 var listDataTest = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-/*
+
 var tasksDemo = [{
-	StartTime : 755775872,
+	StartTime : new Date(),
 	During : 77777,
 	Type : "Study",
 	Period : TaskPeriod.ONCE,
+	AlramId : 150,
 	Exclude : null
 }, {
-	StartTime : 7257827,
+	StartTime : new Date(),
 	During : 7777222,
 	Type : "Study",
 	Period : TaskPeriod.YEARLY,
+	AlramId : 150,
 	Exclude : null
 }, {
-	StartTime : 725527362,
+	StartTime : new Date(),
 	During : 1125252,
 	Type : "Study",
 	Period : TaskPeriod.MONTHLY,
+	AlramId : 150,
 	Exclude : null
 }, {
-	StartTime : 7752788,
+	StartTime : new Date(),
 	During : 77752025,
 	Type : "Study",IndexDBObject
 	Period : TaskPeriod.WORKDAY,
+	AlramId : 150,
 	Exclude : null
 
 }];
-*/
+
 function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	var _this = this;
+	var listId = "listView";
 	var section = CreateSection();
 	this.area = section;
 	areaToShow.appendChild(section);
 
-	$("#listView").selectable();
+	$("#" + listId).selectable();
 
-	IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
+	var listDB = new IndexDBObject("tasks");
+	listDB.OnDbReaady = function(indexDbObject) {
 		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
 			if (arr.length > 0) {
 				CreateTasksList(indexDbObject);
@@ -57,80 +62,58 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		};
 	}
 
-	function Refresh() {
-
-	}
-
-	function Dialog() {
-	}
-
-	Dialog.Open = function(title, content, _buttons) {
-		var id = "dialog_" + title;
-		var div = AddDiv(section);
-		var p = ElementFactory.CraeteElement('p');
-		//p.appendChild(ElementFactory.CreateTextNode("Action?"));
-		div.appendChild(p);
-		div.setAttribute('id', id);
-		div.setAttribute('title', title);
-		section.appendChild(div);
-		var _s=section;
-		
-		function onclose(event, ui){
-			//_s.removeChild(div);
-		}
-		
-		$("#" + id).dialog({
-			autoOpen : false,
-			closeOnEscape : false,
-			beforeclose : function(event, ui) {
-				return false;
-			}
-			//,     dialogClass : "noclose",
-			,
-			buttons : _buttons,
-			close : onclose
-		});
-		$("#" + id).dialog("open");
-	};
-
-	function deleteTask(recordId) {
+	function RefreshList() {
+		var list = ElementFactory.FindElement(listId);
+		section.removeChild(list);
 		IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
+			CreateTasksList(indexDbObject);
+		};
+	}
+
+
+	this.Refresh = RefreshList;
+	function deleteTask(recordId) {
+		var deleteDB = new IndexDBObject("tasks");
+		deleteDB.OnDbReaady = function(indexDbObject) {
 			var arr = [recordId];
 			indexDbObject.DeleteArray(arr).onsuccess = function(evt) {
-				alert("task:"+recordId+" deleted!");
+				alert("task:" + recordId + " deleted!");
+				RefreshList();
 			};
 		};
 	}
 
-	function CreateTask(task) {
+	function CreateTaskItem(task) {
 		var p = ElementFactory.CraeteElement('p');
-		var text = "Null";
+		var textNode = "Null";
 		if (task != null) {
 			var id = task.Id;
 			var startDate = new Date(task.StartTime * 1000);
-			var during = task.During / (60);
+			var during = getTime(task.During);
 			var type = task.Type;
 			var period = TaskPeriod.toString(task.Period);
-			text = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
+
+			textNode = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
 			p.onclick = function() {
 				var buttons = [{
-					text : "Delete",
+					text : "Delete:" + id,
 					click : function() {
 						deleteTask(id);
 						$(this).dialog("close");
 					}
 				}];
-				Dialog.Open("action", "msg", buttons);
+				var contain = ElementFactory.CreateTextNode(startDate + "," + during + "," + type + "," + period);
+				Dialog.Open("action", contain, buttons);
 			};
 		}
-		p.appendChild(text);
+		p.appendChild(textNode);
 
 		return p;
 	}
 
 	function CreateList(arr) {
 		var list = ElementFactory.CraeteElement("ol");
-		list.setAttribute('id', "listView");
+		list.setAttribute('id', listId);
 		//list.setAttribute('class', "list-tasks");
 		arr.forEach(function(entry) {
 			console.log("entry:" + entry);
@@ -143,7 +126,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	function CreateListItem(content) {
 		console.log(content);
 		var item = ElementFactory.CraeteElement("li");
-		item.appendChild(CreateTask(content));
+		item.appendChild(CreateTaskItem(content));
 		item.setAttribute('class', "ui-widget-content");
 		return item;
 	}

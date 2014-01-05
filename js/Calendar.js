@@ -13,10 +13,11 @@ function InitializeCalendarLayoutArea(areaToShow) {//layout class Constructor
 	this.messageDiv = AddDiv(this.area);
 	this.messageDiv.id = messageId;
 	this.messageDiv.className = "dateArea";
+
 }
 
 function CalendarView(areaToShow) {//CalendarView class Constructor
-
+	var schedualTasks;
 	var g_globalObject2;
 
 	this.OnDateSelected = function(date, inst) {//Date(),object
@@ -33,31 +34,51 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 	_this.showArea = areaToShow;
 
 	var onDatePicked = function(dateStr, inst) {
-		//console.log(dateStr);
-		var dateArr = dateStr.split("-");
-		Assert(dateArr.length == 3, "convert Date error!");
-		var date = new Date();
-		date.setFullYear(dateArr[0], dateArr[1]-1, dateArr[2]);
-		//console.log(date.toDateString());
+		var date = stringToDate(dataStr);
 		_this.OnDateSelected(date, inst);
 	};
 
 	var Initialize = function() {
-		$(function() {
-			$("#" + _this.showArea.id).datepicker({
-				autoSize : true,
-				onSelect : onDatePicked,
-				dateFormat : "yy-mm-dd",
-				//showButtonPanel: true,
-				beforeShowDay : beforeShowDay
-				//,direction: "up"
-			});
-		});
+		var calendarDB = new IndexDBObject("tasks");
+		calendarDB.OnDbReaady = function(indexDbObject) {
+			indexDbObject.AllTask().OnAllTasksGot = function(arr) {
+				schedualTasks = arr;
+				$(function() {
+					$("#" + _this.showArea.id).datepicker({
+						autoSize : true,
+						onSelect : onDatePicked,
+						dateFormat : "yy-mm-dd",
+						beforeShowDay : beforeShowDay
+					});
+				});
+				console.log(schedualTasks);
+			};
+		};
 	};
 
 	var beforeShowDay = function(date) {
 		return _this.BeforeShowDay(date);
 	};
+
+	function showTasks(date) {
+		var ret = [];
+		ret[0] = true;
+		ret[1] = "";
+		ret[2] = "";
+		if (isDateMeached(date, schedualTasks))
+			ret[1] = "ui-state-datepicker-scheduled";
+		else
+			ret[1] = "ui-state-datepicker-unscheduled";
+		return ret;
+	}
+
+	function isDateMeached(date1, schedTasks) {
+		schedTasks.forEach(function(entry) {
+
+		});
+
+		return false;
+	}
 
 	Initialize();
 }
