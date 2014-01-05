@@ -114,7 +114,7 @@ function IndexDBObject(dbName) {
 				cursor.
 				continue();
 			} else {
-				console.log("GetAllTask all");
+			//	console.log("GetAllTask all");
 				_this.OnAllTasksGot(_tasks);
 				//alert("Got all customers: " + tasks);
 			}
@@ -129,7 +129,7 @@ function IndexDBObject(dbName) {
 		var objectStore = transaction.objectStore("tasks");
 		var request = objectStore.add(task);
 		request.onsuccess = function(evt) {
-			console.log("add:" + task);
+		//	console.log("add:" + task);
 		};
 		return request;
 	};

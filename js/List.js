@@ -1,38 +1,7 @@
 function mm_includejs(jsFile) {
 	document.write('<script type="text/javascript" src="' + jsFile + '"></script>');
 }
-
 mm_includejs('js/Utility.js');
-
-var tasksDemo = [{
-	StartTime : new Date(),
-	During : 77777,
-	Type : "Study",
-	Period : TaskPeriod.ONCE,
-	AlramId : 150,
-	Exclude : null
-}, {
-	StartTime : new Date(),
-	During : 7777222,
-	Type : "Study",
-	Period : TaskPeriod.YEARLY,
-	AlramId : 150,
-	Exclude : null
-}, {
-	StartTime : new Date(),
-	During : 1125252,
-	Type : "Study",
-	Period : TaskPeriod.MONTHLY,
-	AlramId : 150,
-	Exclude : null
-}, {
-	StartTime : new Date(),
-	During : 77752025,
-	Type : "Study",
-	Period : TaskPeriod.WORKDAY,
-	AlramId : 150,
-	Exclude : null
-}];
 
 function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	var _this = this;
@@ -59,7 +28,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	function CreateTasksList(indexDbObject) {
 		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
 			var list = CreateList(arr);
-			console.log("CreateList");
+//			console.log("CreateList");
 			section.appendChild(list);
 			section.setAttribute('class', "list-scrollable");
 		};
@@ -119,7 +88,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		list.setAttribute('id', listId);
 		//list.setAttribute('class', "list-tasks");
 		arr.forEach(function(entry) {
-			console.log("entry:" + entry);
+	//		console.log("entry:" + entry);
 			var item = CreateListItem(entry);
 			list.appendChild(item);
 		});
@@ -127,7 +96,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	}
 
 	function CreateListItem(content) {
-		console.log(content);
+//		console.log(content);
 		var item = ElementFactory.CraeteElement("li");
 		item.appendChild(CreateTaskItem(content));
 		item.setAttribute('class', "ui-widget-content");

@@ -16,22 +16,18 @@ function MissionPage(headerArea, mainArea) {
 	var _this = this;
 	this.HeadArea = headerArea;
 	this.MainArea = mainArea;
-	var calendarView;
-	var messageView;
 	var listLayout;
 	var calendarLayout;
 	function UpdateMissionArea(headerArea, mainArea) {
 
 		calendarLayout = new InitializeCalendarLayoutArea(mainArea);
 		calendarLayout.area.id = tabData[0]["elementId"];
-		calendarView = new CalendarView(calendarLayout.calendarDiv);
-		calendarView.OnDateSelected = onSelectedDate;
-		//calendarView.BeforeShowDay = showTasks;
-
-		messageView = new MessageView(calendarLayout.messageDiv);
-
 		listLayout = new InitializeListLayoutArea(mainArea);
 		listLayout.area.id = tabData[1]["elementId"];
+
+		calendarView = calendarLayout.CalendarView;
+		calendarView.OnDateSelected = onSelectedDate;
+		messageView = calendarLayout.MessageView;
 
 		var header = new HeaderView(headerArea);
 		header.OnButtonClick = function() {
@@ -42,6 +38,7 @@ function MissionPage(headerArea, mainArea) {
 
 	function Refresh() {
 		listLayout.Refresh();
+		calendarLayout.Refresh();
 		alert("should refresh");
 	}
 

@@ -22,9 +22,11 @@
 		<script type="text/javascript" src="./js/MissionPage.js"></script>
 		<script type="text/javascript" src="./js/Calendar.js"></script>
 		<script type="text/javascript" src="./js/List.js"></script>
-		<script type="text/javascript" src="./js/task.js"></script>
+		<script type="text/javascript" src="./js/alarm.js"></script>
+		<!--<script type="text/javascript" src="./js/cptTaskDB.js"></script>-->		
 		<script type="text/javascript" src="./js/history.js"></script>
 		<script type="text/javascript" src="./js/setting.js"></script>
+		<script type="text/javascript" src="./js/task.js"></script>
 		<script type="text/javascript" src="./js/jquery-ui-1.10.3.custom.min.js"></script>
 
 		<!--
@@ -56,6 +58,21 @@
 		</style>
 	</head>
 	<body role="application">
+		
+		<!-- Running Task Div -->
+		<div id="taskRunning" class="taskLabel">
+			<div id="divRunTask" align="center" style="display: none;">
+				<div id="divCntDnd" class="countDownLabel"></div>
+				<button  id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>
+			</div>
+			
+			<div id="divTaskResult" align = "center" style="display: none;">
+				<div id="taskCmdDiv"></div>
+				<div id="cpltRateDiv"></div>
+				<button id="returnBtn" type="button" onclick="taskReturn();">返回</button>
+				<button type="button" onclick="poFB();">發文至塗鴉牆</button>
+			</div>
+		</div>
 
 		<section role="region">
 			<!-- if your tabs are at the top, remove class="bottom" -->
@@ -80,7 +97,7 @@
 					</div>
 				</li>
 				<li id="panel2" role="tab">
-					<a href="#panel2" class="icon"><img src="./img/task.png">contacts</a>
+					<a href="#panel2" class="icon" onblur="tas_init();"><img src="./img/task.png" align="middle">contacts</a>
 					<div role="tabpanel">
 						<section role="region">
 							<header>
@@ -89,75 +106,43 @@
 							</header>
 						</section>
 													
-							<table id="tblUnstart" align="center">
-								<form id="frmImdTask">
-									<tr>
-										<td class="taskLabel">
-											任務類型<br>
-											<select id="lstTaskType"></select>
-										</td>
-									</tr>
-									<tr>
-										<td class="taskLabel">
-											持續時長：<br>
-											<select id="lstHour"></select>時 <select id="lstMins"></select>分 
-										</td>
-									</tr>
-									<tr>
-										<td>
-										<button type="button" onclick="initImdTask();">開始任務</button>
-										
-										<!-- for test -->
-										<input type="text" id="h">
-										點
-										<input type="text" id="m">
-										分
-										<select id="routine">
-											<option value="once" selected="selected">一次</option>
-											<option value="daily" selected="selected">每天</option>
-											<option value="workday" selected="selected">工作天</option>
-											<option value="weekly" selected="selected">每週這天</option>
-											<option value="monthly" selected="selected">每月這天</option>
-											<option value="yearly" selected="selected">每年這天</option>
-										</select>
-										<input type="submit" id="submit" value="Set Alarm">
-										</td>
-									</tr>
-									<tr>
-										<td><div id="labelDiv"></div></td>
-									</tr>
-								</form>
-							</table>
-
-							<table id="tblRunTask" align="center">
+							<table id="tblUnstart" align="center">								
 								<tr>
-									<td><div id="divCntDnd" class="taskLabel"></div></td>
+									<td class="taskLabel">
+										任務類型<br>
+										<select id="lstTaskType"></select>
+									</td>
+								</tr>
+								<tr>
+									<td class="taskLabel">
+										持續時長：<br>
+										<select id="lstHour"></select>時 <select id="lstMins"></select>分 
+									</td>
 								</tr>
 								<tr>
 									<td>
-										<button id="btnQuit" type="button" onclick="quitTask();">放棄任務</button>										
+									<button type="button" onclick="initImdTask();">開始任務</button>
+									
+									<!-- for test -->
+									<input type="text" id="h">
+									點
+									<input type="text" id="m">
+									分
+									<select id="routine">
+										<option value="once" selected="selected">一次</option>
+										<option value="daily" selected="selected">每天</option>
+										<option value="workday" selected="selected">工作天</option>
+										<option value="weekly" selected="selected">每週這天</option>
+										<option value="monthly" selected="selected">每月這天</option>
+										<option value="yearly" selected="selected">每年這天</option>
+									</select>
+									<input type="button" id="btnTest" value="Set Alarm">
 									</td>
 								</tr>
-
+								<tr>
+									<td><div id="labelDiv"></div></td>									
+								</tr>								
 							</table>
-
-							<table id="tblTaskResult" align = "center">
-								<tr>
-									<td><div id="taskCmdDiv" class="taskLabel"></div></td>
-								</tr>
-								<tr>
-									<td><div id="cpltRateDiv" class="taskLabel"></div></td>
-								</tr>
-								<tr>
-									<td>
-										<button id="returnBtn" type="button" onclick="taskReturn();">返回</button>
-										<button type="button" onclick="poFB();">發文至塗鴉牆</button>
-									</td>
-								</tr>
-							</table>
-							<script>
-								tas_init();
-							</script>
 						</div>
 				</li>
 				
@@ -241,11 +226,12 @@
 						</form>
 						<script>
 							setting();
-
 						</script>
 				</li>
 			</ul>
 		</section>
+		
+			
 
 	</body>
 </html>
