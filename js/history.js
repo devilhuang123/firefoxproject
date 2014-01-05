@@ -15,22 +15,16 @@ function his_init()
 		if(task_list[i] != "undefine")
 			type.add(new Option(task_list[i], task_list[i]));			
 	}
-    
-	createCptIndexDb().OnDbReaady = function(indexDbObject) {
-		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
-			if (arr.length > 0) {
-				//CreateTasksList(indexDbObject);
-				console.log(arr);
-			} else {
-				console.log("nothing in DB");
-			}
-		};
-	};
 }
 
 
 function getSelectedChange()
 {
+	var canvas = document.getElementById('canvas_circle');
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+	
+	//document.getElementById('circle').innerHTML="";
 	var selected = document.getElementById('history_type');
 	showCircle(selected.value);		
 }
@@ -38,33 +32,98 @@ function getSelectedChange()
 
 function showCircle(selectedType)
 {	
-	//if(arr.length == 0) alert("no!");
 	var sum = 0;
-	var data_rate = 0;
-	var data = 0;
+	var data_rate = new Array("0","0");
+	var data = new Array("0","0");
+	var arr1 = new Array();
 	
-	for (var i=0; i<arr.length; i++)
+	createCptIndexDb().OnDbReaady = function(indexDbObject) 
+	{		
+		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
+			console.log("array length:"+arr.length);
+			if (arr.length > 0) {
+				console.log(arr);
+				for (var i=0; i<arr.length; i++)
+				{
+					arr1[i] = arr[i];					
+				}
+
+			} else {
+				console.log("nothing in DB");
+			}
+			
+			for (var i = 0; i <arr1.length; i++) 
+				{
+					console.log(arr1[i].Type);
+					if (selectedType == arr1[i].Type)
+					{
+						sum = sum +1;
+						console.log(arr1[i].result);
+						if (arr1[i].result == "SUCCESS")
+						{
+							data[0]++;
+						}
+						else if(arr1[i].result == "FAIL")
+						{
+							data[1]++;
+						}	
+						else {}											
+					}
+					else {}
+				}	
+	
+	
+	
+	
+			if (sum == 0)
+			{
+				alert("no task");
+			}
+			else
+			{
+				data_rate[0] = data[0] / sum;
+				data_rate[1] = data[1] / sum;
+			
+				drawCircle("canvas_circle", data_rate, color_arr, text_arr);
+			}
+		};
+	};
+	
+		/*		for (var i = 0; i <arr1.length; i++) 
+				{
+					console.log(arr1[i].Type);
+					if (selectedType == arr1[i].Type)
+					{
+						sum = sum +1;
+						console.log(arr1[i].result);
+						if (arr1.result == "SUCCESS")
+						{
+							data[0]++;
+						}
+						else if(arr1.result == "FAIL")
+						{
+							data[1]++;
+						}	
+						else {}											
+					}
+					else {}
+				}	
+	
+	
+	
+	
+	if (sum == 0)
 	{
-		if (selectedType == arr[i].Type)
-		{				
-			if (arr.result == "SUCCESS")
-			{
-				data[0] = data[0] + 1;
-				sum = sum + 1;
-			}
-			else 
-			{
-				data[1] = data[1] + 1;
-				sum = sum + 1;
-			}
-		}
-		else{ }
+		alert("no task");
 	}
+	else
+	{
+		data_rate[0] = data[0] / sum;
+		data_rate[1] = data[1] / sum;
 	
-	data_rate[0] = data[0] / sum;
-	data_rate[1] = data[1] / sum;
-	
-	drawCircle("canvas_circle", data_rate, color_arr, text_arr);
+		drawCircle("canvas_circle", data_rate, color_arr, text_arr);
+	}*/
+
 }
 
 //绘制饼图  
@@ -95,11 +154,11 @@ function drawCircle(canvasId, data_arr, color_arr, text_arr)
         ctx.fill();  
         startAngle = endAngle; //设置起始弧度  
   
-                    //绘制比例图及文字  
+        //绘制比例图及文字  
         ctx.fillStyle = color_arr[i];  
         ctx.fillRect(posX, posY + 20 * i, width, height);  
         ctx.moveTo(posX, posY + 20 * i);  
-        ctx.font = '12px';    //斜体 30像素 微软雅黑字体  
+        ctx.font = '12px';    //30像素  
         ctx.fillStyle = color_arr[i]; //"#000000";  
         var percent = text_arr[i] + "：" + 100 * data_arr[i] + "%";  
         ctx.fillText(percent, textX, textY + 20 * i);  
