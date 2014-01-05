@@ -62,7 +62,6 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 					dateFormat : "yy-mm-dd",
 					beforeShowDay : beforeShowDay
 				});
-				//	console.log(schedualTasks);
 			};
 		};
 		_this.BeforeShowDay = showTasks;
@@ -83,7 +82,6 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 			ret[1] = "ui-state-datepicker-scheduled";
 		} else
 			ret[1] = "ui-state-datepicker-unscheduled";
-
 		return ret;
 	}
 
@@ -97,23 +95,23 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 						_tasks.push(task);
 					break;
 				case TaskPeriod.DAILY:
-					if (date.getTime() > task.StartTime.getTime())
+					if (afterOrSame(date, task.StartTime))
 						_tasks.push(task);
 					break;
 				case TaskPeriod.WORKDAY:
-					if (date.getTime() > task.StartTime.getTime() && date.getDay() > 0 && date.getDay() < 6)
+					if (afterOrSame(date, task.StartTime) && date.getDay() > 0 && date.getDay() < 6)
 						_tasks.push(task);
 					break;
 				case TaskPeriod.WEEKLY:
-					if (date.getTime() > task.StartTime.getTime() && date.getDay() == task.StartTime.getDay())
+					if (afterOrSame(date, task.StartTime) && date.getDay() == task.StartTime.getDay())
 						_tasks.push(task);
 					break;
 				case TaskPeriod.MONTHLY:
-					if (date.getTime() > task.StartTime.getTime() && date.getDate() == task.StartTime.getDate())
+					if (afterOrSame(date, task.StartTime) && date.getDate() == task.StartTime.getDate())
 						_tasks.push(task);
 					break;
 				case TaskPeriod.YEARLY:
-					if (date.getTime() > task.StartTime.getTime() && task.StartTime.getDate() == date.getDate() && task.StartTime.getMonth() == date.getMonth())
+					if (afterOrSame(date, task.StartTime) && task.StartTime.getDate() == date.getDate() && task.StartTime.getMonth() == date.getMonth())
 						_tasks.push(task);
 					break;
 			}
@@ -123,6 +121,12 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 			return (date0.getDate() == date1.getDate() && date0.getMonth() == date1.getMonth() && date0.getFullYear() == date1.getFullYear());
 		}
 
+		function afterOrSame(date0, date1) {
+			var t0 = date0.getFullYear() * 365 + date0.getMonth() * 30 + date0.getDate();
+			var t1 = date1.getFullYear() * 365 + date1.getMonth() * 30 + date1.getDate();
+			return t1 >= t0;
+		}
+
 		return _tasks;
 	}
 
@@ -130,7 +134,6 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 	this.Refresh = function() {
 		$("#" + _this.showArea.id).datepicker("destroy");
 		Initialize();
-		//$("#" + _this.showArea.id).datepicker("refresh");
 	};
 	Initialize();
 }

@@ -80,10 +80,19 @@ function MissionPage(headerArea, mainArea) {
 		var schedualTaskstartDate = ElementFactory.CraeteElement('input');
 		schedualTaskstartDate.setAttribute('id', "schedualTaskstartDate");
 		schedualTaskstartDate.setAttribute('type', "text");
-		p.appendChild(ElementFactory.CreateTextNode("開始時間"));
+		p.appendChild(ElementFactory.CreateTextNode("開始日期"));
+		p.appendChild(ElementFactory.CraeteElement('br'));
 		p.appendChild(schedualTaskstartDate);
+		var schedualTaskStartHour = createSelection("schedualTaskStartHour");
+		var schedualTaskStartMins = createSelection("schedualTaskStartMins");
+		p.appendChild(ElementFactory.CraeteElement('br'));
+		p.appendChild(schedualTaskStartHour);
+		p.appendChild(ElementFactory.CreateTextNode("時"));
+		p.appendChild(schedualTaskStartMins);
+		p.appendChild(ElementFactory.CreateTextNode("分"));
 		contain.appendChild(p);
-		$("#schedualTaskstartDate").datepicker();
+		contain.appendChild(p);
+		//$("#schedualTaskstartDate").datepicker();
 
 		p = createP("持續時長：");
 		var schedualTaskDuringHour = createSelection("schedualTaskstartDate");
@@ -106,10 +115,12 @@ function MissionPage(headerArea, mainArea) {
 
 		for (var i = 0; i < 24; i++) {
 			schedualTaskDuringHour.add(new Option(i, i));
+			schedualTaskStartHour.add(new Option(i, i));
 		}
 
 		for (var i = 0; i < 60; i++) {
 			schedualTaskDuringMins.add(new Option(i, i));
+			schedualTaskStartMins.add(new Option(i, i));
 		}
 
 		TaskPeriod.fotEach(function(entry) {
@@ -120,7 +131,9 @@ function MissionPage(headerArea, mainArea) {
 			text : "OK",
 			click : function() {
 				var selectedDate = stringToDate(schedualTaskstartDate.value);
-				console.log(schedualTaskDuringHour.value + ":" + schedualTaskDuringMins.value);
+				selectedDate.setHours(schedualTaskStartHour.value);
+				selectedDate.setMinutes(schedualTaskStartMins.value);
+				//console.log(schedualTaskDuringHour.value + ":" + schedualTaskDuringMins.value);
 				var task = {
 					StartTime : selectedDate,
 					During : schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins.value * 60,
@@ -149,6 +162,12 @@ function MissionPage(headerArea, mainArea) {
 		function smallDatePicker(id) {
 			$(id).datepicker({
 				dateFormat : "yy-mm-dd",
+				autoSize : true,
+				showOn : "button",
+				buttonImage : "img/calendar.png",
+				buttonImageOnly : true
+				//buttonText: "Choose",
+				//showButtonPanel: true
 			});
 		}
 
