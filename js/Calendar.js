@@ -95,23 +95,23 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 						_tasks.push(task);
 					break;
 				case TaskPeriod.DAILY:
-					if (afterOrSame(date, task.StartTime))
+					if (afterOrSame(task.StartTime, date))
 						_tasks.push(task);
 					break;
 				case TaskPeriod.WORKDAY:
-					if (afterOrSame(date, task.StartTime) && date.getDay() > 0 && date.getDay() < 6)
+					if (afterOrSame(task.StartTime, date) && date.getDay() > 0 && date.getDay() < 6)
 						_tasks.push(task);
 					break;
 				case TaskPeriod.WEEKLY:
-					if (afterOrSame(date, task.StartTime) && date.getDay() == task.StartTime.getDay())
+					if (afterOrSame(task.StartTime, date) && date.getDay() == task.StartTime.getDay())
 						_tasks.push(task);
 					break;
 				case TaskPeriod.MONTHLY:
-					if (afterOrSame(date, task.StartTime) && date.getDate() == task.StartTime.getDate())
+					if (afterOrSame(task.StartTime, date) && date.getDate() == task.StartTime.getDate())
 						_tasks.push(task);
 					break;
 				case TaskPeriod.YEARLY:
-					if (afterOrSame(date, task.StartTime) && task.StartTime.getDate() == date.getDate() && task.StartTime.getMonth() == date.getMonth())
+					if (afterOrSame(task.StartTime, date) && task.StartTime.getDate() == date.getDate() && task.StartTime.getMonth() == date.getMonth())
 						_tasks.push(task);
 					break;
 			}

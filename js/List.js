@@ -69,17 +69,22 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 			var type = task.Type;
 			var period = TaskPeriod.toString(task.Period);
 
-			textNode = ElementFactory.CreateTextNode("id:" + id + "," + startDate.toLocaleString() + "," + during + "," + type + "," + period);
+			textNode = ElementFactory.CreateTextNode("開始於："+startDate.toLocaleString() + ", 持續：" + during + ", 類型：" + type + ", 週期：" + period);
 			p.onclick = function() {
 				var buttons = [{
-					text : "Delete:" + id,
+					text : "Delete",
 					click : function() {
 						deleteTask(id);
 						$(this).dialog("close");
 					}
 				}];
-				var contain = ElementFactory.CreateTextNode(startDate + "," + during + "," + type + "," + period);
-				Dialog.Open("action", contain, buttons);
+				var containStr="開始於："+startDate.toLocaleString() +
+				 "<br>持續：" + during + 
+				 "<br>類型：" + type + 
+				 ", 週期：" + period;
+				var contain = ElementFactory.CraeteElement('p');
+				contain.innerHTML=containStr;
+				Dialog.Open("排程任務", contain, buttons);
 			};
 		}
 		p.appendChild(textNode);
