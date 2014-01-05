@@ -210,11 +210,19 @@ function endTask(lastTime, result)
 		document.body.style.backgroundImage="url('./img/success.png')";
 		document.getElementById("returnBtn").style.display = "";
 		document.getElementById("taskCmdDiv").innerHTML = "<br>幹的好!你真是人生勝利組!";
+		document.getElementById("poSuccess").style.display = "";
+		document.getElementById("poFail").style.display = "none";
 	}
 	else if (result == "FAIL")
 	{
+		document.getElementById("poSuccess").style.display = "none";
+		document.getElementById("poFail").style.display = "";
 		if(mode == "strict")
+		{
 			document.getElementById("returnBtn").style.display = "none";
+			do_post();
+		}
+		
 		document.body.style.backgroundImage="url('./img/fail.png')";
 		document.getElementById("taskCmdDiv").innerHTML = "<br>加把勁啊！";
 	}
@@ -233,8 +241,14 @@ function taskReturn()
 
 function poFB() 
 {
-	alert("發文到FB!");
+	//alert("發文到FB!");
 	do_post();
+	taskReturn();
+}
+function poFB2() 
+{
+	//alert("發文到FB!");
+	do_post_2();
 	taskReturn();
 }
 
