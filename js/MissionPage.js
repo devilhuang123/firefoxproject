@@ -1,11 +1,11 @@
 ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
 ElementFactory.LoadCSS("css/calendarPage.css");
 var tabData = [{
-	"label" : "Calendar",
+	"label" : "<img src='./img/calendar.png'  height='28'>",
 	"elementId" : "tabs-1",
 	"checked" : true
 }, {
-	"label" : "List",
+	"label" : "<img src='./img/calendar_list.png'  height='28'>",
 	"elementId" : "tabs-2",
 	"checked" : false
 }];
@@ -204,7 +204,7 @@ function HeaderView(areaToShow) {//HeaderView class Constructor
 		var a = ElementFactory.CraeteElement('a');
 		menu.appendChild(a);
 		menu.setAttribute('type', "toolbar");
-		a.innerHTML = "+";
+		a.innerHTML = "<img src='./img/add.png' align='middle'>";
 		a.onclick = onButtonClick;
 
 		var radioButtons = CreateRadioButtons(tabData);

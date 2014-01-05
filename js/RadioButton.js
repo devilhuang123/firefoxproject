@@ -31,6 +31,7 @@ function CreateRadioButtons(radioData) {
 	function CraeteLabel(labelText) {
 		var label = ElementFactory.CraeteElement("label");
 		label.setAttribute("for", "radio" + inputs.length);
+		label.setAttribute("class", "radioTabs");
 		label.innerHTML = labelText;
 		return label;
 	}
@@ -38,13 +39,13 @@ function CreateRadioButtons(radioData) {
 	var form = ElementFactory.CraeteElement("div");
 
 	radioData.forEach(function(entry) {
-		var label = entry["label"];
+		var _label = entry["label"];
 		var elementId = entry["elementId"];
 		var checked = entry["checked"];
 		var i = inputs.length;
 		var id = elementId;
 		var input = CraeteInput(checked, id);
-		var label = CraeteLabel(label);
+		var label = CraeteLabel(_label);
 		inputs.push(input);
 		form.appendChild(input);
 		form.appendChild(label);

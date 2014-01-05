@@ -57,7 +57,7 @@ function IndexDBObject(dbName) {
 	var db;
 	var name = dbName;
 	var _this = this;
-	this.DB
+	_this.DB;
 	this.OnDbReaady = function(_db) {
 	};
 	if (!indexedDB)
