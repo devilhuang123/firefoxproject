@@ -8,7 +8,7 @@ isRunning = false;
 var countdownMeter;
 var successFeedback = new Array();
 var failFeedback = new Array();
-var preNotify = 1000 * 60;
+
 //the time before the task to notify user
 var runningTask = {
 	StartTime : null,

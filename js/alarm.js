@@ -1,10 +1,9 @@
 /*================================================
     Alarm -- by pmkw52525, student ID:101522094
  =================================================*/
-
+var preNotify = 1000 * 60 *10;
 function setAlarm(startTime, lastTime, type, period) {
-	// prevent default - we don't want the form to submit in the conventional way
-	//e.preventDefault();
+	
 
 	//here we get any information we want to put into the alarm data for what we have to do after alarm ring! ex.during->for how long the task is
 	/*
@@ -16,17 +15,7 @@ function setAlarm(startTime, lastTime, type, period) {
 	var now = new Date();
 	var alarmTypeStr = "";
 	var returnAlarmId = "";
-	//////////////////Here get the alarm time from the input data in task page, date is today
-	//var h = document.getElementById("h");
-	//var m = document.getElementById("m");
-	//var Period = "ONCE";
 	
-	//var testAlarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h.value, m.value, 0);
-	//var testTargetTime = 20;
-	
-	//var testTaskType = "sleep";
-	/////////////////////////////////
-
 	if (navigator.mozAlarms) {
 		//if the time set alarm is within 10 mins, we won't set the notify alarm. Only the start alarm will be set.
 		if (startTime.getTime() - now.getTime() > preNotify) {
@@ -47,7 +36,6 @@ function setAlarm(startTime, lastTime, type, period) {
 		request.onsuccess = function() 
 		{
 			notifyMe("successfully add alarm");
-			//console.log("Alarm sucessfully scheduled");
 			var alarmRequest = navigator.mozAlarms.getAll();
 			alarmRequest.onsuccess = function() 
 			{

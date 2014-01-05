@@ -10,6 +10,7 @@ function his_init()
 	{
 		type.options[i].remove();
 	}
+	type.add(new Option("請選擇", "請選擇"));		
 	for (var i = 0; i < task_list.length; i++) 
 	{
 		if(task_list[i] != "undefine")
@@ -21,14 +22,17 @@ function his_init()
 function getSelectedChange()
 {
 	//canvas clear
-	var canvas = document.getElementById('canvas_circle');
-    var context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
+	
+	clearCanvas();
 	var selected = document.getElementById('history_type');
 	showCircle(selected.value);		
 }
-
+function clearCanvas()
+{
+	var canvas = document.getElementById('canvas_circle');
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 function showCircle(selectedType)
 {	
@@ -74,9 +78,13 @@ function showCircle(selectedType)
 				}	
 					
 	
-			if (sum == 0)
+			if (sum == 0 && selectedType != "請選擇")
 			{
 				alert("這個任務類型還沒有任務完成哦~加油完成一次吧！");
+			}
+			else if(selectedType == "請選擇")
+			{
+				clearCanvas();
 			}
 			else
 			{
@@ -153,6 +161,7 @@ function hisdel(){
 				{
 					console.log("nothing in db");
 				}
+				clearCanvas();
 			};
 		};
 				
