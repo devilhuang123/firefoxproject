@@ -201,7 +201,7 @@ function endTask(lastTime, result)
 		{
 			console.log("success to add data");
 		};
-	}
+	};
 	///////////////////////////////////////////
 	//print result
 	document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (parseInt((parseInt(lastTime) / parseInt(runningTask.TargetTime)) * 100,10)/100) * 100 + "%<br>";

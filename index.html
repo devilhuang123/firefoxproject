@@ -95,6 +95,7 @@
 						</section>
 					</div>
 				</li>
+				
 				<li id="panel2" role="tab">
 					<a href="#panel2" class="icon" onblur="tas_init();"><img src="./img/task.png" align="middle">contacts</a>
 					<div role="tabpanel">
@@ -150,22 +151,30 @@
 				</li>
 				
 				<li id="panel3" role="tab">
-					<a href="#panel3" class="icon"><img src="./img/history.png" align="middle">dialer</a>
+					<a href="#panel3" class="icon" onclick="his_init();"><img src="./img/history.png" align="middle">dialer</a>
 					<div role="tabpanel">
 						<section role="region">
 							<header>
 								<menu type="toolbar">
-									<a href="" ><img src="./img/delete.png" align="middle"></a>
+									<a href="#panel3" ><img src="./img/delete.png" align="middle" onclick="hisdel()" /></a>
 								</menu>
 								<h1>History</h1>
 							</header>
+							
+							<p class="taskLabel">任務類型<br></p>
+							<select id="history_type" onchange="getSelectedChange()" ></select>						
+								
+							<div role = "circle">			
+						  		<p>  
+                          			<canvas id="canvas_circle" width="500" height="300" style="border:2px solid #0026ff;" >
+                          				
+                          			</canvas>  
+        				  		</p> 
+							</div>
 						</section>
-						<select id="history_task_type"></select>
-						<script>
-							//his_print();
-						</script>
 					</div>
 				</li>
+				
 				<li id="panel4" role="tab">
 					<a href="#panel4" class="icon"><img src="./img/setting.png" align="middle">Tab name</a>
 					<div role="tabpanel">
@@ -232,9 +241,7 @@
 						</script>
 				</li>
 			</ul>
-		</section>
-		
-			
+		</section>		
 
 	</body>
 </html>
