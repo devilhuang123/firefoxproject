@@ -12,6 +12,19 @@
 	color:#FF9D37;
 	font-size:20px;
 }
+
+.taskHeaderHR {
+	background:#FF9D37;
+	color:#FFB73D;
+	height:8px;
+}
+
+.taskItemHR {
+	background:#FF9D37;
+	color:#FFB73D;
+	height:5px;
+}
+
 .list-scrollable {
 	height:360px; /* or any value */
 	overflow-y:auto;
@@ -22,14 +35,7 @@
 	margin-right:auto;
 	margin-bottom:20px;
 }
-/*#feedback { font-size: 1.4em; }*/
-/*#listView .ui-selecting {
- background: #FECA40;
- }
- #listView .ui-selected {
- background: #F39814;
- color: white;
- }*/
+
 #listView {
 	list-style-type:none;
 	margin-left:0%;

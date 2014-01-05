@@ -1,7 +1,9 @@
 function mm_includejs(jsFile) {
 	document.write('<script type="text/javascript" src="' + jsFile + '"></script>');
 }
+
 mm_includejs('js/Utility.js');
+
 
 function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	var _this = this;
@@ -28,29 +30,31 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	function CreateTasksList(indexDbObject) {
 		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
 			var list = CreateList(arr);
-//			console.log("CreateList");
+			//			console.log("CreateList");
 			section.appendChild(list);
 			section.setAttribute('class', "list-scrollable");
 		};
 	}
 
-	function RefreshList() {
+	this.Refresh=function () {
 		var list = ElementFactory.FindElement(listId);
 		section.removeChild(list);
 		IndexDBObject("tasks").OnDbReaady = function(indexDbObject) {
 			CreateTasksList(indexDbObject);
 		};
-	}
+	};
 
+	this.OnUpdateEvent = function() {
+		_this.Refresh();
+	};
 
-	this.Refresh = RefreshList;
 	function deleteTask(recordId) {
 		var deleteDB = new IndexDBObject("tasks");
 		deleteDB.OnDbReaady = function(indexDbObject) {
 			var arr = [recordId];
 			indexDbObject.DeleteArray(arr).onsuccess = function(evt) {
-				alert("task:" + recordId + " deleted!");
-				RefreshList();
+				//alert("task:" + recordId + " deleted!");
+				_this.OnUpdateEvent();
 			};
 		};
 	}
@@ -60,12 +64,12 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		var textNode = "Null";
 		if (task != null) {
 			var id = task.Id;
-			var startDate = new Date(task.StartTime * 1000);
+			var startDate = task.StartTime;
 			var during = getTime(task.During);
 			var type = task.Type;
 			var period = TaskPeriod.toString(task.Period);
 
-			textNode = ElementFactory.CreateTextNode("id:" + id + "," + startDate + "," + during + "," + type + "," + period);
+			textNode = ElementFactory.CreateTextNode("id:" + id + "," + startDate.toLocaleString() + "," + during + "," + type + "," + period);
 			p.onclick = function() {
 				var buttons = [{
 					text : "Delete:" + id,
@@ -88,7 +92,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 		list.setAttribute('id', listId);
 		//list.setAttribute('class', "list-tasks");
 		arr.forEach(function(entry) {
-	//		console.log("entry:" + entry);
+			//		console.log("entry:" + entry);
 			var item = CreateListItem(entry);
 			list.appendChild(item);
 		});
@@ -96,7 +100,7 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	}
 
 	function CreateListItem(content) {
-//		console.log(content);
+		//		console.log(content);
 		var item = ElementFactory.CraeteElement("li");
 		item.appendChild(CreateTaskItem(content));
 		item.setAttribute('class', "ui-widget-content");

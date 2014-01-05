@@ -49,7 +49,6 @@ var tasksDemo = [{
 	Period : TaskPeriod.WORKDAY,
 	AlramId : 150,
 	Exclude : null
-
 }];
 
 var mode = "sweet";

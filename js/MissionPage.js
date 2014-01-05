@@ -29,6 +29,9 @@ function MissionPage(headerArea, mainArea) {
 		calendarView.OnDateSelected = onSelectedDate;
 		messageView = calendarLayout.MessageView;
 
+		listLayout.OnUpdateEvent = Refresh;
+		calendarLayout.OnUpdateEvent = Refresh;
+
 		var header = new HeaderView(headerArea);
 		header.OnButtonClick = function() {
 			AddTaskDialog();
@@ -39,14 +42,22 @@ function MissionPage(headerArea, mainArea) {
 	function Refresh() {
 		listLayout.Refresh();
 		calendarLayout.Refresh();
-		alert("should refresh");
+		//alert("should refresh");
 	}
 
-	function onSelectedDate(date, inst) {
-		var dates = [1, 8, 12, 7, 24, 19, 28, 29, 30];
+	function onSelectedDate(date, tasks, inst) {
 		var str = "無任務";
-		if (dates.indexOf(date.getDate()) >= 0) {
-			str = "任務：" + (date.getMonth() + 1) + "月" + date.getDate() + "日 ,揪團打宥均";
+		if (tasks.length > 0) {
+			str = "任務：" + (date.getMonth() + 1) + "月" + date.getDate() + "日";
+			str += "<HR class='taskHeaderHR'>";
+			tasks.forEach(function(task) {
+				str += "開始日期：" + task.StartTime + "<br>";
+				str += "持續：" + getTime(task.During) + "<br>";
+				str += "類型：" + task.Type + "<br>";
+				str += "週期：" + TaskPeriod.toString(task.Period);
+				if (tasks.indexOf(task) < tasks.length - 1)
+					str += "<HR class='taskItemHR'>";
+			});
 		}
 
 		messageView.SetText(str);
@@ -108,19 +119,23 @@ function MissionPage(headerArea, mainArea) {
 		var buttons = [{
 			text : "OK",
 			click : function() {
+				var selectedDate = stringToDate(schedualTaskstartDate.value);
+				console.log(schedualTaskDuringHour.value + ":" + schedualTaskDuringMins.value);
 				var task = {
-					StartTime : stringToDate(schedualTaskstartDate.value),
-					During : schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins * 60,
+					StartTime : selectedDate,
+					During : schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins.value * 60,
 					Type : selectSchedualTaskType.value,
 					Period : schedualTaskRoutine.value,
 					AlramId : 150,
 					Exclude : null
 				};
+
 				var calendarDB = new IndexDBObject("tasks");
 				calendarDB.OnDbReaady = function(indexDbObject) {
 					indexDbObject.Add(task).onsuccess = function(evt) {
-						console.log("added:" + task);
 						Refresh();
+						console.log("added:");
+						console.log(task);
 					};
 				};
 				$(this).dialog("close");

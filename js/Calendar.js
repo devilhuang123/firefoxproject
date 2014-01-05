@@ -17,9 +17,13 @@ function InitializeCalendarLayoutArea(areaToShow) {//layout class Constructor
 	this.CalendarView = new CalendarView(_this.calendarDiv);
 	this.MessageView = new MessageView(_this.messageDiv);
 
+	this.OnUpdateEvent = function() {
+		_this.Refresh();
+	};
+
 	this.Refresh = function() {
-		$("." + _this.calendarDiv.id).datepicker("refresh");
-		_this.MessageView.SetText("123456");
+		_this.CalendarView.Refresh();
+		_this.MessageView.SetText("Pick a date");
 	};
 
 }
@@ -28,7 +32,7 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 	var schedualTasks;
 	var g_globalObject2;
 
-	this.OnDateSelected = function(date, inst) {//Date(),object
+	this.OnDateSelected = function(date, tasks, inst) {//Date(),object
 	};
 	this.BeforeShowDay = function(date) {
 		var ret = [];
@@ -43,7 +47,8 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 
 	var onDatePicked = function(dateStr, inst) {
 		var date = stringToDate(dateStr);
-		_this.OnDateSelected(date, inst);
+		var tasks = tasksMeached(date, schedualTasks);
+		_this.OnDateSelected(date, tasks, inst);
 	};
 
 	var Initialize = function() {
@@ -57,7 +62,7 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 					dateFormat : "yy-mm-dd",
 					beforeShowDay : beforeShowDay
 				});
-				console.log(schedualTasks);
+				//	console.log(schedualTasks);
 			};
 		};
 		_this.BeforeShowDay = showTasks;
@@ -72,12 +77,9 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 		ret[0] = true;
 		ret[1] = "";
 		ret[2] = "";
-		//console.log("schedualTasks");
-		//console.log(schedualTasks);
 		var tasks = tasksMeached(date, schedualTasks);
-		console.log("tasks.length"+tasks.length);
 		if (tasks.length > 0) {
-			console.log("tasksMeached:"+tasks);
+			console.log("tasksMeached:" + tasks);
 			ret[1] = "ui-state-datepicker-scheduled";
 		} else
 			ret[1] = "ui-state-datepicker-unscheduled";
@@ -88,7 +90,8 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 	function tasksMeached(date, schedTasks) {
 		var _tasks = [];
 		schedTasks.forEach(function(task) {
-			switch(task.Period) {
+
+			switch(parseInt(task.Period)) {
 				case TaskPeriod.ONCE:
 					if (sameDay(date, task.StartTime))
 						_tasks.push(task);
@@ -98,7 +101,7 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 						_tasks.push(task);
 					break;
 				case TaskPeriod.WORKDAY:
-					if (date.getTime() > task.StartTime.getTime() && task.StartTime.getDay() < 5)
+					if (date.getTime() > task.StartTime.getTime() && date.getDay() > 0 && date.getDay() < 6)
 						_tasks.push(task);
 					break;
 				case TaskPeriod.WEEKLY:
@@ -117,12 +120,18 @@ function CalendarView(areaToShow) {//CalendarView class Constructor
 		});
 
 		function sameDay(date0, date1) {
-			return (date0.getDate() == date1.getDate() && date0.getMonth() == date1.getMonth() && date0.getFullYear() == date1.getMonth());
+			return (date0.getDate() == date1.getDate() && date0.getMonth() == date1.getMonth() && date0.getFullYear() == date1.getFullYear());
 		}
 
 		return _tasks;
 	}
 
+
+	this.Refresh = function() {
+		$("#" + _this.showArea.id).datepicker("destroy");
+		Initialize();
+		//$("#" + _this.showArea.id).datepicker("refresh");
+	};
 	Initialize();
 }
 
