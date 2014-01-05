@@ -1,9 +1,9 @@
-function mm_includejs(jsFile) {
+/*function mm_includejs(jsFile) {
 	document.write('<script type="text/javascript" src="' + jsFile + '"></script>');
 }
 
 mm_includejs('js/Utility.js');
-
+*/
 
 function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	var _this = this;

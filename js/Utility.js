@@ -298,5 +298,18 @@ function createCptIndexDb()
 		};
 		return this;
 	};
+	this.DeleteArray = function(ids) {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var request = null;
+		ids.forEach(function(entry) {
+			request = objectStore.delete(entry);
+			request.onerror = function(evt) {
+				console.log("cpt IndexedDB error: " + evt.target.errorCode);
+			};
+		});
+
+		return request;
+	};
 	return this;
 }

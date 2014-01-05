@@ -135,7 +135,27 @@ function drawCircle(canvasId, data_arr, color_arr, text_arr)
 function hisdel(){
 	if (confirm("確定要刪除所有歷史記錄嗎？"))
 	{
-		//deleteAllCptTask();
+		createCptIndexDb().OnDbReaady = function(indexDbObject) 
+		{		
+			indexDbObject.AllTask().OnAllTasksGot = function(arr) {
+				console.log("array length:"+arr.length);
+				if (arr.length > 0) 
+				{
+					for (var i=0; i<arr.length; i++)
+					{
+						console.log("helllloooo"+arr[i].Id);
+						var new_arr = [arr[i].Id];
+						indexDbObject.DeleteArray(new_arr).onsuccess = function(evt) {
+						};
+					}
+				}
+				else
+				{
+					console.log("nothing in db");
+				}
+			};
+		};
+				
 	}
 	else
 	{
