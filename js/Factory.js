@@ -31,7 +31,7 @@ ElementFactory.LoadScript = function(href) {
 
 ElementFactory.FindElement = function(id) {
 	var element = ElementFactory.Document.getElementById(id);
-	Assert(element != null, "can't find element with" + id);
+	Assert(element != null, "can't find element with " + id);
 	return element;
 };
 
@@ -57,7 +57,7 @@ function IndexDBObject(dbName) {
 	var db;
 	var name = dbName;
 	var _this = this;
-	this.DB;
+	_this.DB;
 	this.OnDbReaady = function(_db) {
 	};
 	if (!indexedDB)
@@ -114,7 +114,7 @@ function IndexDBObject(dbName) {
 				cursor.
 				continue();
 			} else {
-				console.log("GetAllTask all");
+				//	console.log("GetAllTask all");
 				_this.OnAllTasksGot(_tasks);
 				//alert("Got all customers: " + tasks);
 			}
@@ -129,7 +129,6 @@ function IndexDBObject(dbName) {
 		var objectStore = transaction.objectStore("tasks");
 		var request = objectStore.add(task);
 		request.onsuccess = function(evt) {
-			console.log("add:" + task);
 		};
 		return request;
 	};
@@ -151,7 +150,11 @@ function IndexDBObject(dbName) {
 		ids.forEach(function(entry) {
 			request = objectStore.
 			delete (entry);
+			request.onerror = function(evt) {
+				console.log("IndexedDB error: " + evt.target.errorCode);
+			};
 		});
+
 		return request;
 	};
 
@@ -196,10 +199,12 @@ Dialog.Open = function(title, content, _buttons) {
 };
 
 function getTime(sec) {
-	var tm = parseInt(sec / (60));
-	var hr = parseInt(tm / (60));
-	var min = parseInt(tm % (60));
-	return hr + ":" + min;
+	//console.log(sec);
+	var tm = parseInt(sec / 60);
+//	console.log(tm);
+	var hr = parseInt(tm / 60);
+	var min = parseInt(tm % 60);
+	return hr + "小時" + min+"分";
 }
 
 function stringToDate(dateStr) {

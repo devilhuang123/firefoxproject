@@ -1,11 +1,11 @@
 ElementFactory.LoadCSS("css/ui-darkness/jquery-ui-1.10.3.custom.css");
 ElementFactory.LoadCSS("css/calendarPage.css");
 var tabData = [{
-	"label" : "Calendar",
+	"label" : "<img src='./img/calendar.png'  height='28'>",
 	"elementId" : "tabs-1",
 	"checked" : true
 }, {
-	"label" : "List",
+	"label" : "<img src='./img/calendar_list.png'  height='28'>",
 	"elementId" : "tabs-2",
 	"checked" : false
 }];
@@ -16,22 +16,21 @@ function MissionPage(headerArea, mainArea) {
 	var _this = this;
 	this.HeadArea = headerArea;
 	this.MainArea = mainArea;
-	var calendarView;
-	var messageView;
 	var listLayout;
 	var calendarLayout;
 	function UpdateMissionArea(headerArea, mainArea) {
 
 		calendarLayout = new InitializeCalendarLayoutArea(mainArea);
 		calendarLayout.area.id = tabData[0]["elementId"];
-		calendarView = new CalendarView(calendarLayout.calendarDiv);
-		calendarView.OnDateSelected = onSelectedDate;
-		//calendarView.BeforeShowDay = showTasks;
-
-		messageView = new MessageView(calendarLayout.messageDiv);
-
 		listLayout = new InitializeListLayoutArea(mainArea);
 		listLayout.area.id = tabData[1]["elementId"];
+
+		calendarView = calendarLayout.CalendarView;
+		calendarView.OnDateSelected = onSelectedDate;
+		messageView = calendarLayout.MessageView;
+
+		listLayout.OnUpdateEvent = Refresh;
+		calendarLayout.OnUpdateEvent = Refresh;
 
 		var header = new HeaderView(headerArea);
 		header.OnButtonClick = function() {
@@ -42,14 +41,23 @@ function MissionPage(headerArea, mainArea) {
 
 	function Refresh() {
 		listLayout.Refresh();
-		alert("should refresh");
+		calendarLayout.Refresh();
+		//alert("should refresh");
 	}
 
-	function onSelectedDate(date, inst) {
-		var dates = [1, 8, 12, 7, 24, 19, 28, 29, 30];
+	function onSelectedDate(date, tasks, inst) {
 		var str = "無任務";
-		if (dates.indexOf(date.getDate()) >= 0) {
-			str = "任務：" + (date.getMonth() + 1) + "月" + date.getDate() + "日 ,揪團打宥均";
+		if (tasks.length > 0) {
+			str = "任務：" + (date.getMonth() + 1) + "月" + date.getDate() + "日";
+			str += "<HR class='taskHeaderHR'>";
+			tasks.forEach(function(task) {
+				str += "開始日期：" + task.StartTime + "<br>";
+				str += "持續：" + getTime(task.During) + "<br>";
+				str += "類型：" + task.Type + "<br>";
+				str += "週期：" + TaskPeriod.toString(task.Period);
+				if (tasks.indexOf(task) < tasks.length - 1)
+					str += "<HR class='taskItemHR'>";
+			});
 		}
 
 		messageView.SetText(str);
@@ -70,12 +78,23 @@ function MissionPage(headerArea, mainArea) {
 
 		p = ElementFactory.CraeteElement('p');
 		var schedualTaskstartDate = ElementFactory.CraeteElement('input');
+		schedualTaskstartDate.setAttribute('class', "schedualTaskstartDateInput");
+		schedualTaskstartDate.disabled = true;
 		schedualTaskstartDate.setAttribute('id', "schedualTaskstartDate");
 		schedualTaskstartDate.setAttribute('type', "text");
-		p.appendChild(ElementFactory.CreateTextNode("開始時間"));
+		p.appendChild(ElementFactory.CreateTextNode("開始日期"));
+		p.appendChild(ElementFactory.CraeteElement('br'));
 		p.appendChild(schedualTaskstartDate);
+		var schedualTaskStartHour = createSelection("schedualTaskStartHour");
+		var schedualTaskStartMins = createSelection("schedualTaskStartMins");
+		p.appendChild(ElementFactory.CraeteElement('br'));
+		p.appendChild(schedualTaskStartHour);
+		p.appendChild(ElementFactory.CreateTextNode("時"));
+		p.appendChild(schedualTaskStartMins);
+		p.appendChild(ElementFactory.CreateTextNode("分"));
 		contain.appendChild(p);
-		$("#schedualTaskstartDate").datepicker();
+		contain.appendChild(p);
+		//$("#schedualTaskstartDate").datepicker();
 
 		p = createP("持續時長：");
 		var schedualTaskDuringHour = createSelection("schedualTaskstartDate");
@@ -98,10 +117,12 @@ function MissionPage(headerArea, mainArea) {
 
 		for (var i = 0; i < 24; i++) {
 			schedualTaskDuringHour.add(new Option(i, i));
+			schedualTaskStartHour.add(new Option(i, i));
 		}
 
 		for (var i = 0; i < 60; i++) {
 			schedualTaskDuringMins.add(new Option(i, i));
+			schedualTaskStartMins.add(new Option(i, i));
 		}
 
 		TaskPeriod.fotEach(function(entry) {
@@ -111,19 +132,25 @@ function MissionPage(headerArea, mainArea) {
 		var buttons = [{
 			text : "OK",
 			click : function() {
+				var selectedDate = stringToDate(schedualTaskstartDate.value);
+				selectedDate.setHours(schedualTaskStartHour.value);
+				selectedDate.setMinutes(schedualTaskStartMins.value);
+				var during=schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins.value * 60;
 				var task = {
-					StartTime : stringToDate(schedualTaskstartDate.value),
-					During : schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins * 60,
+					StartTime : selectedDate,
+					During : during,
 					Type : selectSchedualTaskType.value,
 					Period : schedualTaskRoutine.value,
 					AlramId : 150,
 					Exclude : null
 				};
+
 				var calendarDB = new IndexDBObject("tasks");
 				calendarDB.OnDbReaady = function(indexDbObject) {
 					indexDbObject.Add(task).onsuccess = function(evt) {
-						console.log("added:" + task);
 						Refresh();
+						console.log("added:");
+						console.log(task);
 					};
 				};
 				$(this).dialog("close");
@@ -137,6 +164,10 @@ function MissionPage(headerArea, mainArea) {
 		function smallDatePicker(id) {
 			$(id).datepicker({
 				dateFormat : "yy-mm-dd",
+				autoSize : true,
+				showOn : "button",
+				buttonImage : "img/calendar.png",
+				buttonImageOnly : true
 			});
 		}
 
@@ -173,7 +204,7 @@ function HeaderView(areaToShow) {//HeaderView class Constructor
 		var a = ElementFactory.CraeteElement('a');
 		menu.appendChild(a);
 		menu.setAttribute('type', "toolbar");
-		a.innerHTML = "+";
+		a.innerHTML = "<img src='./img/add.png' align='middle'>";
 		a.onclick = onButtonClick;
 
 		var radioButtons = CreateRadioButtons(tabData);

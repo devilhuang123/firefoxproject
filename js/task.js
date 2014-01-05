@@ -1,6 +1,9 @@
+/*================================================
+ Task Page -- by pmkw52525, student ID:101522094
+ =================================================*/
+
 var remainSnd = 0;
 var isRunning = new Boolean();
-//not used now
 isRunning = false;
 var countdownMeter;
 var successFeedback = new Array();
@@ -13,13 +16,11 @@ var runningTask = {
 	Type : null
 };
 
-///////////get the submit event, use in alarm
+///////////get the button event, use in alarm
 var btnTest;
 var btnDeleteTest;
 
-/*================
- Task Page
- =================*/
+
 
 var cptTasksDemo = 
 [
@@ -52,7 +53,6 @@ function tas_init() {
 			}
 		};
 	};
-	//changeTaskPage("tblUnstart");
 	document.getElementById("tblUnstart").style.display = "";
 	
 	var lstHours = document.getElementById("lstHour");
@@ -63,24 +63,19 @@ function tas_init() {
 	///////////////////////////////////////////////////	
 	btnTest = document.getElementById("btnTest");
 	btnTest.addEventListener('click', setAlarm, false);
-	
-	btnDeleteTest = document.getElementById("btnDelete");
-	btnDeleteTest.addEventListener('click', deleteAlarm, false);
 	///////////////////////////////////////////////////
 	
 	
 	if(lstHours.options.length == 0)
 	{
-		for (var i = 0; i < 24; i++) {
-			lstHours.add(new Option(i, i));
-		}
+		for (var i = 0; i < 24; i++)
+			lstHours.add(new Option(i, i));		
 	}
 
 	if(lstMins.options.length == 0)
 	{
-		for (var i = 0; i < 60; i++) {
-			lstMins.add(new Option(i, i));
-		}
+		for (var i = 0; i < 60; i++)
+			lstMins.add(new Option(i, i));		
 	}
 	
 
@@ -96,20 +91,21 @@ function tas_init() {
 
 }
 
-function initImdTask() {
+function initImdTask() 
+{
 	var hours = document.getElementById("lstHour").value;
 	var mins = document.getElementById("lstMins").value;
 
 	//validate
-	if (parseInt(hours) === 0 && parseInt(mins) === 0) {
+	if (parseInt(hours) === 0 && parseInt(mins) === 0)
+	{
 		alert("任務時長不可為0時0分!");
-	} else if (parseInt(hours) !== 0 || parseInt(mins) !== 0) {
-		//successfully add a new task and start running it!
-
-		var nowMode = mode;
-		switch(nowMode) {
+	}
+	else if (parseInt(hours) !== 0 || parseInt(mins) !== 0) 
+	{
+		switch(mode) 
+		{
 			case "sweet":
-
 				break;
 
 			case "strict":
@@ -120,17 +116,14 @@ function initImdTask() {
 			default:
 				console.log("!");
 				break;
-
 		}
 
 		addTaskOrder(new Date(), (parseInt(hours) * 3600 + parseInt(mins) * 60), document.getElementById("lstTaskType").value, "ONCE");
 		setRunningTask(new Date(), (parseInt(hours) * 3600 + parseInt(mins) * 60), document.getElementById("lstTaskType").value);
 		changeTaskPage("divRunTask");
 		countdown();
-
-	} else {
-		console.log("!");
 	}
+	else {console.log("!");}
 }
 
 function setRunningTask(startTime, targetTime, type) {
@@ -146,57 +139,54 @@ function setRunningTask(startTime, targetTime, type) {
 }
 
 //immediate task or preordered task info is stored in the runningTask object in this .js
-function countdown() {
+function countdown() 
+{
 	var rmdHour = Math.floor(remainSnd / 3600);
 	var rmdMin = Math.floor((remainSnd - rmdHour * 3600) / 60);
 	var rmdSnd = remainSnd % 60;
 
-	if (rmdHour < 10) {
-		rmdHour = "0" + rmdHour;
-	}
-	if (rmdMin < 10) {
-		rmdMin = "0" + rmdMin;
-	}
-	if (rmdSnd < 10) {
-		rmdSnd = "0" + rmdSnd;
-	}
+	if (rmdHour < 10) {	rmdHour = "0" + rmdHour;}
+	if (rmdMin < 10) {	rmdMin = "0" + rmdMin;}
+	if (rmdSnd < 10) {	rmdSnd = "0" + rmdSnd;}
 
-	document.getElementById("divCntDnd").innerHTML = "<br><br><br>" + rmdHour + " : " + rmdMin + " : " + rmdSnd;
+	document.getElementById("divCntDnd").innerHTML = "<br><br>" + rmdHour + " : " + rmdMin + " : " + rmdSnd;
 	
-
-	if (!isRunning) {
+	if (!isRunning) 
+	{
 		isRunning = true;
 		countdown();
-	} else if (remainSnd != 0 && isRunning) {
+	}
+	else if (remainSnd != 0 && isRunning) 
+	{
 		remainSnd--;
-		countdownMeter = setTimeout('countdown()', 1000);
-		//do it once 1 sec
-	} else if (remainSnd == 0 && isRunning)//success!
+		countdownMeter = setTimeout('countdown()', 1000); //do it once 1 sec
+	}
+	else if (remainSnd == 0 && isRunning)//success!
 	{
 		endTask(runningTask.TargetTime, "SUCCESS");
-	} else {
-		console.log("countdown Error");
 	}
+	else {console.log("countdown Error");}
 }
 
-function quitTask() {
-	if (confirm("確定要放棄任務嗎?在堅持一下吧!")) {
+function quitTask() 
+{
+	if (confirm("確定要放棄任務嗎?在堅持一下吧!")) 
+	{
 		var lastTime = parseInt(runningTask.TargetTime) - remainSnd;
 		endTask(lastTime, "FAIL");
-	} else {
-	}//do nothing
+	} else {}//do nothing
 }
 
-function endTask(lastTime, result) {
+function endTask(lastTime, result) 
+{
 	isRunning = false;
 	remainSnd == 0;
 	clearTimeout(countdownMeter);
 
 	
 	changeTaskPage("divTaskResult");
-
 	//add task complete data into database
-	addTaskCpt(runningTask.StartTime, runningTask.TargetTime, runningTask.Type, lastTime, result);
+	//addTaskCpt(runningTask.StartTime, runningTask.TargetTime, runningTask.Type, lastTime, result);
 	////////////////////////////////////////
 	var cptTask = [{
 	StartTime : runningTask.StartTime,
@@ -205,24 +195,28 @@ function endTask(lastTime, result) {
 	lastTime : lastTime,
 	result : result
 	}];
-	createCptIndexDb().OnDbReaady = function(indexDbObject) {
-		indexDbObject.AddArray(cptTask).onsuccess = function(evt) {
+	createCptIndexDb().OnDbReaady = function(indexDbObject) 
+	{
+		indexDbObject.AddArray(cptTask).onsuccess = function(evt) 
+		{
 			console.log("success to add data");
 		};
-	}
+	};
 	///////////////////////////////////////////
 	//print result
-	document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (parseInt((parseInt(lastTime) / parseInt(runningTask.TargetTime)) * 100,10)/100) * 100 + "%";
+	document.getElementById("cpltRateDiv").innerHTML = "任務完成率:" + (parseInt((parseInt(lastTime) / parseInt(runningTask.TargetTime)) * 100,10)/100) * 100 + "%<br>";
 	if (result == "SUCCESS")
 	{
+		document.body.style.backgroundImage="url('./img/success.png')";
 		document.getElementById("returnBtn").style.display = "";
-		document.getElementById("taskCmdDiv").innerHTML = "幹的好!你真是人生勝利組!";
+		document.getElementById("taskCmdDiv").innerHTML = "<br>幹的好!你真是人生勝利組!";
 	}
 	else if (result == "FAIL")
 	{
 		if(mode == "strict")
 			document.getElementById("returnBtn").style.display = "none";
-		document.getElementById("taskCmdDiv").innerHTML = "加把勁啊！";
+		document.body.style.backgroundImage="url('./img/fail.png')";
+		document.getElementById("taskCmdDiv").innerHTML = "<br>加把勁啊！";
 	}
 	else
 		console.log("End task false!");
@@ -231,25 +225,25 @@ function endTask(lastTime, result) {
 }
 
 //use in index.html
-function taskReturn() {
-	//bottomVisibility("");
+function taskReturn() 
+{
 	changeTaskPage("tblUnstart");
 	bottomVisibility("");
-
 }
 
-function poFB() {
+function poFB() 
+{
 	alert("發文到FB!");
 	do_post();
-	bottomVisibility("");
-	changeTaskPage("tblUnstart");
+	taskReturn();
 }
 
-function bottomVisibility(visibility) {
-	document.getElementById("panel1").style.display = visibility;
-	document.getElementById("panel2").style.display = visibility;
-	document.getElementById("panel3").style.display = visibility;
-	document.getElementById("panel4").style.display = visibility;
-
+function bottomVisibility(visibility) 
+{
+	if(visibility == "none")
+		document.body.style.backgroundImage="url('./img/clock.png')";
+	else
+		document.body.style.backgroundImage= "none";		
+	document.getElementById("listSection").style.display = visibility;
 }
 

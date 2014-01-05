@@ -14,7 +14,6 @@ TaskPeriod.toString = function(value) {
 	return "Go to DMC!";
 };
 
-
 TaskPeriod.fotEach = function(callBack) {
 	for (var key in TaskPeriod) {
 		if (TaskPeriod[key] <= 5 && TaskPeriod[key] >= 0)
@@ -22,9 +21,38 @@ TaskPeriod.fotEach = function(callBack) {
 	}
 };
 
+var tasksDemo = [{
+	StartTime : new Date(),
+	During : 77777,
+	Type : "Study",
+	Period : TaskPeriod.ONCE,
+	AlramId : 150,
+	Exclude : null
+}, {
+	StartTime : new Date(),
+	During : 7777222,
+	Type : "Study",
+	Period : TaskPeriod.YEARLY,
+	AlramId : 150,
+	Exclude : null
+}, {
+	StartTime : new Date(),
+	During : 1125252,
+	Type : "Study",
+	Period : TaskPeriod.MONTHLY,
+	AlramId : 150,
+	Exclude : null
+}, {
+	StartTime : new Date(),
+	During : 77752025,
+	Type : "Study",
+	Period : TaskPeriod.WORKDAY,
+	AlramId : 150,
+	Exclude : null
+}];
+
 var mode = "sweet";
 //Task Mode
-
 var tasks = new Array();
 var orderId = 0;
 

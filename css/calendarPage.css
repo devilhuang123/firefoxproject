@@ -10,7 +10,27 @@
 }
 .dateArea {
 	color:#FF9D37;
-	font-size:20px;
+	font-size:16px;
+}
+.taskHeaderHR {
+	background:#FF9D37;
+	color:#FFB73D;
+	height:5px;
+}
+.taskItemHR {
+	background:#FF9D37;
+	color:#FFB73D;
+	width:95%;
+	height:3px;
+}
+.schedualTaskstartDateInput:disabled {
+	background-color:#BFBDBD;
+	border:solid 1px #BFBDBD;
+	color:#FF4E00;
+	/*height:28px;*/
+	/*width:191px;*/
+	padding-left:10px;
+	box-shadow:2px 2px 0 #828181 inset;
 }
 .list-scrollable {
 	height:360px; /* or any value */
@@ -22,14 +42,11 @@
 	margin-right:auto;
 	margin-bottom:20px;
 }
-/*#feedback { font-size: 1.4em; }*/
-/*#listView .ui-selecting {
- background: #FECA40;
- }
- #listView .ui-selected {
- background: #F39814;
- color: white;
- }*/
+
+.radioTabs {
+	height:35px;
+}
+
 #listView {
 	list-style-type:none;
 	margin-left:0%;
@@ -39,8 +56,8 @@
 #listView li {
 	margin:3px;
 	padding:0.6em;
-	font-size:1.4em;
-	height:25px;
+	font-size:1.35em;
+	/*height:45px;*/
 }
 .noclose .ui-dialog-titlebar-close {
 	display:none;
