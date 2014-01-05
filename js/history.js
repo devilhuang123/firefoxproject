@@ -20,11 +20,11 @@ function his_init()
 
 function getSelectedChange()
 {
+	//canvas clear
 	var canvas = document.getElementById('canvas_circle');
     var context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
-	
-	//document.getElementById('circle').innerHTML="";
+
 	var selected = document.getElementById('history_type');
 	showCircle(selected.value);		
 }
@@ -35,35 +35,36 @@ function showCircle(selectedType)
 	var sum = 0;
 	var data_rate = new Array("0","0");
 	var data = new Array("0","0");
-	var arr1 = new Array();
+	var tasksArr = new Array();
 	
 	createCptIndexDb().OnDbReaady = function(indexDbObject) 
 	{		
 		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
 			console.log("array length:"+arr.length);
-			if (arr.length > 0) {
+			if (arr.length > 0) 
+			{
 				console.log(arr);
 				for (var i=0; i<arr.length; i++)
 				{
-					arr1[i] = arr[i];					
+					tasksArr[i] = arr[i];					
 				}
-
-			} else {
+			} 
+			else {
 				console.log("nothing in DB");
 			}
 			
-			for (var i = 0; i <arr1.length; i++) 
+			for (var i = 0; i <tasksArr.length; i++) 
 				{
-					console.log(arr1[i].Type);
-					if (selectedType == arr1[i].Type)
+					console.log(tasksArr[i].Type);
+					if (selectedType == tasksArr[i].Type)
 					{
 						sum = sum +1;
-						console.log(arr1[i].result);
-						if (arr1[i].result == "SUCCESS")
+						console.log(tasksArr[i].result);
+						if (tasksArr[i].result == "SUCCESS")
 						{
 							data[0]++;
 						}
-						else if(arr1[i].result == "FAIL")
+						else if(tasksArr[i].result == "FAIL")
 						{
 							data[1]++;
 						}	
@@ -71,13 +72,11 @@ function showCircle(selectedType)
 					}
 					else {}
 				}	
-	
-	
-	
+					
 	
 			if (sum == 0)
 			{
-				alert("no task");
+				alert("這個任務類型還沒有任務完成哦~加油完成一次吧！");
 			}
 			else
 			{
@@ -88,41 +87,6 @@ function showCircle(selectedType)
 			}
 		};
 	};
-	
-		/*		for (var i = 0; i <arr1.length; i++) 
-				{
-					console.log(arr1[i].Type);
-					if (selectedType == arr1[i].Type)
-					{
-						sum = sum +1;
-						console.log(arr1[i].result);
-						if (arr1.result == "SUCCESS")
-						{
-							data[0]++;
-						}
-						else if(arr1.result == "FAIL")
-						{
-							data[1]++;
-						}	
-						else {}											
-					}
-					else {}
-				}	
-	
-	
-	
-	
-	if (sum == 0)
-	{
-		alert("no task");
-	}
-	else
-	{
-		data_rate[0] = data[0] / sum;
-		data_rate[1] = data[1] / sum;
-	
-		drawCircle("canvas_circle", data_rate, color_arr, text_arr);
-	}*/
 
 }
 
@@ -132,11 +96,11 @@ function drawCircle(canvasId, data_arr, color_arr, text_arr)
     var c = document.getElementById(canvasId);  
     var ctx = c.getContext("2d");  
   
-    var radius = c.height / 2 - 20;  
-    var ox = radius + 20, oy = radius + 20; //圆心  
+    var radius = c.height / 2.5 - 15;  
+    var ox = radius + 15, oy = radius + 15; //圆心  
   
     var width = 30, height = 10; //图例宽和高  
-	var posX = ox * 2 + 20, posY = 30;   //  
+	var posX = ox * 2 + 15, posY = 30;   //  
     var textX = posX + width + 5, textY = posY + 10;  
   
     var startAngle = 0; //起始弧度  
@@ -156,12 +120,12 @@ function drawCircle(canvasId, data_arr, color_arr, text_arr)
   
         //绘制比例图及文字  
         ctx.fillStyle = color_arr[i];  
-        ctx.fillRect(posX, posY + 20 * i, width, height);  
-        ctx.moveTo(posX, posY + 20 * i);  
+        ctx.fillRect(posX, posY + 15 * i, width, height);  
+        ctx.moveTo(posX, posY + 15 * i);  
         ctx.font = '12px';    //30像素  
         ctx.fillStyle = color_arr[i]; //"#000000";  
         var percent = text_arr[i] + "：" + 100 * data_arr[i] + "%";  
-        ctx.fillText(percent, textX, textY + 20 * i);  
+        ctx.fillText(percent, textX, textY + 15 * i);  
     }  
 }  
 
