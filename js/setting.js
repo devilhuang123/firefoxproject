@@ -27,7 +27,7 @@ function Type(){
 ///
 
 ///
-//Mode functions -- getMode(),setMode().
+// Mode functions -- getMode(),setMode().
 ///
 
 function getMode(){
@@ -53,11 +53,11 @@ function setMode(){
 }
 
 ///
-//Mode Functions end
+// Mode Functions end
 ///
 
 ///
-//Type Functions
+// Type Functions
 ///
 
 function appendOption(){
@@ -71,11 +71,18 @@ function appendOption(){
 }
 
 function getOption(){
+	var select_type = document.getElementById('select_type');
+
+	if(select_type.length > 0){
+		for(var i=(select_type.length-1);i>=0;i--){
+			select_type.remove(i);
+		}
+	}
+
 	for(var i=0;i<task_list.length;i++){
 		var option = document.createElement('option');
 		option.text = task_list[i];
 		option.value = task_list[i];
-		var select_type = document.getElementById('select_type');
 		select_type.appendChild(option);
 	}
 }
@@ -89,5 +96,5 @@ function removeOption(){
 }
 
 ///
-//Type Functions end
+// Type Functions end
 ///
