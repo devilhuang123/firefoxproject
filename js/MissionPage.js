@@ -78,6 +78,8 @@ function MissionPage(headerArea, mainArea) {
 
 		p = ElementFactory.CraeteElement('p');
 		var schedualTaskstartDate = ElementFactory.CraeteElement('input');
+		schedualTaskstartDate.setAttribute('class', "schedualTaskstartDateInput");
+		schedualTaskstartDate.disabled = true;
 		schedualTaskstartDate.setAttribute('id', "schedualTaskstartDate");
 		schedualTaskstartDate.setAttribute('type', "text");
 		p.appendChild(ElementFactory.CreateTextNode("開始日期"));
@@ -133,10 +135,10 @@ function MissionPage(headerArea, mainArea) {
 				var selectedDate = stringToDate(schedualTaskstartDate.value);
 				selectedDate.setHours(schedualTaskStartHour.value);
 				selectedDate.setMinutes(schedualTaskStartMins.value);
-				//console.log(schedualTaskDuringHour.value + ":" + schedualTaskDuringMins.value);
+				var during=schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins.value * 60;
 				var task = {
 					StartTime : selectedDate,
-					During : schedualTaskDuringHour.value * 60 * 60 + schedualTaskDuringMins.value * 60,
+					During : during,
 					Type : selectSchedualTaskType.value,
 					Period : schedualTaskRoutine.value,
 					AlramId : 150,
@@ -166,8 +168,6 @@ function MissionPage(headerArea, mainArea) {
 				showOn : "button",
 				buttonImage : "img/calendar.png",
 				buttonImageOnly : true
-				//buttonText: "Choose",
-				//showButtonPanel: true
 			});
 		}
 
