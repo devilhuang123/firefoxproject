@@ -61,8 +61,8 @@ function tas_init() {
 	var lstTaskType = document.getElementById("lstTaskType");
 
 	///////////////////////////////////////////////////	
-	btnTest = document.getElementById("btnTest");
-	btnTest.addEventListener('click', setAlarm, false);
+	//btnTest = document.getElementById("btnTest");
+	//btnTest.addEventListener('click', setAlarm, false);
 	///////////////////////////////////////////////////
 	
 	
@@ -118,7 +118,7 @@ function initImdTask()
 				break;
 		}
 
-		addTaskOrder(new Date(), (parseInt(hours) * 3600 + parseInt(mins) * 60), document.getElementById("lstTaskType").value, "ONCE");
+		//addTaskOrder(new Date(), (parseInt(hours) * 3600 + parseInt(mins) * 60), document.getElementById("lstTaskType").value, "ONCE");
 		setRunningTask(new Date(), (parseInt(hours) * 3600 + parseInt(mins) * 60), document.getElementById("lstTaskType").value);
 		changeTaskPage("divRunTask");
 		countdown();
