@@ -69,7 +69,8 @@
 				<div id="taskCmdDiv"></div>
 				<div id="cpltRateDiv"></div>
 				<input type="button"  class="button1" id="returnBtn" value="返回" onclick="taskReturn();">
-				<input type="button"  class="button1" value="發文至塗鴉牆" onclick="poFB();">
+				<input type="button"  class="button1" id="poSuccess" value="發勝利文至塗鴉牆" onclick="poFB2();">
+		        <input type="button"  class="button1" id="poFail" value="發失敗文至塗鴉牆" onclick="poFB();">
 			</div>
 		</div>
 
@@ -220,7 +221,10 @@
 						</script>
 				</li>
 			</ul>
-		</section>		
+		</section>
+		<script>
+             document.location.href="#panel1";                        
+        </script>	
 
 	</body>
 </html>
