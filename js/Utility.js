@@ -193,23 +193,6 @@ function new_db() {
 			objectStore.add(type_list[i].name);
 		}
 	};
-
-	/*request.onsuccess = function(event){
-	 var db = request.result;
-	 var objectStore = db.transaction("task_type").objectStore("task_type");
-
-	 objectStore.openCursor().onsuccess = function(event){
-	 var cursor = event.target.result;
-	 if (cursor){
-	 var option = document.createElement('option');
-	 option.text = cursor.value;
-	 option.value = cursor.value;
-
-	 select_type.appendChild(option);
-	 cursor.continue();
-	 }
-	 };
-	 };*/
 }
 
 function createCptIndexDb() 
