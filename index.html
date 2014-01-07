@@ -1,234 +1,234 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
+        <head>
+                <meta charset="utf-8">
 
-		<title>Tabs</title>
-		<meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
-		<!-- <link rel="stylesheet" type="text/css" media="all" href="./js/jsdatepick-calendar/jsDatePick_ltr.min.css" /> -->
-		<link rel="stylesheet" href="./css/tabs.css">
-		<link rel="stylesheet" href="./css/buttons.css">
-		<link rel="stylesheet" href="./css/value-selector.css">
-		<link rel="stylesheet" href="./css/header.css">
-		<link rel="stylesheet" href="./css/task.css">
-		<!-- <link rel="stylesheet" href="./css/ui-darkness/jquery-ui-1.10.3.custom.css"> -->
-		<script src="js/Debuger.js"></script>
-		<script src="js/jquery-1.9.1.js"></script>
-		<script src="js/FB_init.js"></script>
-		<script src="js/FB_post.js"></script>
-		<script type="text/javascript" src="./js/Utility.js"></script>
-		<script type="text/javascript" src="./js/Factory.js"></script>
-		<script type="text/javascript" src="./js/RadioButton.js"></script>
-		<script type="text/javascript" src="./js/MissionPage.js"></script>
-		<script type="text/javascript" src="./js/Calendar.js"></script>
-		<script type="text/javascript" src="./js/List.js"></script>
-		<script type="text/javascript" src="./js/alarm.js"></script>	
-		<script type="text/javascript" src="./js/history.js"></script>
-		<script type="text/javascript" src="./js/setting.js"></script>
-		<script type="text/javascript" src="./js/task.js"></script>
-		<script type="text/javascript" src="./js/jquery-ui-1.10.3.custom.min.js"></script>
+                <title>Tabs</title>
+                <meta name="description" content="Allows multiple instances to be contained within a single window. Tabs are used as a navigational widget for switching between sets of views. ">
+                <!-- <link rel="stylesheet" type="text/css" media="all" href="./js/jsdatepick-calendar/jsDatePick_ltr.min.css" /> -->
+                <link rel="stylesheet" href="./css/tabs.css">
+                <link rel="stylesheet" href="./css/buttons.css">
+                <link rel="stylesheet" href="./css/value-selector.css">
+                <link rel="stylesheet" href="./css/header.css">
+                <link rel="stylesheet" href="./css/task.css">
+                <!-- <link rel="stylesheet" href="./css/ui-darkness/jquery-ui-1.10.3.custom.css"> -->
+                <script src="js/Debuger.js"></script>
+                <script src="js/jquery-1.9.1.js"></script>
+                <script src="js/FB_init.js"></script>
+                <script src="js/FB_post.js"></script>
+                <script type="text/javascript" src="./js/Utility.js"></script>
+                <script type="text/javascript" src="./js/Factory.js"></script>
+                <script type="text/javascript" src="./js/RadioButton.js"></script>
+                <script type="text/javascript" src="./js/MissionPage.js"></script>
+                <script type="text/javascript" src="./js/Calendar.js"></script>
+                <script type="text/javascript" src="./js/List.js"></script>
+                <script type="text/javascript" src="./js/alarm.js"></script>        
+                <script type="text/javascript" src="./js/history.js"></script>
+                <script type="text/javascript" src="./js/setting.js"></script>
+                <script type="text/javascript" src="./js/task.js"></script>
+                <script type="text/javascript" src="./js/jquery-ui-1.10.3.custom.min.js"></script>
 
-		<!--
-		This <style> and <link> is only used for the example code, is no needed for the real case use
-		-->
-		<style>
-			html, body {
-				margin: 0;
-				padding: 0;
-				font-size: 10px;
-			}
+                <!--
+                This <style> and <link> is only used for the example code, is no needed for the real case use
+                -->
+                <style>
+                        html, body {
+                                margin: 0;
+                                padding: 0;
+                                font-size: 10px;
+                        }
 
-			body {
-				background-image:none;
-			}
+                        body {
+                                background-image:none;
+                        }
 
-			h2.bb-docs {
-				font-size: 1.8 rem;
-				font-family: sans-serif;
-				font-weight: lighter;
-				color: #666;
-				margin: -1px 0 0;
-				background-color: #f5f5f5;
-				padding: 0.4 rem 0.4 rem 0.4 rem 3rem;
-				border: solid 1px #e8e8e8;
-			}
+                        h2.bb-docs {
+                                font-size: 1.8 rem;
+                                font-family: sans-serif;
+                                font-weight: lighter;
+                                color: #666;
+                                margin: -1px 0 0;
+                                background-color: #f5f5f5;
+                                padding: 0.4 rem 0.4 rem 0.4 rem 3rem;
+                                border: solid 1px #e8e8e8;
+                        }
 
-		</style>
-	</head>
-	<body role="application">
-		
-		<!-- Running Task Div -->
-		<div id="taskRunning" class="taskLabel">
-			<div id="divRunTask" align="center" style="display: none;">
-				<div id="divCntDnd" class="countDownLabel"></div>
-				<input type="button" class = "color red button1" id="btnQuit" value="放棄任務" onclick="quitTask();"></button>
-			</div>
-			
-			<div id="divTaskResult" align = "center" style="display: none;">
-				<div id="taskCmdDiv"></div>
-				<div id="cpltRateDiv"></div>
-				<input type="button"  class="button1" id="returnBtn" value="返回" onclick="taskReturn();">
-				<input type="button"  class="button1" id="poSuccess" value="發勝利文至塗鴉牆" onclick="poFB2();">
-				<input type="button"  class="button1" id="poFail" value="發失敗文至塗鴉牆" onclick="poFB();">
-			</div>
-		</div>
+                </style>
+        </head>
+        <body role="application">
+                
+                <!-- Running Task Div -->
+                <div id="taskRunning" class="taskLabel">
+                        <div id="divRunTask" align="center" style="display: none;">
+                                <div id="divCntDnd" class="countDownLabel"></div>
+                                <input type="button" class = "color red button1" id="btnQuit" value="放棄任務" onclick="quitTask();"></button>
+                        </div>
+                        
+                        <div id="divTaskResult" align = "center" style="display: none;">
+                                <div id="taskCmdDiv"></div>
+                                <div id="cpltRateDiv"></div>
+                                <input type="button"  class="button1" id="returnBtn" value="返回" onclick="taskReturn();">
+                                <input type="button"  class="button1" id="poSuccess" value="發勝利文至塗鴉牆" onclick="poFB2();">
+                                <input type="button"  class="button1" id="poFail" value="發失敗文至塗鴉牆" onclick="poFB();">
+                        </div>
+                </div>
 
-		<section id="listSection" role="region">
-			<!-- if your tabs are at the top, remove class="bottom" -->
-			<ul role="tablist" data-items="4" class="bottom">
-				<li id="panel1" role="tab">
-					<a href="#panel1" class="icon"><img src="./img/calendar.png" align="middle">comms</a>
+                <section id="listSection" role="region">
+                        <!-- if your tabs are at the top, remove class="bottom" -->
+                        <ul role="tablist" data-items="4" class="bottom">
+                                <li id="panel1" role="tab">
+                                        <a href="#panel1" class="icon"><img src="./img/calendar.png" align="middle">comms</a>
 
-					<div role="tabpanel" >
-						<section role="region" id="mainArea">
-							<header id="headerArea">
-								<!-- <menu type="toolbar">
-									<a>delect</a>
-								</menu> -->
-							</header>
-							<script>
-								var header = document.getElementById("headerArea");
-								var main = document.getElementById("mainArea");
-								var missionPage = new MissionPage(header, main);
-								missionPage.Show();
-							</script>
-						</section>
-					</div>
-				</li>
-				
-				<li id="panel2" role="tab">
-					<a href="#panel2" class="icon" onclick="tas_init();"><img src="./img/task.png" align="middle">contacts</a>
-					<div role="tabpanel">
-						<section role="region">
-							<header>
-								<menu type="toolbar"></menu>
-								<h1>Task</h1>
-							</header>
-						</section>
-													
-							<table id="tblUnstart" align="center"  class="taskLabel">								
-								<tr>
-									<td>
-										任務類型<br>
-										<select align="center" class="styled-select" id="lstTaskType"></select>
-										
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<br>持續時長<br>
-										<select id="lstHour" class="styled-select" ></select>時<br>
-										<select id="lstMins" class="styled-select" ></select>分
-									</td>
-								</tr>
-								<tr>
-									<td>
-									<br><input type="button"  class="button1" value="開始任務" onclick="initImdTask();">
-									<td>
-								<tr>
-							</table>
-					</div>
-				</li>
-				
-				<li id="panel3" role="tab">
-					<a href="#panel3" class="icon" onclick="his_init();"><img src="./img/history.png" align="middle">dialer</a>
-					<div role="tabpanel">
-						<section role="region">
-							<header>
-								<menu type="toolbar">
-									<a href="#panel3" ><img src="./img/delete.png" align="middle" onclick="hisdel()"></a>
-								</menu>
-								<h1>History</h1>
-							</header>
-							
-							<p class="taskLabel" align="center">任務類型
-							<select id="history_type" onchange="getSelectedChange()">
-							</select>
-							</p>						
-								
-							<div role = "circle" align="center">			
-						  		<p>  
-                          			<canvas id="canvas_circle" width="300" height="200" style="border:2px solid #0026ff;" ></canvas>  
-        				  		</p> 
-							</div>
-						</section>
-					</div>
-				</li>
-				
-				<li id="panel4" role="tab">
-					<a href="#panel4" class="icon"><img src="./img/setting.png" align="middle">Tab name</a>
-					<div role="tabpanel">
-						<section role="region">
-						<header>
-								<menu type="toolbar"></menu>
-								<h1>Setting</h1>
-						</header>
-						<form id="setting_form" name="setting_form">
-							<p>
-								<button type="button" onclick="Mode()">
-									任務模式設置
-								</button>
-								<button type="button" onclick="Type()">
-									任務類型設置
-								</button>
-							</p>
-							<!-- Mode area -->
-							<p>
-								<table id="mode_table">
-									<tr>
-										<td>當前模式:</td>
-										<td id="td_mode">&nbsp;</td>
-									</tr>
-									<tr>
-										<td>
-										<select id="select_mode" onchange="setMode()">
-											<option value="sweet">溫柔模式</option>
-											<option value="strict">剽悍模式</option>
-										</select></td>
-									</tr>
-								</table>
-							</p>
-							<!-- end Mode -->
+                                        <div role="tabpanel" >
+                                                <section role="region" id="mainArea">
+                                                        <header id="headerArea">
+                                                                <!-- <menu type="toolbar">
+                                                                        <a>delect</a>
+                                                                </menu> -->
+                                                        </header>
+                                                        <script>
+                                                                var header = document.getElementById("headerArea");
+                                                                var main = document.getElementById("mainArea");
+                                                                var missionPage = new MissionPage(header, main);
+                                                                missionPage.Show();
+                                                        </script>
+                                                </section>
+                                        </div>
+                                </li>
+                                
+                                <li id="panel2" role="tab">
+                                        <a href="#panel2" class="icon" onclick="tas_init();"><img src="./img/task.png" align="middle">contacts</a>
+                                        <div role="tabpanel">
+                                                <section role="region">
+                                                        <header>
+                                                                <menu type="toolbar"></menu>
+                                                                <h1>Task</h1>
+                                                        </header>
+                                                </section>
+                                                                                                        
+                                                        <table id="tblUnstart" align="center"  class="taskLabel">                                                                
+                                                                <tr>
+                                                                        <td>
+                                                                                任務類型<br>
+                                                                                <select align="center" class="styled-select" id="lstTaskType"></select>
+                                                                                
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>
+                                                                                <br>持續時長<br>
+                                                                                <select id="lstHour" class="styled-select" ></select>時<br>
+                                                                                <select id="lstMins" class="styled-select" ></select>分
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>
+                                                                        <br><input type="button"  class="button1" value="開始任務" onclick="initImdTask();">
+                                                                        <td>
+                                                                <tr>
+                                                        </table>
+                                        </div>
+                                </li>
+                                
+                                <li id="panel3" role="tab">
+                                        <a href="#panel3" class="icon" onclick="his_init();"><img src="./img/history.png" align="middle">dialer</a>
+                                        <div role="tabpanel">
+                                                <section role="region">
+                                                        <header>
+                                                                <menu type="toolbar">
+                                                                        <a href="#panel3" ><img src="./img/delete.png" align="middle" onclick="hisdel()"></a>
+                                                                </menu>
+                                                                <h1>History</h1>
+                                                        </header>
+                                                        
+                                                        <p class="taskLabel" align="center">任務類型
+                                                        <select id="history_type" onchange="getSelectedChange()">
+                                                        </select>
+                                                        </p>                                                
+                                                                
+                                                        <div role = "circle" align="center">                        
+                                                                  <p>  
+                                                  <canvas id="canvas_circle" width="300" height="200" style="border:2px solid #0026ff;" ></canvas>  
+                                                          </p> 
+                                                        </div>
+                                                </section>
+                                        </div>
+                                </li>
+                                
+                                <li id="panel4" role="tab">
+                                        <a href="#panel4" class="icon"><img src="./img/setting.png" align="middle">Tab name</a>
+                                        <div role="tabpanel">
+                                                <section role="region">
+                                                <header>
+                                                                <menu type="toolbar"></menu>
+                                                                <h1>Setting</h1>
+                                                </header>
+                                                <form id="setting_form" name="setting_form">
+                                                        <p>
+                                                                <button type="button" onclick="Mode()">
+                                                                        任務模式設置
+                                                                </button>
+                                                                <button type="button" onclick="Type()">
+                                                                        任務類型設置
+                                                                </button>
+                                                        </p>
+                                                        <!-- Mode area -->
+                                                        <p>
+                                                                <table id="mode_table">
+                                                                        <tr>
+                                                                                <td>當前模式:</td>
+                                                                                <td id="td_mode">&nbsp;</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>
+                                                                                <select id="select_mode" onchange="setMode()">
+                                                                                        <option value="sweet">溫柔模式</option>
+                                                                                        <option value="strict">剽悍模式</option>
+                                                                                </select></td>
+                                                                        </tr>
+                                                                </table>
+                                                        </p>
+                                                        <!-- end Mode -->
 
-							<!-- Type area -->
-							<p>
-								<table id="task_type_table" border="1">
-									<tr>
-										<td>任務列表</td>
-									</tr>
-									<tr>
-										<td> 新增任務:
-										<input type="text" id="text_type">
-										<button type="button" onclick="appendOption()">
-											新增
-										</button></td>
-									</tr>
-									<tr>
-										<td>
-										<select id="select_type" width="200" size="10"></select>
-										<br>
-										<button type="button" onclick="removeOption()">
-											刪除
-										</button></td>
-									</tr>
-								</table>
-							</p>
+                                                        <!-- Type area -->
+                                                        <p>
+                                                                <table id="task_type_table" border="1">
+                                                                        <tr>
+                                                                                <td>任務列表</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td> 新增任務:
+                                                                                <input type="text" id="text_type">
+                                                                                <button type="button" onclick="appendOption()">
+                                                                                        新增
+                                                                                </button></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>
+                                                                                <select id="select_type" width="200" size="10"></select>
+                                                                                <br>
+                                                                                <button type="button" onclick="removeOption()">
+                                                                                        刪除
+                                                                                </button></td>
+                                                                        </tr>
+                                                                </table>
+                                                        </p>
 
-							<p>
-								<table id="history_manage_table"></table>
-							</p>
-						</form>
-						<script>
-							setting();
-						</script>
-						
-						</section>
-						</div>
-				</li>
-			</ul>
-		</section>		
-		<script>
-			 window.location.href="#panel1";			
-		</script>
-	</body>
+                                                        <p>
+                                                                <table id="history_manage_table"></table>
+                                                        </p>
+                                                </form>
+                                                <script>
+                                                        setting();
+                                                </script>
+                                                
+                                                </section>
+                                                </div>
+                                </li>
+                        </ul>
+                </section>                
+                <script>
+                         window.location.href="#panel1";                        
+                </script>
+        </body>
 </html>
