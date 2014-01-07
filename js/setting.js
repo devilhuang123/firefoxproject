@@ -67,7 +67,16 @@ function appendOption(){
 	
 	var select_type = document.getElementById('select_type');
 	select_type.appendChild(option);
-	task_list[task_list.length] = document.getElementById("text_type").value;
+	task_list.push(document.getElementById('text_type').value);
+	alert("已新增任務： " + document.getElementById('text_type').value);
+	
+	var request = indexedDB.open("db_type", 3);
+	request.onsuccess = function(event){
+		var db = event.target.result;
+		var transaction = db.transaction(["task_type"], "readwrite");
+		var objectStore = transaction.objectStore("task_type");
+		var request = objectStore.add(document.getElementById('text_type').value);
+	}		
 }
 
 function getOption(){
@@ -91,8 +100,19 @@ function removeOption(){
 	var select_type = document.getElementById('select_type');
 	var index = document.getElementById("select_type").selectedIndex;
 	var option = document.getElementById("select_type").options;
+	var item = option[index].value;
 	
 	select_type.removeChild(option[index]);
+	task_list.splice(index, 1);
+	alert("已刪除任務： " + item);
+	
+	var request = indexedDB.open("db_type", 3);
+	request.onsuccess = function(event){
+		var db = event.target.result;
+		var transaction = db.transaction(["task_type"], "readwrite");
+		var objectStore = transaction.objectStore("task_type");
+		var request = objectStore.delete(item);
+	}	
 }
 
 ///
