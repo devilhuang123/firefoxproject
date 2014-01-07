@@ -19,7 +19,7 @@ window.fbAsyncInit = function() {
     } else if (response.status === 'not_authorized') {
       	login();
     } else {
-    	document.location.href="https://m.facebook.com/dialog/oauth/?client_id=534601883297900&redirect_uri=http://web.cc.ncu.edu.tw/~102522102/fb.html&scope=publish_actions,publish_stream";
+    	document.location.href="https://m.facebook.com/dialog/oauth/?client_id=534601883297900&redirect_uri=http://web.cc.ncu.edu.tw/~102522071/index.html&scope=publish_actions,publish_stream";
     }
   });
   
