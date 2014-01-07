@@ -1,63 +1,86 @@
-//tasks and cptTasks Elements are all start in Upper Case
-//tasks = { Id, StartTime, TargetTime, Type, Period, Exclude }		
-//cptTask =	{Id, StartTime, TargetTime, Type, LastTime, Result } 
+var TaskPeriod = {
+	ONCE : 0,
+	DAILY : 1,
+	WORKDAY : 2,
+	WEEKLY : 3,
+	MONTHLY : 4,
+	YEARLY : 5
+};
+TaskPeriod.toString = function(value) {
+	for (var key in TaskPeriod) {
+		if (value == TaskPeriod[key])
+			return key;
+	}
+	return "Go to DMC!";
+};
+
+TaskPeriod.fotEach = function(callBack) {
+	for (var key in TaskPeriod) {
+		if (TaskPeriod[key] <= 5 && TaskPeriod[key] >= 0)
+			callBack(key);
+	}
+};
+
+var tasksDemo = [{
+	StartTime : new Date(),
+	During : 77777,
+	Type : "Study",
+	Period : TaskPeriod.ONCE,
+	AlramId : 150,
+	Exclude : null
+}, {
+	StartTime : new Date(),
+	During : 7777222,
+	Type : "Study",
+	Period : TaskPeriod.YEARLY,
+	AlramId : 150,
+	Exclude : null
+}, {
+	StartTime : new Date(),
+	During : 1125252,
+	Type : "Study",
+	Period : TaskPeriod.MONTHLY,
+	AlramId : 150,
+	Exclude : null
+}, {
+	StartTime : new Date(),
+	During : 77752025,
+	Type : "Study",
+	Period : TaskPeriod.WORKDAY,
+	AlramId : 150,
+	Exclude : null
+}];
+
+var mode = "sweet";
+//Task Mode
 var tasks = new Array();
-var cptTasks = new Array();
 var orderId = 0;
+
+var cptTasks = new Array();
 var cptId = 0;
-var taskTypes = new Array();
-var typeId = 0;
-var isLogin = new Boolean();
-var mode;
-initType();
-changeMode("sweet");
 
-/*=========================
- * Task Order
- *=========================/
-
-/* addTaskOrder:
- * 		action that user request for add new task, return this order task Id
- * 
- * Input:
- * startTime:Date(), 
- * targetTime:int/string(seconds), 
- * type:string (Excercise, Study, Sleep, etc...)
- * period:string (ONCE, DAILY, WORKDAY, WEEKLY, MONTHLY, YEARLY)
- * 
- * Output:
- * this new order task Id
- * 
- * Content:
- * Id:
- * Exclude:Array of Date() that won't obey this task's period rule
- * */
-function addTaskOrder(startTime, targetTime, type, period)
-{
-	var task = 
-	{
+function addTaskOrder(startTime, targetTime, type, period) {
+	var task = {
 		Id : parseInt(orderId),
 		StartTime : startTime,
 		TargetTime : targetTime,
 		Type : type,
 		Period : period,
-		Exclude : null		
+		Exclude : null
 	};
-	
+
 	tasks[orderId] = task;
-	alert("成功加入\nid = "+tasks[orderId].Id + ",\nstartTime = " + tasks[orderId].StartTime.getTime() + ",\ntargetTime = " + tasks[orderId].TargetTime + ",\ntype = " +  tasks[orderId].Type);
-	
+	alert("成功加入\nid = " + tasks[orderId].Id + ",\nstartTime = " + tasks[orderId].StartTime.getTime() + ",\ntargetTime = " + tasks[orderId].TargetTime + ",\ntype = " + tasks[orderId].Type);
+
 	return orderId;
-	
+
 	var nextId = parseInt(orderId) + 1;
 	orderId = nextId;
 }
 
+//add the exclusion date of the periodically task 立即任務
+function addTaskExclude(taskOrderId, ExDate) {
 
-
-//add the exclusion date of the periodically task
-function addTaskExclude(taskOrderId, ExDate)
-{
 	//add exclude date into task.Exclude
 	var excludeDate = new Array();
 	excludeDate[excludeDate.length] = ExDate;
@@ -67,106 +90,209 @@ function addTaskExclude(taskOrderId, ExDate)
 /* Input: string/int
  * Output: task
  */
-function getTask(taskId)
-{
+function getTask(taskId) {
 	return tasks[parseInt(taskId)];
 }
 
-function deleteTask(taskId)
-{
+function deleteTask(taskId) {
+
 	tasks[parseInt(taskId)] = null;
 }
 
-
 /*=========================
- * Task Completed
- =========================*/
-
+* Task Completed
+=========================*/
+//此function傳入參數只需要傳task跟result不就好了
 //when the end of a task(whaever success or fail), add a task complete record
-function addTaskCpt(startTime, targetTime, type, lastTime, result)
-{	
-	var cptTask = 
-	{
+
+function addTaskCpt(startTime, targetTime, type, lastTime, result) {
+	var cptTask = {
 		Id : parseInt(cptId),
 		StartTime : startTime,
 		TargetTime : targetTime,
 		Type : type,
 		LastTime : lastTime,
-		Result : result 
+		Result : result
 	};
 	cptTasks[cptId] = cptTask;
-	alert("成功加入\nid:"+cptTasks[cptId].Id+",\nStart:"+cptTasks[cptId].StartTime+",\nTarget:"+cptTasks[cptId].TargetTime+",\ntype:"+cptTasks[cptId].Type+",\nlastTime:"+cptTasks[cptId].LastTime+",\nresult:"+cptTasks[cptId].Result);
-	
+	alert("成功加入\nid:" + cptTasks[cptId].Id + ",\nStart:" + cptTasks[cptId].StartTime + ",\nTarget:" + cptTasks[cptId].TargetTime + ",\ntype:" + cptTasks[cptId].Type + ",\nlastTime:" + cptTasks[cptId].LastTime + ",\nresult:" + cptTasks[cptId].Result);
+
 	return cptId;
-	
+
 	var nextId = parseInt(cptId) + 1;
 	cptId = nextId;
 }
 
-function getCptTask(id)
-{
+function getCptTask(id) {
 	return cptTask[id];
 }
 
-function deleteAllCptTask()
-{
+function deleteAllCptTask() {
 	//here should go to database to delete all completed task data
 	cptTasks = null;
 	var cptTasks = new Array();
 }
 
+///
+// Task type Function
+///
+var task_list = new Array();
+// Task Type List
+getTasktype(task_list);
 
-
-/*=========================
- * Task Type
- =========================*/
-
-function initType()
-{
-	typeId = 0;
-	addTaskType("用功讀書","study");
-	addTaskType("早點睡覺","sleep");
-	addTaskType("努力運動","exercise");
-}
-
-function addTaskType(name, value)
-{	
-	var tastType = 
-	{
-		Name: name,
-		Value: value
+function getTasktype(task_list) {
+	var request = indexedDB.open("db_type", 3);
+	request.onerror = function(event) {
+		alert("connect to database db_type has a wrong!");
 	};
-	taskTypes[typeId] = tastType;
-	typeId = typeId + 1;	
-}
-
-function deleteTaskType(value)
-{
-	for(var i=0; i<taskTypes.length; i++)
-	{
-		if(taskTypes[i].Value == value)
-		{
-			taskTypes[i] = null;
+	request.onsuccess = function(event) {
+		var db = request.result;
+		if (db.objectStoreNames.length > 0) {
+			var objectStore = db.transaction("task_type").objectStore("task_type");
+			objectStore.openCursor().onsuccess = function(event) {
+				var cursor = event.target.result;
+				if (cursor) {
+					task_list.push(cursor.value);
+					cursor.
+					continue();
+				}
+			};
+		} else {
+			task_list.push("吃飯");
+			task_list.push("睡覺");
+			task_list.push("上課");
+			db.close();
+			indexedDB.deleteDatabase("db_type");
+			new_db();
 		}
-	}
+	};
+	return task_list;
 }
 
-function getAllType()
-{
-	return taskTypes;
+function new_db() {
+	var request = indexedDB.open("db_type", 3);
+
+	request.onerror = function(event) {
+		alert("connect to database db_type has a wrong!");
+	};
+
+	request.onupgradeneeded = function(event) {
+		const type_list = [{
+			name : "吃飯"
+		}, {
+			name : "睡覺"
+		}, {
+			name : "上課"
+		}];
+		var db = event.target.result;
+		var objectStore = db.createObjectStore("task_type", {
+			autoIncrement : true
+		});
+
+		for (var i in type_list) {
+			objectStore.add(type_list[i].name);
+		}
+	};
 }
 
-
-/*=========================
- * Mode
- =========================*/
-
-function changeMode(Mode)
+function createCptIndexDb() 
 {
-	mode = Mode;
-}
+	var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+	var db;
+	var name = "cpt_tasks";
+	var _this = this;
+	this.DB;
+	this.OnDbReaady = function(_db) {
+	};
+	if (!indexedDB)
+		alert("cpt indexedDB not support!");
 
-function getNowMode()
-{
-	return mode;	
+	var request = indexedDB.open(name, 1);
+	request.onsuccess = function(evt) {// 將db暫存起來供以後操作
+		db = request.result;
+		_this.DB=db;
+		console.log("cpt IndexedDB success");
+		_this.OnDbReaady(_this);
+	};
+
+	request.onerror = function(evt) {
+		console.log("cpt IndexedDB error: " + evt.target.errorCode);
+	};
+
+	request.onupgradeneeded = function(evt) {
+		var objectStore = evt.currentTarget.result.createObjectStore("cpt_tasks", {
+			keyPath : "Id",
+			autoIncrement : true
+		});
+
+		objectStore.createIndex("StartTime", "StartTime", {
+			unique : false
+		});
+		objectStore.createIndex("During", "During", {
+			unique : false
+		});
+		objectStore.createIndex("Type", "Type", {
+			unique : false
+		});
+		objectStore.createIndex("lastTime", "lastTime", {
+			unique : false
+		});
+		objectStore.createIndex("result", "result", {
+			unique : false
+		});
+		console.log("cpt onupgradeneeded");
+	};
+
+	this.Add = function(task) {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var request = objectStore.add(task);
+		request.onsuccess = function(evt) {
+			console.log("add:" + task);
+		};
+		return request;
+	};
+	this.AddArray = function(_array) {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var request = null;
+		_array.forEach(function(entry) {
+			request = objectStore.add(entry);
+		});
+		return request;
+	};
+	this.AllTask = function() {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var _tasks = [];
+		var _this = this;
+		objectStore.openCursor().onsuccess = function(event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				_tasks.push(cursor.value);
+				cursor.continue();
+			} else {
+				console.log("GetAllTask all");
+				_this.OnAllTasksGot(_tasks);
+				//alert("Got all customers: " + tasks);
+			}
+		};
+		this.OnAllTasksGot = function(tasks) {
+		};
+		return this;
+	};
+	this.DeleteArray = function(ids) {
+		var transaction = db.transaction(name, "readwrite");
+		var objectStore = transaction.objectStore("cpt_tasks");
+		var request = null;
+		ids.forEach(function(entry) {
+			request = objectStore.delete(entry);
+			request.onerror = function(evt) {
+				console.log("cpt IndexedDB error: " + evt.target.errorCode);
+			};
+		});
+
+		return request;
+	};
+	return this;
 }

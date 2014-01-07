@@ -1,0 +1,64 @@
+.ui-state-datepicker-scheduled {
+	border:.05em groove #DF3B39;
+	/*background: #eeeeee url(images/ui-bg_glass_40_0078a3_1x400.png) 50% top repeat-x;*/
+	/*color: #511789;*/
+}
+.ui-state-datepicker-unscheduled {
+	border:.05em;
+	/*background: #eeeeee url(images/ui-bg_glass_40_0078a3_1x400.png) 50% top repeat-x;*/
+	/*color: #511789;*/
+}
+.dateArea {
+	color:#FF9D37;
+	font-size:16px;
+}
+.taskHeaderHR {
+	background:#FF9D37;
+	color:#FFB73D;
+	height:5px;
+}
+.taskItemHR {
+	background:#FF9D37;
+	color:#FFB73D;
+	width:95%;
+	height:3px;
+}
+.schedualTaskstartDateInput:disabled {
+	background-color:#BFBDBD;
+	border:solid 1px #BFBDBD;
+	color:#FF4E00;
+	/*height:28px;*/
+	/*width:191px;*/
+	padding-left:10px;
+	box-shadow:2px 2px 0 #828181 inset;
+}
+.list-scrollable {
+	height:360px; /* or any value */
+	overflow-y:auto;
+}
+.list-tasks {
+	margin-top:5px;
+	margin-left:10%;
+	margin-right:auto;
+	margin-bottom:20px;
+}
+
+.radioTabs {
+	height:35px;
+}
+
+#listView {
+	list-style-type:none;
+	margin-left:0%;
+	padding:0;
+	width:100%;
+}
+#listView li {
+	margin:3px;
+	padding:0.6em;
+	font-size:1.35em;
+	/*height:45px;*/
+}
+.noclose .ui-dialog-titlebar-close {
+	display:none;
+}
