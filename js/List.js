@@ -17,13 +17,13 @@ function InitializeListLayoutArea(areaToShow) {//layout class Constructor
 	var listDB = new IndexDBObject("tasks");
 	listDB.OnDbReaady = function(indexDbObject) {
 		indexDbObject.AllTask().OnAllTasksGot = function(arr) {
-			if (arr.length > 0) {
+			//if (arr.length > 0) {
 				CreateTasksList(indexDbObject);
-			} else {
-				indexDbObject.AddArray(tasksDemo).onsuccess = function(evt) {
-					CreateTasksList(indexDbObject);
-				};
-			}
+			// } else {
+				// indexDbObject.AddArray(tasksDemo).onsuccess = function(evt) {
+					// CreateTasksList(indexDbObject);
+				// };
+			// }
 		};
 	};
 
